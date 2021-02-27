@@ -29,6 +29,8 @@ android {
     }
     kotlinOptions {
         jvmTarget = '1.8'
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+
     }
 }
 
@@ -46,5 +48,13 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
     implementation 'com.android.support:design:26.1.0'
+
+    implementation 'com.google.android.gms:play-services-location:17.1.0'
+//region coroutine
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.5'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.5'
+    //retrofit
+    implementation "com.squareup.retrofit2:retrofit:$version_retrofit"
+    implementation "com.squareup.retrofit2:converter-scalars:$version_retrofit"
 
 }

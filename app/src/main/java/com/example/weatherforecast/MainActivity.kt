@@ -15,7 +15,6 @@ class MainActivity : AppCompatActivity() {
         val toolBar =findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolBar)
         val tabLayout=findViewById<TabLayout>(R.id.tab_layout)
-
         tabLayout.addTab(tabLayout.newTab().setText(R.string.setting_fragment))
         tabLayout.addTab(tabLayout.newTab().setText(R.string.home_fragment))
         tabLayout.addTab(tabLayout.newTab().setText(R.string.alert_fragment))

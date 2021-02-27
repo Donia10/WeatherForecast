@@ -9,4 +9,23 @@
         <item>reply</item>
         <item>reply_all</item>
     </string-array>
+
+    <string-array name="location">
+        <item>GPS</item>
+        <item>Search</item>
+    </string-array>
+    <string-array name="unitOfTemperature">
+        <item>Kelvin</item>
+        <item>Celsius</item>
+        <item>Fahrenheit</item>
+    </string-array>
+
+    <string-array name="unitsOfWindSpeed">
+        <item>meter/sec</item>
+        <item>miles/hour</item>
+    </string-array>
+    <string-array name="chooseLanguage">
+        <item>Arabic</item>
+        <item>English</item>
+    </string-array>
 </resources>
