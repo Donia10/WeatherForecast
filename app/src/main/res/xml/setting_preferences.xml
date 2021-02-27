@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:key="CatLocation"
+        android:layout_width="match_parent"
+        android:icon="@color/cardview_dark_background"
+        app:allowDividerBelow="true"
+        app:key="loc_cati"
+        app:title="Location">
+
+        <ListPreference
+            android:entries="@array/location"
+            android:entryValues="@array/location"
+            app:key="location"
+            app:summary="Determine Location With GPS Or Search"
+            app:defaultValue="true"
+            app:title="Choose Location"/>
+            <Preference
+                app:key="displayLocation"
+                app:summary="search bar"
+                app:title="Location Chosen"
+                app:isPreferenceVisible="false"/>
+
+
+    </PreferenceCategory>
+    <PreferenceCategory
+        app:key="Units"
+        app:title="Units"
+        app:allowDividerBelow="true"
+        android:icon="@color/cardview_dark_background">
+
+        <ListPreference
+            app:key="Temperature"
+            app:title="Temperature"
+            app:summary="Choose Unit Of Temperature"
+            android:entries="@array/unitOfTemperature"
+            android:entryValues="@array/unitOfTemperature">
+        </ListPreference>
+        <ListPreference
+            app:key="WindSpeed"
+            app:title="Wind Speed"
+            app:summary="Choose Unit Of Wind Speed"
+            android:entries="@array/unitsOfWindSpeed"
+            android:entryValues="@array/unitsOfWindSpeed">
+        </ListPreference>
+    </PreferenceCategory>
+    <PreferenceCategory
+        app:key="Language"
+        app:title="Language"
+        app:allowDividerBelow="true"
+        android:icon="@color/cardview_dark_background">
+
+        <ListPreference
+            app:key="language"
+            app:title="Language"
+            app:summary="Choose Language"
+            android:entries="@array/chooseLanguage"
+            android:entryValues="@array/chooseLanguage">
+        </ListPreference>
+
+    </PreferenceCategory>
+</PreferenceScreen>
