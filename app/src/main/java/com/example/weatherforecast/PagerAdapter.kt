@@ -3,6 +3,7 @@ package com.example.weatherforecast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
+import com.example.weatherforecast.view.Home
 
 class PagerAdapter (fm: FragmentManager,noOfTabs:Int) : FragmentStatePagerAdapter(fm, noOfTabs) {
 

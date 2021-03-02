@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:scrollbars="vertical"
-    tools:context=".Home">
+    tools:context=".view.Home">
 
     <ScrollView
         android:id="@+id/scrollView2"
@@ -13,18 +13,285 @@
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
-        <TextView
-            android:id="@+id/home"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:text="@string/home_fragment"
-            android:scrollbars="vertical"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardview_basic"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/city"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="City" />
+
+                        <TextView
+                            android:id="@+id/date_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="date-time" />
+
+                        <TextView
+                            android:id="@+id/cloud_desc"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="cloud_desc" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/temp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="30 "/>
+
+                        <ImageView
+                            android:id="@+id/imageView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:src="@mipmap/ic_launcher" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/max"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="max=55"/>
+
+                        <TextView
+                            android:id="@+id/min"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="min= 33" />
+                    </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/precipitation"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="250dp"
+                            android:text="5% precipitation" />
+
+                        <TextView
+                            android:id="@+id/clouds"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="250dp"
+                            android:text="90 %clouds" />
+
+                        <TextView
+                            android:id="@+id/windSpeed"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="250dp"
+                            android:text="55 km/h winds" />
+
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout_hourly"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toTopOf="@id/constraintLayout_daily"
+                app:layout_constraintLeft_toLeftOf="@id/constraintLayout"
+                app:layout_constraintRight_toRightOf="@id/constraintLayout"
+                app:layout_constraintTop_toBottomOf="@+id/cardview_basic">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_view_hourly"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout_daily"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="@id/constraintLayout"
+                app:layout_constraintRight_toRightOf="@id/constraintLayout"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout_hourly">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_view_daily"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/details"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/constraintLayout_daily"
+                app:layout_constraintLeft_toLeftOf="@id/constraintLayout"
+                app:layout_constraintRight_toRightOf="@id/constraintLayout"
+                app:layout_constraintBottom_toBottomOf="@id/constraintLayout">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayout_details"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/txtView_humidity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Humidity"
+                        app:layout_constraintBottom_toTopOf="@+id/data_humidity"
+                        app:layout_constraintLeft_toLeftOf="@id/constraintLayout_details"
+                        app:layout_constraintTop_toTopOf="@id/constraintLayout_details"
+                        app:layout_constraintRight_toLeftOf="@id/txt_precipitation"/>
+
+                    <TextView
+                        android:id="@+id/data_humidity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="data_humidity"
+                        app:layout_constraintTop_toBottomOf="@+id/txtView_humidity"
+                        app:layout_constraintLeft_toLeftOf="@id/constraintLayout_details"
+                        app:layout_constraintRight_toLeftOf="@id/data_precipitation"
+                        app:layout_constraintBottom_toTopOf="@id/txt_windSpeed"/>
+                    <TextView
+                        android:id="@+id/txt_precipitation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Precipitation"
+                        app:layout_constraintTop_toTopOf="@id/constraintLayout_details"
+                        app:layout_constraintLeft_toRightOf="@id/txtView_humidity"
+                        app:layout_constraintBottom_toTopOf="@id/data_precipitation"
+                        app:layout_constraintRight_toLeftOf="@id/txt_pressure"/>
+                    <TextView
+                        android:id="@+id/data_precipitation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="data_precipitation"
+                        app:layout_constraintLeft_toRightOf="@id/data_humidity"
+                        app:layout_constraintTop_toBottomOf="@+id/txt_precipitation"
+                        app:layout_constraintBottom_toTopOf="@id/txt_cloudCover"
+                        app:layout_constraintRight_toLeftOf="@id/data_pressure"/>
+                    <TextView
+                        android:id="@+id/txt_pressure"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Pressure"
+                        app:layout_constraintTop_toTopOf="@id/constraintLayout_details"
+                        app:layout_constraintLeft_toRightOf="@id/txt_precipitation"
+                        app:layout_constraintRight_toRightOf="@id/constraintLayout_details"
+                        app:layout_constraintBottom_toTopOf="@id/data_pressure"/>
+                    <TextView
+                        android:id="@+id/data_pressure"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="data_pressure"
+                        app:layout_constraintTop_toBottomOf="@id/txt_pressure"
+                        app:layout_constraintLeft_toRightOf="@id/data_precipitation"
+                        app:layout_constraintBottom_toTopOf="@id/txt_visibility"
+                        app:layout_constraintRight_toRightOf="@id/constraintLayout_details"/>
+                    <TextView
+                        android:id="@+id/txt_windSpeed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Wind Speed"
+                        app:layout_constraintLeft_toLeftOf="@id/constraintLayout_details"
+                        app:layout_constraintTop_toBottomOf="@id/data_humidity"
+                        app:layout_constraintBottom_toTopOf="@id/data_windSpeed"
+                        app:layout_constraintRight_toLeftOf="@+id/txt_cloudCover"/>
+                    <TextView
+                        android:id="@+id/data_windSpeed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="data_windSpeed"
+                        app:layout_constraintLeft_toLeftOf="@+id/constraintLayout_details"
+                        app:layout_constraintTop_toBottomOf="@id/txt_windSpeed"
+                        app:layout_constraintRight_toLeftOf="@+id/data_cloudCover"/>
+                    <TextView
+                        android:id="@+id/txt_cloudCover"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Cloud Cover"
+                        app:layout_constraintLeft_toRightOf="@id/txt_windSpeed"
+                        app:layout_constraintTop_toBottomOf="@id/data_precipitation"
+                        app:layout_constraintRight_toLeftOf="@id/txt_visibility"
+                        app:layout_constraintBottom_toTopOf="@id/data_cloudCover"/>
+                    <TextView
+                        android:id="@+id/data_cloudCover"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="data_cloudCover"
+                        app:layout_constraintLeft_toRightOf="@id/data_windSpeed"
+                        app:layout_constraintTop_toBottomOf="@id/txt_cloudCover"
+                        app:layout_constraintBottom_toBottomOf="@id/constraintLayout_details"
+                        app:layout_constraintRight_toLeftOf="@+id/data_visibility" />
+                    <TextView
+                        android:id="@+id/txt_visibility"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Visibility"
+                        app:layout_constraintLeft_toRightOf="@id/txt_cloudCover"
+                        app:layout_constraintTop_toBottomOf="@+id/data_pressure"
+                        app:layout_constraintRight_toRightOf="@id/constraintLayout_details"
+                        app:layout_constraintBottom_toTopOf="@id/data_visibility"/>
+                    <TextView
+                        android:id="@+id/data_visibility"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="data_visibility"
+                        app:layout_constraintTop_toBottomOf="@id/txt_visibility"
+                        app:layout_constraintBottom_toBottomOf="@id/constraintLayout_details"
+                        app:layout_constraintRight_toRightOf="@id/constraintLayout_details"
+                        app:layout_constraintLeft_toRightOf="@id/data_cloudCover"/>
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

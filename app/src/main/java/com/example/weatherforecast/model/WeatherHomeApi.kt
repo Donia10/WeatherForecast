@@ -1,5 +1,6 @@
 package com.example.weatherforecast.model
 
+import android.graphics.Bitmap
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -9,8 +10,8 @@ interface WeatherHomeApi {
     suspend fun getWeatherForecast(@Query("lat")lat:String,
                                    @Query("lon")lon:String,
                                    @Query("appid")appid:String,
-                                    @Query("exclude")exclude:String
-
+                                   @Query("units")units:String
+        //       @Query("exclude")exclude:String
                                    ): Response<WeatherDataModel>
 
 }
