@@ -1,35 +1,52 @@
 package com.example.weatherforecast.viewmodel
 
+import android.app.Application
 import android.graphics.Bitmap
 import android.util.Log
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
+import com.example.roomwordsample.model.WeatherDatabase.Companion.getDatabase
+import com.example.weatherforecast.model.WeatherDao
 import com.example.weatherforecast.model.WeatherDataModel
 import com.example.weatherforecast.model.WeatherHomeService
+import com.example.weatherforecast.model.WeatherRepository
 import kotlinx.coroutines.*
+import java.io.IOException
+import java.lang.IllegalArgumentException
+import java.net.CacheResponse
 
-class WeatherHomeViewModel : ViewModel() {
+class WeatherHomeViewModel (application: Application) :AndroidViewModel(application) {
+    /**
+     * The data source this ViewModel will fetch results from.
+     */
+    private val weatherRepository = WeatherRepository(getDatabase(application))
+    val liveWeatherData: LiveData<WeatherDataModel> = weatherRepository.weatherLiveData
 
-    val countryLiveData = MutableLiveData<WeatherDataModel>()
 
-    fun fetchData() {
-        val exceptionHandlerException = CoroutineExceptionHandler { _, _ ->
-            Log.i("TAG", "exce: ")
-        }
-        CoroutineScope(Dispatchers.IO /*+ exceptionHandlerException**/).launch {
-             val response = WeatherHomeService.getWeatherService().getWeatherForecast("33.441792","-94.037689","c9f08d5ea2902a1721e39bea2c8ccac0","metric")
-     //       val response = WeatherHomeService.getWeatherService().getWeatherForecast("33.441792","-94.037689","c9f08d5ea2902a1721e39bea2c8ccac0","hourly,daily,minutely")
-            withContext(Dispatchers.Main) {
-                if (response.isSuccessful) {
-                    countryLiveData.postValue(response.body())
-                    Log.i("TAG", "sucesss: ")
-
-                }else{
-                    Log.i("TAG", "fail: ")
-                }
-            }
+    private fun refreshDataFromRepository() = viewModelScope.launch {
+        try {
+            Log.i("TAG", "refreshDataFromRepository: try ")
+            weatherRepository.refreshWeatherData()
+        } catch (networkError: IOException) {
+            Log.i("TAG", "refreshDataFromRepository: catch")
         }
 
     }
 
+    init {
+        refreshDataFromRepository()
+    }
+
+
+    /**
+     * Factory for constructing DevByteViewModel with parameter
+     */
+    class Factory(val app: Application) : ViewModelProvider.Factory {
+        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+            if (modelClass.isAssignableFrom(WeatherHomeViewModel::class.java)) {
+                @Suppress("UNCHECKED_CAST")
+                return WeatherHomeViewModel(app) as T
+            }
+            throw IllegalArgumentException("Unable to construct viewmodel")
+        }
+    }
 }

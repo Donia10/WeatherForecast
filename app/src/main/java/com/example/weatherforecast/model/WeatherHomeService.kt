@@ -10,5 +10,6 @@ object WeatherHomeService {
             return Retrofit.Builder().baseUrl(BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create()).build()
                     .create(WeatherHomeApi::class.java)
+
         }
 }

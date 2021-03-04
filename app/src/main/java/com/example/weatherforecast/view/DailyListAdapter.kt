@@ -49,6 +49,10 @@ class DailyListAdapter(var dailyList:ArrayList<Daily>) :RecyclerView.Adapter<Dai
         private val dailyNightIcon=itemView.dailyNight_icon
         private val dailyNightTemp=itemView.dailyNight_temp
         private val sunset=itemView.dailyNight_sunset
+        private val dailyDayDesc=itemView.dailyDay_desc
+        private val dailyNightDesc=itemView.dailyNight_desc
+
+
 
         fun bind(daily: Daily){
 
@@ -64,6 +68,8 @@ class DailyListAdapter(var dailyList:ArrayList<Daily>) :RecyclerView.Adapter<Dai
             dailyNightTemp.text=(daily.temp?.night)?.toInt().toString()+"℃"
             sunrise.text=getDt(daily.sunrise)
             sunset.text=getDt(daily.sunset)
+            dailyDayDesc.text="'"
+
 
             //   hourlyPrec.text=hourly.
             val dayIcon=daily.weather?.get(0)?.icon

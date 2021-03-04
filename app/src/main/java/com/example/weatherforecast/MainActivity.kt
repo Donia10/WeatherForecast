@@ -3,15 +3,20 @@ package com.example.weatherforecast
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TableLayout
+import androidx.activity.viewModels
 import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.viewModels
+import androidx.room.Room
 import androidx.viewpager.widget.ViewPager
+import com.example.weatherforecast.model.WeatherApplication
+import com.example.weatherforecast.viewmodel.WeatherHomeViewModel
 import com.google.android.material.tabs.TabLayout
 
 class MainActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         val toolBar =findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolBar)
         val tabLayout=findViewById<TabLayout>(R.id.tab_layout)
