@@ -1,12 +1,10 @@
 package com.example.weatherforecast.model
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.example.roomwordsample.model.WeatherDatabase
+import com.example.weatherforecast.model.remote.WeatherHomeService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import java.sql.Time
 import java.util.concurrent.TimeUnit
 
 class WeatherRepository (val weatherDatabase: WeatherDatabase) {

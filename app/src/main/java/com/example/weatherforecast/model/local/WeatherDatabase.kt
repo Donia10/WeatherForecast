@@ -2,16 +2,13 @@ package com.example.roomwordsample.model
 
 import android.content.Context
 import androidx.room.*
-import androidx.sqlite.db.SupportSQLiteDatabase
-import com.example.weatherforecast.model.DataConverter
-import com.example.weatherforecast.model.WeatherDao
+import com.example.weatherforecast.model.local.DataConverter
+import com.example.weatherforecast.model.local.WeatherDao
 import com.example.weatherforecast.model.WeatherDataModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
 
 @Database(entities = [WeatherDataModel::class],version = 1,exportSchema = false)
 @TypeConverters(DataConverter::class)
-public abstract class WeatherDatabase :RoomDatabase(){
+ abstract class WeatherDatabase :RoomDatabase(){
     abstract fun weatherDao(): WeatherDao
 
     companion object{

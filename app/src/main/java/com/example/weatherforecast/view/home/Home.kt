@@ -1,4 +1,4 @@
-package com.example.weatherforecast.view
+package com.example.weatherforecast.view.home
 
 import android.graphics.Color
 import android.graphics.Typeface
@@ -11,8 +11,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,8 +20,9 @@ import com.bumptech.glide.request.RequestOptions
 import com.example.weatherforecast.R
 import com.example.weatherforecast.model.Daily
 import com.example.weatherforecast.model.Hourly
-import com.example.weatherforecast.model.WeatherApplication
 import com.example.weatherforecast.model.WeatherDataModel
+import com.example.weatherforecast.view.DailyListAdapter
+import com.example.weatherforecast.view.HourlyListAdapter
 import com.example.weatherforecast.viewmodel.WeatherHomeViewModel
 import kotlinx.android.synthetic.main.fragment_home.*
 import java.text.SimpleDateFormat
@@ -43,8 +42,10 @@ class Home : Fragment()  {
         ViewModelProvider(this, WeatherHomeViewModel.Factory(activity.application))
             .get(WeatherHomeViewModel::class.java)
     }
-    var hourlyListAdapter = HourlyListAdapter(arrayListOf())
-    var dailyListAdapter =  DailyListAdapter(arrayListOf())
+    var hourlyListAdapter =
+        HourlyListAdapter(arrayListOf())
+    var dailyListAdapter =
+        DailyListAdapter(arrayListOf())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,15 +53,7 @@ class Home : Fragment()  {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.liveWeatherData.observe(viewLifecycleOwner, Observer {
-                data ->data?.let {
-            data.let { updaMainLayout(it) }
-            data.hourly?.let { it1 -> updateHourlyListUI(it1) }
-            data.daily?.let { it1 -> updateDailyListUI(it1) }
-            data.let { updateDetailsLayout(it) }
 
-        }
-        })
     }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -78,7 +71,17 @@ class Home : Fragment()  {
         recyclerViewForDaily.adapter=dailyListAdapter
 
         Log.i("TAG", "home: ")
+
         //        //initalize  viewModel DB
+        viewModel.liveWeatherData.observe(viewLifecycleOwner, Observer {
+                data ->data?.let {
+            data.let { updaMainLayout(it) }
+            data.hourly?.let { it1 -> updateHourlyListUI(it1) }
+            data.daily?.let { it1 -> updateDailyListUI(it1) }
+            data.let { updateDetailsLayout(it) }
+
+        }
+        })
 /*
         val homeViewModel = ViewModelProvider(this).get(WeatherHomeViewModel::class.java)
 

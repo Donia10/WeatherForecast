@@ -3,18 +3,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.weatherforecast.R
 import com.example.weatherforecast.model.Daily
-import com.example.weatherforecast.model.Hourly
 import kotlinx.android.synthetic.main.daily_row.view.*
-import kotlinx.android.synthetic.main.hourly_row.view.*
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.coroutines.coroutineContext
 
 
 class DailyListAdapter(var dailyList:ArrayList<Daily>) :RecyclerView.Adapter<DailyListAdapter.DailyViewHolder>(){
@@ -26,16 +22,17 @@ class DailyListAdapter(var dailyList:ArrayList<Daily>) :RecyclerView.Adapter<Dai
         notifyDataSetChanged()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, p1: Int) = DailyViewHolder(
-        LayoutInflater.from(parent.context).inflate(R.layout.daily_row, parent, false)
-    )
+    override fun onCreateViewHolder(parent: ViewGroup, p1: Int) =
+        DailyViewHolder(
+            LayoutInflater.from(parent.context).inflate(R.layout.daily_row, parent, false)
+        )
 
 
     override fun getItemCount(): Int {
         return dailyList.size
     }
 
-    override fun onBindViewHolder(holder: DailyListAdapter.DailyViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: DailyViewHolder, position: Int) {
         holder.bind(dailyList[position])
     }
 

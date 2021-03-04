@@ -1,5 +1,4 @@
-package com.example.weatherforecast.model
-import android.graphics.Bitmap
+package com.example.weatherforecast.model.remote
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 

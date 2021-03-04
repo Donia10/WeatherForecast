@@ -1,18 +1,14 @@
 package com.example.weatherforecast.viewmodel
 
 import android.app.Application
-import android.graphics.Bitmap
 import android.util.Log
 import androidx.lifecycle.*
 import com.example.roomwordsample.model.WeatherDatabase.Companion.getDatabase
-import com.example.weatherforecast.model.WeatherDao
 import com.example.weatherforecast.model.WeatherDataModel
-import com.example.weatherforecast.model.WeatherHomeService
 import com.example.weatherforecast.model.WeatherRepository
 import kotlinx.coroutines.*
 import java.io.IOException
 import java.lang.IllegalArgumentException
-import java.net.CacheResponse
 
 class WeatherHomeViewModel (application: Application) :AndroidViewModel(application) {
     /**

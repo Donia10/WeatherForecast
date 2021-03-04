@@ -2,6 +2,7 @@
 package com.example.weatherforecast.model
 
 import androidx.room.*
+import com.example.weatherforecast.model.local.DataConverter
 import com.google.gson.annotations.SerializedName
 import com.google.gson.annotations.Expose
  const val WEATHERID=0

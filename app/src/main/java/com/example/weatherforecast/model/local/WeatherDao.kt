@@ -1,11 +1,12 @@
 
-package com.example.weatherforecast.model
+package com.example.weatherforecast.model.local
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.example.weatherforecast.model.WeatherDataModel
 
 @Dao
 interface WeatherDao {

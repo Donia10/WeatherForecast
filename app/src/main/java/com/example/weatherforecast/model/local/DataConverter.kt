@@ -1,11 +1,10 @@
 
-package com.example.weatherforecast.model
+package com.example.weatherforecast.model.local
 
 import androidx.room.TypeConverter
+import com.example.weatherforecast.model.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import java.lang.reflect.Type
-import java.util.ArrayList
 
 class DataConverter {
     @TypeConverter
@@ -128,7 +127,7 @@ class DataConverter {
         return gson.fromJson<List<Weather__>>(weatherList, type)
     }
     @TypeConverter
-    fun fromFeelLike(feelsLike:FeelsLike): String? {
+    fun fromFeelLike(feelsLike: FeelsLike): String? {
         if (feelsLike == null) {
             return null
         }

@@ -1,25 +1,12 @@
-package com.example.weatherforecast
+package com.example.weatherforecast.view.setting
 
-import android.Manifest
 import android.annotation.SuppressLint
-import android.app.Activity
-import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
-import android.content.pm.PackageManager
-import android.location.Location
-import android.util.Log
 import android.widget.Toast
-import androidx.core.app.ActivityCompat
-import androidx.core.app.ActivityCompat.startActivityForResult
 import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceManager
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
 import com.google.android.material.internal.ContextUtils.getActivity
-import java.security.AccessController.getContext
-import java.util.*
 import kotlinx.coroutines.*
 
 class SettingPreferences(activity: SettingsFragment){
@@ -37,7 +24,7 @@ class SettingPreferences(activity: SettingsFragment){
     val prefLang: Preference? = activity.getPreferenceScreen().findPreference("language")
     val prefSearch: Preference? = activity.getPreferenceScreen().findPreference("edit")
 
-    fun updatePrefSummary(context:SettingsFragment) {
+    fun updatePrefSummary(context: SettingsFragment) {
         get(context)
        // prefLocation?.let { bindPreferenceSummaryToValue(it) }
         if (prefLocation != null) {
@@ -90,13 +77,16 @@ class SettingPreferences(activity: SettingsFragment){
                                 if (listPreference.entries[index] == "Search") {
                                     flag = true
                                     Toast.makeText(preference.context, "$index", Toast.LENGTH_SHORT).show()
-                  //                  Log.i("TAG", "search: ${preference.isVisible}${com.example.weatherforecast.SettingPreferences.Companion.flag}")
+                  //                  Log.i("TAG", "search: ${preference.isVisible}${com.example.weatherforecast.view.setting.SettingPreferences.Companion.flag}")
                                     search?.let { it1 -> bindPreferenceSummaryToValue(it1) }
 
                                 } else if (listPreference.entries[index] == "GPS") {
                                     flag = false
                                     CoroutineScope(Dispatchers.Default).launch {
-                                        val getLocation = GetLocation(preference.context)
+                                        val getLocation =
+                                            GetLocation(
+                                                preference.context
+                                            )
                                       val job=  launch {
                                            getLocation.getLastLocation()  }
                                         launch {   delay(5000)
@@ -106,7 +96,7 @@ class SettingPreferences(activity: SettingsFragment){
 
                                     }
                                     search?.let { it1 -> bindPreferenceSummaryToValue(it1) }
-                                    //                 Log.i("TAG", "gps: ${preference.isVisible}${com.example.weatherforecast.SettingPreferences.Companion.flag}")
+                                    //                 Log.i("TAG", "gps: ${preference.isVisible}${com.example.weatherforecast.view.setting.SettingPreferences.Companion.flag}")
 
                                 }
                                 listPreference.entries[index]
@@ -128,7 +118,7 @@ class SettingPreferences(activity: SettingsFragment){
                         preference.summary = prefs.getString("Location","not found")
 
                     }
-                 //       Log.i("TAG", ": ${preference.isVisible} ${com.example.weatherforecast.SettingPreferences.Companion.flag}")
+                 //       Log.i("TAG", ": ${preference.isVisible} ${com.example.weatherforecast.view.setting.SettingPreferences.Companion.flag}")
                        else
                         preference.summary = stringValue
 

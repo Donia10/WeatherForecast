@@ -1,6 +1,6 @@
-package com.example.weatherforecast.model
+package com.example.weatherforecast.model.remote
 
-import android.graphics.Bitmap
+import com.example.weatherforecast.model.WeatherDataModel
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query

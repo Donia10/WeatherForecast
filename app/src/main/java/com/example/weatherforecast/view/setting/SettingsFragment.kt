@@ -1,16 +1,16 @@
-package com.example.weatherforecast
+package com.example.weatherforecast.view.setting
 
 import android.os.Bundle
 import androidx.preference.PreferenceFragmentCompat
-import kotlin.random.Random.Default.Companion
-import kotlinx.coroutines.*
+import com.example.weatherforecast.R
 
 class SettingsFragment : PreferenceFragmentCompat() {
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.setting_preferences, rootKey)
 
-      val settingPref=SettingPreferences(this)
+      val settingPref=
+          SettingPreferences(this)
         settingPref.updatePrefSummary(this)
 
 
