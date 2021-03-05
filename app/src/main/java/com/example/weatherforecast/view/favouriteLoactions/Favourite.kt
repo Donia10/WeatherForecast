@@ -1,34 +1,24 @@
 package com.example.weatherforecast.view.favouriteLoactions
 
+import android.app.Activity
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.Fragment
 import com.example.weatherforecast.R
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [Favourite.newInstance] factory method to
- * create an instance of this fragment.
- */
 class Favourite : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+
     }
 
     override fun onCreateView(
@@ -38,26 +28,38 @@ class Favourite : Fragment() {
         // Inflate the layout for this fragment
         val view:View =inflater.inflate(R.layout.fragment_favourite, container, false)
         Log.i("TAG", "fav: ")
+        val fab=view.findViewById<FloatingActionButton>(R.id.fab)
+        fab.setOnClickListener{
+
+            val intent= Intent(requireContext() , MapsActivity::class.java)
+            startActivityForResult(intent,1)
+
+            /*
+            val gmmIntentUri =
+                Uri.parse("https://www.google.com/maps/dir/?api=1&origin&travelmode=driving")
+            val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
+            mapIntent.setPackage("com.google.android.apps.maps")
+            requireContext().startActivity(mapIntent)
+            **/
+
+        }
+        /*
+        wordViewModel.allWords.observe(this, Observer { words ->
+            words?.let { adapter.submitList(it) }
+        })**/
         return view
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment Favourite.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            Favourite().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode==1&&resultCode==Activity.RESULT_OK){
+            val latitude=data?.getDoubleExtra(MapsActivity.LaLon_Latitude, 0.0)
+            val longitude=data?.getDoubleExtra(MapsActivity.LaLon_Longitude, 0.0)
+            Toast.makeText(context,"$latitude ,$longitude",Toast.LENGTH_LONG).show()
+            Log.i("TAG", "onActivityResult: $latitude ,$longitude")
+        }else{
+            Toast.makeText(context, "result null",Toast.LENGTH_SHORT).show()
+        }
+
     }
 }

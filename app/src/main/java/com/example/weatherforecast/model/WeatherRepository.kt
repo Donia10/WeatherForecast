@@ -8,10 +8,9 @@ import kotlinx.coroutines.withContext
 import java.util.concurrent.TimeUnit
 
 class WeatherRepository (val weatherDatabase: WeatherDatabase) {
-
     val weatherLiveData=weatherDatabase.weatherDao().getWeatherData()
     suspend fun refreshWeatherData(){
-     //   val datarefresd = weatherDatabase.weatherDao().getHasRefreshed()
+        //   val datarefresd = weatherDatabase.weatherDao().getHasRefreshed()
         if (true) {
             withContext(Dispatchers.IO) {
                 Log.i("TAG", "refresh weather is called and get data from api")
@@ -30,6 +29,4 @@ class WeatherRepository (val weatherDatabase: WeatherDatabase) {
     companion object {
         val FRESH_TIMEOUT = TimeUnit.MINUTES
     }
-
-
 }

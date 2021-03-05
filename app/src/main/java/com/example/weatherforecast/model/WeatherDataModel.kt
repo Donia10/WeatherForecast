@@ -5,7 +5,7 @@ import androidx.room.*
 import com.example.weatherforecast.model.local.DataConverter
 import com.google.gson.annotations.SerializedName
 import com.google.gson.annotations.Expose
- const val WEATHERID=0
+const val WEATHERID=0
 data class Current ( @SerializedName("dt") @Expose var dt: Int? ,
                      @SerializedName("sunrise") @Expose var sunrise: Int? ,
                      @SerializedName("sunset") @Expose var sunset: Int?,
@@ -97,19 +97,19 @@ data class WeatherDataModel( @SerializedName("lat") @Expose var lat: Double?,
                              @SerializedName("lon") @Expose var lon: Double? ,
                              @SerializedName("timezone") @Expose var timezone: String?,
                              @SerializedName("timezone_offset")@Expose var timezoneOffset: Int? ,
-                   //          @Embedded(prefix = "w_current")
+    //          @Embedded(prefix = "w_current")
                              @TypeConverters(DataConverter::class)
                              @SerializedName("current") @Expose var current: Current? ,
-                    //         @Embedded(prefix = "w_minutely")
+    //         @Embedded(prefix = "w_minutely")
                              @TypeConverters(DataConverter::class)
                              @SerializedName("minutely") @Expose var minutely: List<Minutely>? ,
-                  //           @Embedded(prefix = "w_hourly")
+    //           @Embedded(prefix = "w_hourly")
                              @TypeConverters(DataConverter::class)
                              @SerializedName("hourly") @Expose var hourly: List<Hourly>? ,
-               //              @Embedded(prefix = "w_daily")
+    //              @Embedded(prefix = "w_daily")
                              @TypeConverters(DataConverter::class)
                              @SerializedName("daily") @Expose var daily: List<Daily>?
-    ){
+){
     @PrimaryKey(autoGenerate = false)
     var id:Int= WEATHERID
 }
