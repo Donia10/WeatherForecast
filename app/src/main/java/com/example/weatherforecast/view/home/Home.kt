@@ -61,7 +61,6 @@ class Home : Fragment()  {
     ): View ?{
         // Inflate the layout for this fragment
        val view:View= inflater.inflate(R.layout.fragment_home, container, false)
-
         val recyclerViewForHourly:RecyclerView=view.findViewById(R.id.recycler_view_hourly)
         recyclerViewForHourly.layoutManager=LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
         recyclerViewForHourly.adapter=hourlyListAdapter

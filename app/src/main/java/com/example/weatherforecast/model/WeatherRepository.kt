@@ -8,7 +8,7 @@ import kotlinx.coroutines.withContext
 import java.util.concurrent.TimeUnit
 
 class WeatherRepository (val weatherDatabase: WeatherDatabase) {
-    val weatherLiveData=weatherDatabase.weatherDao().getWeatherData()
+    val weatherLiveData=weatherDatabase.weatherDao().getWeatherData(33.441792,-94.037689)
     suspend fun refreshWeatherData(){
         //   val datarefresd = weatherDatabase.weatherDao().getHasRefreshed()
         if (true) {
@@ -22,11 +22,13 @@ class WeatherRepository (val weatherDatabase: WeatherDatabase) {
                 )
                 responseWeatherData.body()
                     ?.let { weatherDatabase.weatherDao().insertWeatherData(it) }
-
             }
         }
     }
     companion object {
         val FRESH_TIMEOUT = TimeUnit.MINUTES
+    }
+    fun getLaLonHome(){
+
     }
 }
