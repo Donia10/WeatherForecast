@@ -122,6 +122,7 @@ class SettingPreferences(activity: SettingsFragment){
                        else
                         preference.summary = stringValue
 
+
                 }
                 true
 
