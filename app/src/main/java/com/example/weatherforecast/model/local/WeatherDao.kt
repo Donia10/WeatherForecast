@@ -12,9 +12,11 @@ import com.example.weatherforecast.model.WeatherDataModel
 interface WeatherDao {
     //flow or live data to get livedata
     // Using Flow with Room allows you to get live updates. This means that every time there's a change in the user table, a new User will be emitted.
-    @Query("select * from Weather WHERE lat=:lat and lon=:lon")
-    fun getWeatherData(lat:Double,lon:Double):LiveData<WeatherDataModel>
+    @Query("select * from Weather")
+     fun getWeatherData():LiveData<WeatherDataModel>
+    @Query("select * from Weather")
+     fun getWeatherFavouriteList():LiveData<List<WeatherDataModel>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertWeatherData( weatherData: WeatherDataModel)
+     fun insertWeatherData( weatherData: WeatherDataModel)
 }

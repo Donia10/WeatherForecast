@@ -92,9 +92,9 @@ data class Weather (    @SerializedName("id") @Expose var id: Int? ,
                         @SerializedName("description") @Expose var description: String? ,
                         @SerializedName("icon") @Expose var icon: String?)
 
-@Entity(tableName ="Weather")
-data class WeatherDataModel( @SerializedName("lat") @Expose var lat: Double?,
-                             @SerializedName("lon") @Expose var lon: Double? ,
+@Entity(tableName ="Weather" ,primaryKeys = ["lat","lon"])
+data class WeatherDataModel( @SerializedName("lat") @Expose var lat: Double,
+                             @SerializedName("lon") @Expose var lon: Double ,
                              @SerializedName("timezone") @Expose var timezone: String?,
                              @SerializedName("timezone_offset")@Expose var timezoneOffset: Int? ,
     //          @Embedded(prefix = "w_current")
@@ -109,9 +109,9 @@ data class WeatherDataModel( @SerializedName("lat") @Expose var lat: Double?,
     //              @Embedded(prefix = "w_daily")
                              @TypeConverters(DataConverter::class)
                              @SerializedName("daily") @Expose var daily: List<Daily>?
-){
+){/*
     @PrimaryKey(autoGenerate = false)
-    var id:Int= WEATHERID
+    var id:Int= WEATHERID*/
 }
 
 data class Weather_(    @SerializedName("id") @Expose var id: Int? ,

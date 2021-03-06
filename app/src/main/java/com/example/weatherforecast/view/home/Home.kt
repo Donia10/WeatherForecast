@@ -79,6 +79,7 @@ class Home : Fragment()  {
             data.daily?.let { it1 -> updateDailyListUI(it1) }
             data.let { updateDetailsLayout(it) }
 
+            Log.i("TAG", "oberho: ")
         }
         })
 /*

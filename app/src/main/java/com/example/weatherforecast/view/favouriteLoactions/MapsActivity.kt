@@ -2,6 +2,8 @@ package com.example.weatherforecast.view.favouriteLoactions
 
 import android.app.Activity
 import android.content.Intent
+import android.location.Address
+import android.location.Geocoder
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -16,6 +18,7 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import java.io.IOException
 import java.util.*
 
 
@@ -97,7 +100,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             map.addMarker(
                 MarkerOptions()
                     .position(it)
-                    .title(getString(R.string.dropped_pin))
+                    .title(getAddress(it.latitude,it.longitude))
                     .snippet(snippet)
             )
             map.addMarker(MarkerOptions().position(it))
@@ -121,6 +124,20 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     companion object{
         const val  LaLon_Latitude="Latitude"
         const val  LaLon_Longitude="Longitude"
+
+    }
+    private fun getAddress( latitude:Double , longitude:Double):String?{
+        val geocoder: Geocoder
+        var addresses :List<Address>?=null
+        geocoder =  Geocoder(applicationContext, Locale.getDefault());
+        try {
+            addresses = geocoder.getFromLocation(latitude, longitude, 1);// Here 1 represent max location result to returned, by documents it recommended 1 to 5
+            //      t.setText(address);
+        } catch ( e: IOException) {
+            e.printStackTrace();
+        }
+        return addresses?.get(0)?.subLocality// If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+        //     t.setText(address);
 
     }
 
