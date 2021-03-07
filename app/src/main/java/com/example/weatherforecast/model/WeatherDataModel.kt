@@ -5,7 +5,6 @@ import androidx.room.*
 import com.example.weatherforecast.model.local.DataConverter
 import com.google.gson.annotations.SerializedName
 import com.google.gson.annotations.Expose
-const val WEATHERID=0
 data class Current ( @SerializedName("dt") @Expose var dt: Int? ,
                      @SerializedName("sunrise") @Expose var sunrise: Int? ,
                      @SerializedName("sunset") @Expose var sunset: Int?,

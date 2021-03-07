@@ -6,52 +6,39 @@ import androidx.lifecycle.*
 import com.example.roomwordsample.model.WeatherDatabase.Companion.getDatabase
 import com.example.weatherforecast.model.WeatherDataModel
 import com.example.weatherforecast.model.WeatherRepository
+import com.example.weatherforecast.model.local.NameTuple
 import kotlinx.coroutines.*
 import java.io.IOException
 import java.lang.IllegalArgumentException
 
-class WeatherFavouriteListViewModel (application: Application) :AndroidViewModel(application) {
+class WeatherFavouriteViewModel (private val weatherRepository: WeatherRepository):ViewModel() {
     /**
      * The data source this ViewModel will fetch results from.
      */
-    private val weatherRepository = WeatherRepository(getDatabase(application))
-     val liveWeatherFavouriteList: LiveData<List<WeatherDataModel>> = weatherRepository.weatherLiveListFav
+    val liveFavLocations: LiveData<List<WeatherDataModel>> = weatherRepository.weatherFavLocations
 
-
-    fun refreshDataFromRepository() = viewModelScope.launch {
+     fun refreshFavDataFromRepository(lat:Double,lon:Double) = viewModelScope.launch {
         try {
-            Log.i("TAG", "refreshDataFromRepository: try ")
-            weatherRepository.refreshWeatherData()
+            Log.i("TAG", "refreshFavDataFromRepository: try ")
+            weatherRepository.insertWeatherData(lat,lon)
         } catch (networkError: IOException) {
-            Log.i("TAG", "refreshDataFromRepository: catch")
+            Log.i("TAG", "refreshFavDataFromRepository: catch")
         }
 
     }
 
-    init {
-        refreshDataFromRepository()
-    }
-    fun requestWeatherData(lat:Double,lon:Double) = viewModelScope.launch {
-        try {
-            Log.i("TAG", "Request data with lalong: try ")
-            weatherRepository.requestWeatherData(lat,lon)
-        } catch (networkError: IOException) {
-            Log.i("TAG", "Request data with lalong: catch")
+    /*init {
+        refreshFavDataFromRepository()
+    }*/
+
+}
+class WeatherFavouriteListViewModelFactory(private val weatherRepository: WeatherRepository):ViewModelProvider.Factory{
+    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        if(modelClass.isAssignableFrom(WeatherFavouriteViewModel::class.java)){
+            @Suppress("UNCHECKED_CAST")
+            return WeatherFavouriteViewModel(weatherRepository) as T
         }
-
+        throw IllegalArgumentException("UnKnown ViewModel class")
     }
 
-
-    /**
-     * Factory for constructing DevByteViewModel with parameter
-     */
-    class WeatherFavouriteListViewModelFactory(val app: Application) : ViewModelProvider.Factory {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(WeatherFavouriteListViewModel::class.java)) {
-                @Suppress("UNCHECKED_CAST")
-                return WeatherFavouriteListViewModel(app) as T
-            }
-            throw IllegalArgumentException("Unable to construct viewmodel")
-        }
-    }
 }

@@ -10,13 +10,12 @@ import kotlinx.coroutines.*
 import java.io.IOException
 import java.lang.IllegalArgumentException
 
-class WeatherHomeViewModel (application: Application) :AndroidViewModel(application) {
+class WeatherHomeViewModel (private val weatherRepository: WeatherRepository):ViewModel() {
     /**
      * The data source this ViewModel will fetch results from.
      */
-    private val weatherRepository = WeatherRepository(getDatabase(application))
+   // private val weatherRepository = WeatherRepository(getDatabase(getApplication()))
     val liveWeatherData: LiveData<WeatherDataModel> = weatherRepository.weatherLiveData
-
 
     private fun refreshDataFromRepository() = viewModelScope.launch {
         try {
@@ -32,17 +31,14 @@ class WeatherHomeViewModel (application: Application) :AndroidViewModel(applicat
         refreshDataFromRepository()
     }
 
-
-    /**
-     * Factory for constructing DevByteViewModel with parameter
-     */
-    class Factory(val app: Application) : ViewModelProvider.Factory {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(WeatherHomeViewModel::class.java)) {
-                @Suppress("UNCHECKED_CAST")
-                return WeatherHomeViewModel(app) as T
-            }
-            throw IllegalArgumentException("Unable to construct viewmodel")
+}
+class WeatherHomeViewModelFactory(private val weatherRepository: WeatherRepository):ViewModelProvider.Factory{
+    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        if(modelClass.isAssignableFrom(WeatherHomeViewModel::class.java)){
+            @Suppress("UNCHECKED_CAST")
+            return WeatherHomeViewModel(weatherRepository) as T
         }
+        throw IllegalArgumentException("UnKnown ViewModel class")
     }
+
 }

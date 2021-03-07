@@ -12,23 +12,21 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.observe
 import com.example.weatherforecast.R
-import com.example.weatherforecast.viewmodel.WeatherFavouriteListViewModel
+import com.example.weatherforecast.WeatherApplication
+import com.example.weatherforecast.viewmodel.WeatherFavouriteListViewModelFactory
+import com.example.weatherforecast.viewmodel.WeatherFavouriteViewModel
 import com.example.weatherforecast.viewmodel.WeatherHomeViewModel
-import com.google.android.gms.maps.model.LatLng
+import com.example.weatherforecast.viewmodel.WeatherHomeViewModelFactory
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.io.IOException
 import java.util.*
 
 class Favourite : Fragment() {
-    private val favListViewModel: WeatherFavouriteListViewModel by lazy {
-        val activity = requireNotNull(this.activity) {
-            "You can only access the viewModel after onActivityCreated()"
-        }
-        ViewModelProvider(this, WeatherFavouriteListViewModel.WeatherFavouriteListViewModelFactory(activity.application))
-            .get(WeatherFavouriteListViewModel::class.java)
+    val weatherFavouriteViewModel : WeatherFavouriteViewModel by viewModels {
+        WeatherFavouriteListViewModelFactory( (requireActivity().application as WeatherApplication).repository)
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,13 +39,11 @@ class Favourite : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view:View =inflater.inflate(R.layout.fragment_favourite, container, false)
-        Log.i("TAG", "fav: ")
-        favListViewModel.liveWeatherFavouriteList.observe(viewLifecycleOwner, Observer {
-                data ->data?.let {
-            Toast.makeText(context,"get data ${data[0].timezone} and ${data.size}",Toast.LENGTH_LONG).show()
 
-        }
-        })
+    weatherFavouriteViewModel.liveFavLocations.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+        Toast.makeText(context,"${it.size}",Toast.LENGTH_SHORT).show()
+    })
+
         val fab=view.findViewById<FloatingActionButton>(R.id.fab)
         fab.setOnClickListener{
 
@@ -78,7 +74,8 @@ class Favourite : Fragment() {
        //     Toast.makeText(context,"$latitude ,$longitude",Toast.LENGTH_LONG).show()
             Log.i("TAG", "onActivityResult: $latitude ,$longitude")
             if (longitude != null&&latitude!=null) {
-                favListViewModel.requestWeatherData(latitude,longitude)
+
+                weatherFavouriteViewModel.refreshFavDataFromRepository(latitude,longitude)
                 Toast.makeText(context,getAddress(latitude,longitude),Toast.LENGTH_LONG).show()
                 Log.i("TAG", "onActivityResult: ${getAddress(latitude,longitude)}")
 

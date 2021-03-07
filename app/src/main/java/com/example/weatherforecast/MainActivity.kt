@@ -2,8 +2,11 @@ package com.example.weatherforecast
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.widget.Toolbar
 import androidx.viewpager.widget.ViewPager
+import com.example.weatherforecast.viewmodel.WeatherHomeViewModel
+import com.example.weatherforecast.viewmodel.WeatherHomeViewModelFactory
 import com.google.android.material.tabs.TabLayout
 
 class MainActivity : AppCompatActivity() {
@@ -24,6 +27,7 @@ class MainActivity : AppCompatActivity() {
         val viewPager =findViewById<ViewPager>(R.id.pager)
          val adapter=PagerAdapter(supportFragmentManager,tabLayout.tabCount)
         viewPager.setAdapter(adapter)
+
 
         //listener
         viewPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabLayout))
