@@ -7,7 +7,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".view.favouriteLoactions.Favourite">
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerview"
+        android:id="@+id/favListRecyclerview"
         android:layout_width="0dp"
         android:layout_height="0dp"
         tools:listitem="@layout/fav_list_item"

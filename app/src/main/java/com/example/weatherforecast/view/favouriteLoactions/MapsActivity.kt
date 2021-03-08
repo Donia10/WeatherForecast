@@ -31,7 +31,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         setContentView(R.layout.activity_maps)
         val toolBar =findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolBar)
-    //    toolBar.showOverflowMenu()
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
@@ -52,9 +51,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap = googleMap
         val home:LatLng= LatLng(29.986844, 32.555545)
         val zoom=10f
-        mMap.addMarker(MarkerOptions().position(home).title("Marker in home"))
+        mMap.addMarker(MarkerOptions().position(home).title("Home"))
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(home,zoom))
-        setMapLongClick(mMap)
+        setMapClick(mMap)
         setPoiClick(mMap)
 
 
@@ -86,7 +85,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             else ->return super.onOptionsItemSelected(item)
         }
     }
-    private fun setMapLongClick(map: GoogleMap){
+    private fun setMapClick(map: GoogleMap){
    //     Log.i("TAG", "setMapLongClick:")
         map.setOnMapClickListener{
         // return LaLong when user touch location
@@ -103,10 +102,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                     .title(getAddress(it.latitude,it.longitude))
                     .snippet(snippet)
             )
-            map.addMarker(MarkerOptions().position(it))
+     //       map.addMarker(MarkerOptions().position(it))
 
             it?.let {
-                var reply:Intent=Intent()
+                val reply:Intent=Intent()
                 reply.putExtra(LaLon_Latitude,it.latitude)
                 reply.putExtra(LaLon_Longitude,it.longitude)
                 setResult(Activity.RESULT_OK,reply)
@@ -136,7 +135,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         } catch ( e: IOException) {
             e.printStackTrace();
         }
-        return addresses?.get(0)?.subLocality// If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+        return addresses?.get(0)?.getAddressLine(0)// If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
         //     t.setText(address);
 
     }

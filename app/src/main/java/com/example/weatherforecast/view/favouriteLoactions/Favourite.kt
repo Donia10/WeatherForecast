@@ -14,6 +14,8 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherforecast.R
 import com.example.weatherforecast.WeatherApplication
 import com.example.weatherforecast.viewmodel.WeatherFavouriteListViewModelFactory
@@ -21,6 +23,7 @@ import com.example.weatherforecast.viewmodel.WeatherFavouriteViewModel
 import com.example.weatherforecast.viewmodel.WeatherHomeViewModel
 import com.example.weatherforecast.viewmodel.WeatherHomeViewModelFactory
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import kotlinx.android.synthetic.main.fragment_favourite.view.*
 import java.io.IOException
 import java.util.*
 
@@ -39,10 +42,16 @@ class Favourite : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view:View =inflater.inflate(R.layout.fragment_favourite, container, false)
+        val recyclerView=view.favListRecyclerview
+        val adapter= FavouriteLocationsListAdapter()
+        recyclerView.adapter=adapter
+        recyclerView.layoutManager= LinearLayoutManager(context)
 
     weatherFavouriteViewModel.liveFavLocations.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
         Toast.makeText(context,"${it.size}",Toast.LENGTH_SHORT).show()
+        adapter.submitList(it)
     })
+
 
         val fab=view.findViewById<FloatingActionButton>(R.id.fab)
         fab.setOnClickListener{
@@ -59,6 +68,7 @@ class Favourite : Fragment() {
             **/
 
         }
+
         /*
         wordViewModel.allWords.observe(this, Observer { words ->
             words?.let { adapter.submitList(it) }
@@ -90,12 +100,12 @@ class Favourite : Fragment() {
         var addresses :List<Address>?=null
         geocoder =  Geocoder(context, Locale.getDefault());
         try {
-            addresses = geocoder.getFromLocation(latitude, longitude, 1);// Here 1 represent max location result to returned, by documents it recommended 1 to 5
+             addresses = geocoder.getFromLocation(latitude, longitude, 1);// Here 1 represent max location result to returned, by documents it recommended 1 to 5
             //      t.setText(address);
         } catch ( e: IOException) {
             e.printStackTrace();
         }
-        return addresses?.get(0)?.locality// If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+        return addresses?.get(0)?.getAddressLine(0)// If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
         //     t.setText(address);
 
     }

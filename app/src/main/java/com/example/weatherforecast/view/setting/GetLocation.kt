@@ -110,8 +110,8 @@ class GetLocation (con: Context){
             } catch ( e: IOException) {
                 e.printStackTrace();
             }
-            address = addresses?.get(0)?.getAddressLine(0) ?: // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
-                    Toast.makeText(context, "address is " + address, Toast.LENGTH_SHORT).show().toString();
+            address = addresses?.get(0)?.getAddressLine(0).toString() // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+//                    Toast.makeText(context, "address is " + address, Toast.LENGTH_SHORT).show().toString();
             //     t.setText(address);
 
         }

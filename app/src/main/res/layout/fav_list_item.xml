@@ -5,8 +5,11 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
     <TextView
-        android:layout_width="wrap_content"
+        android:id="@+id/location_name"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="text"/>
+        android:text="location name"
+        style="@style/word_title"
+        android:background="@android:color/holo_orange_light"/>
 
 </LinearLayout>
