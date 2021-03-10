@@ -5,6 +5,7 @@ import androidx.room.*
 import com.example.weatherforecast.model.local.DataConverter
 import com.example.weatherforecast.model.local.WeatherDao
 import com.example.weatherforecast.model.WeatherDataModel
+import com.example.weatherforecast.model.local.AlarmData
 import kotlinx.coroutines.CoroutineScope
 
 @Database(entities = [WeatherDataModel::class],version = 1,exportSchema = false)

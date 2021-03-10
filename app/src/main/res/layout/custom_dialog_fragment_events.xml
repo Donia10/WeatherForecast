@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/CheckEvent"/>
+    <Button
+        android:id="@+id/rain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/Rain"/>
+    <Button
+        android:id="@+id/temperature"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/Temperature"/>
+    <Button
+        android:id="@+id/wind"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/Wind"/>
+    <Button
+        android:id="@+id/fog_mist_haze"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/fog_mist_haze"/>
+    <Button
+        android:id="@+id/snow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/snow"/>
+    <Button
+        android:id="@+id/cloud"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/cloud"/>
+
+    <Button
+        android:id="@+id/thunderstorm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/ThunderStorm"/>
+
+</LinearLayout>

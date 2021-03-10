@@ -7,7 +7,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 
 class WeatherApplication:Application() {
-    private val database by lazy {  WeatherDatabase.getDatabase(this)}
+     val database by lazy {  WeatherDatabase.getDatabase(this)}
     val repository by lazy {
         WeatherRepository(
             database.weatherDao()

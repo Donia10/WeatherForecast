@@ -3,6 +3,7 @@ package com.example.weatherforecast.model.local
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import com.example.weatherforecast.model.Alert
 import com.example.weatherforecast.model.WeatherDataModel
 
 @Dao
@@ -16,5 +17,8 @@ interface WeatherDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertWeatherData( weatherData: WeatherDataModel)
+
+    @Query("select alerts from Weather where lat=:lat and lon=:lon")
+    fun getAlert(lat: Double,lon: Double):Alert
 
 }

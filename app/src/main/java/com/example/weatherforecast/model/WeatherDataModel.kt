@@ -107,7 +107,10 @@ data class WeatherDataModel( @SerializedName("lat") @Expose var lat: Double,
                              @SerializedName("hourly") @Expose var hourly: List<Hourly>? ,
     //              @Embedded(prefix = "w_daily")
                              @TypeConverters(DataConverter::class)
-                             @SerializedName("daily") @Expose var daily: List<Daily>?
+                             @SerializedName("daily") @Expose var daily: List<Daily>?,
+
+                            @TypeConverters(DataConverter::class)
+                            @SerializedName("alerts") @Expose var alerts:List<Alert>?
 ){/*
     @PrimaryKey(autoGenerate = false)
     var id:Int= WEATHERID*/
@@ -123,8 +126,10 @@ data class Weather__ ( @SerializedName("id") @Expose var id: Int? ,
                        @SerializedName("description") @Expose var description: String? ,
                        @SerializedName("icon") @Expose var icon: String? )
 
+
 data class Alert( @SerializedName("sender_name") @Expose var senderName: String? ,
                   @SerializedName("event") @Expose var event: String?,
                   @SerializedName("start") @Expose var start: Int?,
                   @SerializedName("end") @Expose var end: Int?,
                   @SerializedName("description") @Expose var description: String?) 
+

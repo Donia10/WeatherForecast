@@ -3,6 +3,7 @@ package com.example.weatherforecast.model
 import android.util.Log
 import androidx.lifecycle.LiveData
 import com.example.roomwordsample.model.WeatherDatabase
+import com.example.weatherforecast.model.local.AlarmData
 import com.example.weatherforecast.model.local.NameTuple
 import com.example.weatherforecast.model.local.WeatherDao
 import com.example.weatherforecast.model.remote.WeatherHomeService
@@ -30,6 +31,9 @@ class WeatherRepository (private val weatherDao: WeatherDao) {
 
             }
     }
+    suspend fun getAlert():Alert{
+       return weatherDao.getAlert(33.4418,-94.0377)
+    }
     suspend fun insertWeatherData(lat:Double,lon:Double){
         //   val datarefresd = weatherDatabase.weatherDao().getHasRefreshed()
         withContext(Dispatchers.IO) {
@@ -45,6 +49,8 @@ class WeatherRepository (private val weatherDao: WeatherDao) {
 
         }
     }
+
+
 
     companion object {
         val FRESH_TIMEOUT = TimeUnit.MINUTES
