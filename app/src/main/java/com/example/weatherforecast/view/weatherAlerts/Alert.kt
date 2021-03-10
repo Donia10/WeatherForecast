@@ -14,19 +14,32 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.weatherforecast.AlarmReceiver
 import com.example.weatherforecast.R
+import com.example.weatherforecast.WeatherApplication
+import com.example.weatherforecast.model.local.AlarmData
+import com.example.weatherforecast.view.favouriteLoactions.AlarmAdapter
+import com.example.weatherforecast.view.favouriteLoactions.FavouriteLocationsListAdapter
+import com.example.weatherforecast.viewmodel.WeatherAlertViewModel
+import com.example.weatherforecast.viewmodel.WeatherAlertViewModelFactory
+import com.example.weatherforecast.viewmodel.WeatherHomeViewModel
+import com.example.weatherforecast.viewmodel.WeatherHomeViewModelFactory
 import kotlinx.android.synthetic.main.fragment_alert.view.*
+import kotlinx.android.synthetic.main.fragment_favourite.view.*
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
-class Alert : Fragment() ,EventsCustomDialogFragment.EventsListener{
+class Alert : Fragment() ,EventsCustomDialogFragment.EventsListener,AddAlarmDialog.EventsListener{
     private val NOTIFICATION_ID = 0
     private val PRIMARY_CHANNEL_ID="primary_notification_channel"
     private lateinit var notificationManager:NotificationManager
     private lateinit var toastMsg:String
-
+    val weatherAlertViewModel : WeatherAlertViewModel by viewModels {
+        WeatherAlertViewModelFactory( (requireActivity().application as WeatherApplication).repository)
+    }
     private  var eventChosen:String?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,42 +52,32 @@ class Alert : Fragment() ,EventsCustomDialogFragment.EventsListener{
     ): View? {
         val view:View= inflater.inflate(R.layout.fragment_alert, container, false)
         val alarmToggleButton:ToggleButton=view.alarmToggle
+        val recyclerView=view.alert_recyclerview
+        val adapter= AlarmAdapter()
+        recyclerView.adapter=adapter
+        recyclerView.layoutManager= LinearLayoutManager(context)
+
         notificationManager= activity?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-        val timetext:TextView=view.txt_time
-        val setTime:Button=view.setTime
+
+        weatherAlertViewModel.alarmData.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            adapter.submitList(it)
+        })
+
         val alertEvent=view.alert_fab
         val calendar:Calendar= Calendar.getInstance()
 
         alertEvent.setOnClickListener(View.OnClickListener {
             showEventAlert()
         })
-        var text="Alarm set for :"
-        timetext.text=text+DateFormat.getTimeInstance(DateFormat.SHORT).format(System.currentTimeMillis())
-        setTime.setOnClickListener(View.OnClickListener {
-            val timePickerDialog =
-                TimePickerDialog(context,
-                    OnTimeSetListener { timePicker, selectedHours, selectedMinute ->
-                        calendar.set(Calendar.HOUR_OF_DAY,selectedHours)
-                        calendar.set(Calendar.MINUTE,selectedMinute)
-                        calendar.set(Calendar.SECOND,0)
 
-                        text+=DateFormat.getTimeInstance(DateFormat.SHORT).format(calendar.time)
-                        timetext.text=text
-                  //      setAlarm(calendar)
-
-
-                    }, 12, 0, false
-                )
-            timePickerDialog.show()
-
-                    })
 
         alarmToggleButton.setOnCheckedChangeListener(
             CompoundButton.OnCheckedChangeListener { compoundButton, isChecked ->
                 if (isChecked) {
 
                     setAlarm(calendar)
+                    weatherAlertViewModel.setAlarm(AlarmData(true,calendar.timeInMillis,"24h","notification","rain"))
                     toastMsg = "Stand Up Alarm On"
 
                 } else {
@@ -93,9 +96,9 @@ class Alert : Fragment() ,EventsCustomDialogFragment.EventsListener{
     private fun showEventAlert() {
        /* var eventDialog=EventsCustomDialogFragment()
         activity?.supportFragmentManager?.let { eventDialog.show(it,"event") }*/
-        var dialog=EventsCustomDialogFragment()
+        var dialog=AddAlarmDialog()
         dialog.setTargetFragment(this,1)
-        fragmentManager?.let { dialog.show(it,"eventDialog") }
+        fragmentManager?.let { dialog.show(it,"AddDialog") }
     }
 
     public fun createNotificationChannel(){
@@ -153,6 +156,13 @@ class Alert : Fragment() ,EventsCustomDialogFragment.EventsListener{
         eventChosen=event
     //   Toast.makeText(requireContext(),"$eventChosen",Toast.LENGTH_SHORT).show()
 
+    }
+
+    override fun getAlarmObject(alarmData: AlarmData) {
+        if (alarmData!=null){
+            weatherAlertViewModel.setAlarm(alarmData)
+            Toast.makeText(requireContext(),"set Alarm Successfully",Toast.LENGTH_SHORT).show()
+        }
     }
 
 }

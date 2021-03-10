@@ -6,9 +6,8 @@ import com.example.weatherforecast.model.local.DataConverter
 import com.example.weatherforecast.model.local.WeatherDao
 import com.example.weatherforecast.model.WeatherDataModel
 import com.example.weatherforecast.model.local.AlarmData
-import kotlinx.coroutines.CoroutineScope
 
-@Database(entities = [WeatherDataModel::class],version = 1,exportSchema = false)
+@Database(entities = [WeatherDataModel::class , AlarmData::class],version = 1,exportSchema = false)
 @TypeConverters(DataConverter::class)
  abstract class WeatherDatabase :RoomDatabase(){
     abstract fun weatherDao(): WeatherDao

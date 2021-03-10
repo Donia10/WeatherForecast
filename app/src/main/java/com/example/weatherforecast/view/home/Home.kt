@@ -97,6 +97,7 @@ class Home : Fragment() {
     }
     private fun updateDetailsLayout(it:WeatherDataModel){
         data_windSpeed.text= it.current?.windSpeed.toString()
+
         data_cloudCover.text=it.current?.clouds.toString()
         data_humidity.text=it.current?.humidity.toString()
         data_visibility.text=it.current?.visibility.toString()

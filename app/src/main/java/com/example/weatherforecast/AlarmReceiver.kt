@@ -8,6 +8,7 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 import androidx.core.app.NotificationCompat
+import com.example.weatherforecast.model.Alert
 import com.example.weatherforecast.model.Weather
 import com.example.weatherforecast.model.WeatherDataModel
 import com.example.weatherforecast.model.WeatherRepository
@@ -28,10 +29,14 @@ class AlarmReceiver : BroadcastReceiver() {
         CoroutineScope(Dispatchers.IO).launch {
             var repo=WeatherRepository(((context.applicationContext as WeatherApplication).database).weatherDao())
             repo.refreshWeatherData()
-       //     val alert=repo.getAlert().description
+            val alert:String?= repo.getAlert()?.alerts?.get(0)?.description
            var event=intent.getStringExtra("event")
-       //     event?.let { alert?.contains(it) }
-            deliverNotification(context,event)
+
+            if(intent!=null){
+                event?.let { alert?.contains(it) }
+                  deliverNotification(context,event)
+            }
+         //   deliverNotification(context,event)
         }
       //  deliverNotification(context,intent.getStringExtra("event"))
 

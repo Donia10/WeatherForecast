@@ -31,7 +31,7 @@ class WeatherRepository (private val weatherDao: WeatherDao) {
 
             }
     }
-    suspend fun getAlert():Alert{
+    suspend fun getAlert():WeatherDataModel ?{
        return weatherDao.getAlert(33.4418,-94.0377)
     }
     suspend fun insertWeatherData(lat:Double,lon:Double){
@@ -47,6 +47,13 @@ class WeatherRepository (private val weatherDao: WeatherDao) {
             responseWeatherData.body()
                 ?.let { weatherDao.insertWeatherData(it) }
 
+        }
+    }
+    val alarmData=weatherDao.getAlarm()
+    val alarm=weatherDao.getAlarm()
+    suspend fun setAlarm(alarmData: AlarmData){
+        withContext(Dispatchers.IO){
+            weatherDao.setAlarm(alarmData)
         }
     }
 

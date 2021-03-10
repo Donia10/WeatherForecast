@@ -23,8 +23,10 @@ import java.util.*
 
 class WeatherAlertViewModel (private val weatherRepository: WeatherRepository) :ViewModel() {
 
-
-
+    val alarmData=weatherRepository.alarmData
+     fun setAlarm(alarmData: AlarmData)=viewModelScope.launch {
+        weatherRepository.setAlarm(alarmData)
+    }
 }
 class WeatherAlertViewModelFactory(private val weatherRepository: WeatherRepository):ViewModelProvider.Factory{
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
