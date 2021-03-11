@@ -74,7 +74,10 @@ class AddAlarmDialog:DialogFragment() ,EventsCustomDialogFragment.EventsListener
             if(getevent!=null&& isSetTime != false){
             eventSelected.getAlarmObject(AlarmData(true,calendar.timeInMillis,"not det",isNotification,
                 getevent!!
+
+
             ))
+                eventSelected.startAlarm(calendar)
             dismiss()
             }else{
                 Toast.makeText(context,"Required data ",Toast.LENGTH_SHORT).show()
@@ -104,6 +107,7 @@ class AddAlarmDialog:DialogFragment() ,EventsCustomDialogFragment.EventsListener
 
     public interface EventsListener  {
         fun getAlarmObject( alarmData: AlarmData)
+        fun startAlarm(calendar: Calendar)
     }
 
     override fun getEvent(event: String) {
@@ -135,4 +139,5 @@ class AddAlarmDialog:DialogFragment() ,EventsCustomDialogFragment.EventsListener
     fun DialogFragment.setFullScreen() {
         dialog?.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
     }
+
 }

@@ -1,9 +1,8 @@
 package com.example.weatherforecast.viewmodel
 
-import android.app.Application
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.*
-import com.example.roomwordsample.model.WeatherDatabase.Companion.getDatabase
 import com.example.weatherforecast.model.WeatherDataModel
 import com.example.weatherforecast.model.WeatherRepository
 import kotlinx.coroutines.*
@@ -15,21 +14,35 @@ class WeatherHomeViewModel (private val weatherRepository: WeatherRepository):Vi
      * The data source this ViewModel will fetch results from.
      */
    // private val weatherRepository = WeatherRepository(getDatabase(getApplication()))
-    val liveWeatherData: LiveData<WeatherDataModel> = weatherRepository.weatherLiveData
 
-    private fun refreshDataFromRepository() = viewModelScope.launch {
+    fun getHome(lat: Double, lon: Double): LiveData<WeatherDataModel>{
+        val liveWeatherData: LiveData<WeatherDataModel> = weatherRepository.getHome(lat,lon)
+        return liveWeatherData
+    }
+     fun refreshDataFromRepository(context: Context) = viewModelScope.launch {
         try {
             Log.i("TAG", "refreshDataFromRepository: try ")
-            weatherRepository.refreshWeatherData()
+            weatherRepository.refreshWeatherData(context)
         } catch (networkError: IOException) {
             Log.i("TAG", "refreshDataFromRepository: catch")
         }
 
     }
+    fun refreshHomeDataFromRepository(lat: Double, lon: Double) = viewModelScope.launch {
+        try {
+            Log.i("TAG", "refreshFavDataFromRepository: try ")
+            weatherRepository.insertWeatherData(lat,lon)
+        } catch (networkError: IOException) {
+            Log.i("TAG", "refreshFavDataFromRepository: catch")
+        }
+
+    }
+/*
 
     init {
-        refreshDataFromRepository()
+        refreshDataFromRepository( )
     }
+*/
 
 }
 class WeatherHomeViewModelFactory(private val weatherRepository: WeatherRepository):ViewModelProvider.Factory{

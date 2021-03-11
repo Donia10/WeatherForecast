@@ -29,6 +29,7 @@ import com.example.weatherforecast.viewmodel.WeatherAlertViewModel
 import com.example.weatherforecast.viewmodel.WeatherAlertViewModelFactory
 import com.example.weatherforecast.viewmodel.WeatherHomeViewModel
 import com.example.weatherforecast.viewmodel.WeatherHomeViewModelFactory
+import kotlinx.android.synthetic.main.alarm_item.*
 import kotlinx.android.synthetic.main.fragment_alert.*
 import kotlinx.android.synthetic.main.fragment_alert.view.*
 import kotlinx.android.synthetic.main.fragment_favourite.view.*
@@ -36,7 +37,7 @@ import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
-class Alert : Fragment() ,EventsCustomDialogFragment.EventsListener,AddAlarmDialog.EventsListener {
+class Alert : Fragment() ,EventsCustomDialogFragment.EventsListener,AddAlarmDialog.EventsListener ,AlarmAdapter.OnItemClickListener ,AlarmManager.OnAlarmListener{
     private val NOTIFICATION_ID = 0
     private val PRIMARY_CHANNEL_ID = "primary_notification_channel"
     private lateinit var notificationManager: NotificationManager
@@ -60,7 +61,6 @@ class Alert : Fragment() ,EventsCustomDialogFragment.EventsListener,AddAlarmDial
         val alarmToggleButton: ToggleButton = view.alarmToggle
         val recyclerView = view.alert_recyclerview
         //     val adapter= AlarmAdapter()
-        ItemTouchHelper(itemTouchHelper).attachToRecyclerView(alert_recyclerview)
 
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(context)
@@ -71,6 +71,8 @@ class Alert : Fragment() ,EventsCustomDialogFragment.EventsListener,AddAlarmDial
 
         weatherAlertViewModel.alarmData.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             adapter.submitList(it)
+            adapter.setOnClickListener(this)
+
         })
 
         val alertEvent = view.alert_fab
@@ -205,34 +207,33 @@ class Alert : Fragment() ,EventsCustomDialogFragment.EventsListener,AddAlarmDial
             weatherAlertViewModel.setAlarm(alarmData)
             Toast.makeText(requireContext(), "set Alarm Successfully", Toast.LENGTH_SHORT).show()
         }
+
+        }
+
+    override fun startAlarm(calendar: Calendar) {
+        setAlarm(calendar)
     }
 
-    var itemTouchHelper: ItemTouchHelper.SimpleCallback =
-        object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
-            override fun onMove(
-                recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder,
-                target: RecyclerView.ViewHolder
-            ): Boolean {
-                return false
-            }
+    override fun deleteFromApter(position: Int) {
+      /*  adapter.currentList.removeAt(position)
+        adapter.notifyDataSetChanged()*/
+        Toast.makeText(requireContext(),"delete alarm ",Toast.LENGTH_SHORT).show()
+    }
 
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                AlertDialog.Builder(activity).setMessage(getString(R.string.deletAlarm))
-                    .setPositiveButton(
-                        getString(R.string.yes)
-                    ) { dialog, id ->
-                        val alertItemDeleted = adapter.getItemByVH(viewHolder)
-                        //   cancelAlarm(requireContext(),alertItemDeleted.requestCode)
-                        //     deleteAlertFromDB(alertItemDeleted)
-                        adapter.removeAlertItem(viewHolder)
-                    }
-                    .setNegativeButton(getString(R.string.no),
-                        { dialog, id ->
-                            //        getAlertFromDB()
-                        }).show()
+    override fun removeFromRoom(position: Int) {
 
+        cancelAlarm()
+        weatherAlertViewModel.deleteAlarm(adapter.currentList.get(position))
 
-            }
-        }
+    }
+
+    override fun removeAlarm(alarmData: AlarmData) {
+        cancelAlarm()
+        weatherAlertViewModel.deleteAlarm(alarmData)
+
+    }
+
+    override fun onAlarm() {
+
+    }
 }

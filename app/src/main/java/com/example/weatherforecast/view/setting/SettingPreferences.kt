@@ -1,20 +1,20 @@
 package com.example.weatherforecast.view.setting
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.SharedPreferences
 import android.widget.Toast
 import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceManager
-import com.google.android.material.internal.ContextUtils.getActivity
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class SettingPreferences(activity: SettingsFragment){
     val context=activity
- //   val prefs:SharedPreferences = activity.getPreferences(Activity.MODE_PRIVATE)
-    public  val PREF_NAME:String="MY_PREF"
     @SuppressLint("RestrictedApi")
-    val myPref= getActivity(activity.context)?.getSharedPreferences(PREF_NAME,0);
 
     val prefs = PreferenceManager.getDefaultSharedPreferences(activity.context)
 
@@ -29,7 +29,6 @@ class SettingPreferences(activity: SettingsFragment){
        // prefLocation?.let { bindPreferenceSummaryToValue(it) }
         if (prefLocation != null) {
             bindPreferenceSummaryToValue(prefLocation)
-
         }
         prefWindSpeed?.let { bindPreferenceSummaryToValue(it)
         }
@@ -90,8 +89,8 @@ class SettingPreferences(activity: SettingsFragment){
                                       val job=  launch {
                                            getLocation.getLastLocation()  }
                                         launch {   delay(5000)
-                                            s=getLocation.sendLaLong()
-                                            s?.let { sharedPrefs(it) }
+                                            s="${getLocation.latitude}+${getLocation.longitude} "
+                                            s?.let { sharedPrefs(it,getLocation.latitude,getLocation.longitude) }
                                         }
 
                                     }
@@ -141,10 +140,15 @@ class SettingPreferences(activity: SettingsFragment){
             }
     //    }
 
-    private fun sharedPrefs(location:String){
+    private fun sharedPrefs(location:String,lat:Double,lon:Double){
         var editor:SharedPreferences.Editor= prefs.edit()
         editor.putString("Location",location)
+        editor.putFloat("lat",lat.toFloat())
+        editor.putFloat("lon",lon.toFloat())
         editor.commit();
     }
 
+    private fun getSharedPref(){
+
+    }
 }

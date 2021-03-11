@@ -1,6 +1,6 @@
 package com.example.weatherforecast.view.home
 
-import android.app.Application
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
@@ -11,14 +11,16 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.viewModels
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.example.weatherforecast.Language
 import com.example.weatherforecast.R
 import com.example.weatherforecast.WeatherApplication
 import com.example.weatherforecast.model.Daily
@@ -31,6 +33,7 @@ import com.example.weatherforecast.viewmodel.WeatherHomeViewModelFactory
 import kotlinx.android.synthetic.main.fragment_home.*
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.math.round
 
 class Home : Fragment() {
 
@@ -55,10 +58,11 @@ class Home : Fragment() {
         val weatherHomeViewModel : WeatherHomeViewModel by viewModels {
             WeatherHomeViewModelFactory( (requireActivity().application as WeatherApplication).repository)
         }
+    //    Language.setLocale(requireActivity(),"ar")
+        weatherHomeViewModel.refreshDataFromRepository(requireContext())
         // Inflate the layout for this fragment
          val view:View= inflater.inflate(R.layout.fragment_home, container, false)
-
-        val recyclerViewForHourly:RecyclerView=view.findViewById(R.id.recycler_view_hourly)
+         val recyclerViewForHourly:RecyclerView=view.findViewById(R.id.recycler_view_hourly)
         recyclerViewForHourly.layoutManager=LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
         recyclerViewForHourly.adapter=hourlyListAdapter
 
@@ -70,13 +74,33 @@ class Home : Fragment() {
 
    //     val homeViewModel = ViewModelProvider(this).get(WeatherHomeViewModel::class.java)
 
-           weatherHomeViewModel.liveWeatherData.observe(viewLifecycleOwner, Observer { data ->data?.let {
-            data.let { updaMainLayout(it) }
-            data.hourly?.let { it1 -> updateHourlyListUI(it1) }
-            data.daily?.let { it1 -> updateDailyListUI(it1) }
-            data.let { updateDetailsLayout(it) }
+        val sp: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+        val lat= sp.getFloat("lat",2f)
+        val lon=sp.getFloat("lon",2f)
+        Toast.makeText(context,"${lat.toDouble()}}${ lon.toDouble()}",Toast.LENGTH_SHORT).show()
+        if (lat != null) {
+            if (lon != null) {
+                weatherHomeViewModel.refreshHomeDataFromRepository(lat.toDouble(),lon.toDouble())
+            }
+        }
 
-        } })
+        if (lat != null) {
+            if (lon != null) {
+                val latcast:Double = String.format("%.4f", lat.toDouble()).toDouble()
+                val loncat:Double = String.format("%.4f", lon.toDouble()).toDouble()
+
+                weatherHomeViewModel.getHome(String.format("%.4f", lat.toDouble()).toDouble(), String.format("%.4f", lon.toDouble()).toDouble())
+                    .observe(viewLifecycleOwner, Observer { data ->data?.let {
+
+                        data.let { updaMainLayout(it) }
+                        data.hourly?.let { it1 -> updateHourlyListUI(it1) }
+                        data.daily?.let { it1 -> updateDailyListUI(it1) }
+                        data.let { updateDetailsLayout(it) }
+
+                    } })
+            }
+        }
+
        // initUI()
         return view
     }

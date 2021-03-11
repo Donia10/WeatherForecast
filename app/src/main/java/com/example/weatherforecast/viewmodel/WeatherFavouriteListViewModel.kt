@@ -1,12 +1,9 @@
 package com.example.weatherforecast.viewmodel
 
-import android.app.Application
 import android.util.Log
 import androidx.lifecycle.*
-import com.example.roomwordsample.model.WeatherDatabase.Companion.getDatabase
 import com.example.weatherforecast.model.WeatherDataModel
 import com.example.weatherforecast.model.WeatherRepository
-import com.example.weatherforecast.model.local.NameTuple
 import kotlinx.coroutines.*
 import java.io.IOException
 import java.lang.IllegalArgumentException

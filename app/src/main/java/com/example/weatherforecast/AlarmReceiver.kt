@@ -28,7 +28,7 @@ class AlarmReceiver : BroadcastReceiver() {
         notificationManager= context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         CoroutineScope(Dispatchers.IO).launch {
             var repo=WeatherRepository(((context.applicationContext as WeatherApplication).database).weatherDao())
-            repo.refreshWeatherData()
+            repo.refreshWeatherData(context)
             val alert:String?= repo.getAlert()?.alerts?.get(0)?.description
            var event=intent.getStringExtra("event")
 
@@ -36,11 +36,14 @@ class AlarmReceiver : BroadcastReceiver() {
                 event?.let { alert?.contains(it) }
                   deliverNotification(context,event)
             }
+
          //   deliverNotification(context,event)
         }
+
       //  deliverNotification(context,intent.getStringExtra("event"))
 
     }
+
 
     private fun deliverNotification(context: Context, alert: String?){
         val contentIntent:Intent=Intent(context,MainActivity::class.java)
@@ -57,6 +60,10 @@ class AlarmReceiver : BroadcastReceiver() {
                 .setAutoCancel(true)
                 .setDefaults(NotificationCompat.DEFAULT_ALL)
         notificationManager.notify(NOTIFICATION_ID,builder.build())
+
+
+
+
     }
 
 }
