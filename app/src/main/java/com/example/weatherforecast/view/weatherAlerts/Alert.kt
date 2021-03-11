@@ -15,32 +15,38 @@ import android.widget.*
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide.init
+import com.bumptech.glide.GlideBuilder
 import com.example.weatherforecast.AlarmReceiver
 import com.example.weatherforecast.R
 import com.example.weatherforecast.WeatherApplication
 import com.example.weatherforecast.model.local.AlarmData
-import com.example.weatherforecast.view.favouriteLoactions.AlarmAdapter
 import com.example.weatherforecast.view.favouriteLoactions.FavouriteLocationsListAdapter
 import com.example.weatherforecast.viewmodel.WeatherAlertViewModel
 import com.example.weatherforecast.viewmodel.WeatherAlertViewModelFactory
 import com.example.weatherforecast.viewmodel.WeatherHomeViewModel
 import com.example.weatherforecast.viewmodel.WeatherHomeViewModelFactory
+import kotlinx.android.synthetic.main.fragment_alert.*
 import kotlinx.android.synthetic.main.fragment_alert.view.*
 import kotlinx.android.synthetic.main.fragment_favourite.view.*
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
-class Alert : Fragment() ,EventsCustomDialogFragment.EventsListener,AddAlarmDialog.EventsListener{
+class Alert : Fragment() ,EventsCustomDialogFragment.EventsListener,AddAlarmDialog.EventsListener {
     private val NOTIFICATION_ID = 0
-    private val PRIMARY_CHANNEL_ID="primary_notification_channel"
-    private lateinit var notificationManager:NotificationManager
-    private lateinit var toastMsg:String
-    val weatherAlertViewModel : WeatherAlertViewModel by viewModels {
-        WeatherAlertViewModelFactory( (requireActivity().application as WeatherApplication).repository)
+    private val PRIMARY_CHANNEL_ID = "primary_notification_channel"
+    private lateinit var notificationManager: NotificationManager
+    private lateinit var toastMsg: String
+    val adapter = AlarmAdapter()
+    val weatherAlertViewModel: WeatherAlertViewModel by viewModels {
+        WeatherAlertViewModelFactory((requireActivity().application as WeatherApplication).repository)
     }
-    private  var eventChosen:String?=null
+
+    private var eventChosen: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -50,22 +56,25 @@ class Alert : Fragment() ,EventsCustomDialogFragment.EventsListener,AddAlarmDial
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view:View= inflater.inflate(R.layout.fragment_alert, container, false)
-        val alarmToggleButton:ToggleButton=view.alarmToggle
-        val recyclerView=view.alert_recyclerview
-        val adapter= AlarmAdapter()
-        recyclerView.adapter=adapter
-        recyclerView.layoutManager= LinearLayoutManager(context)
+        val view: View = inflater.inflate(R.layout.fragment_alert, container, false)
+        val alarmToggleButton: ToggleButton = view.alarmToggle
+        val recyclerView = view.alert_recyclerview
+        //     val adapter= AlarmAdapter()
+        ItemTouchHelper(itemTouchHelper).attachToRecyclerView(alert_recyclerview)
 
-        notificationManager= activity?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        recyclerView.adapter = adapter
+        recyclerView.layoutManager = LinearLayoutManager(context)
+
+        notificationManager =
+            activity?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
 
         weatherAlertViewModel.alarmData.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             adapter.submitList(it)
         })
 
-        val alertEvent=view.alert_fab
-        val calendar:Calendar= Calendar.getInstance()
+        val alertEvent = view.alert_fab
+        val calendar: Calendar = Calendar.getInstance()
 
         alertEvent.setOnClickListener(View.OnClickListener {
             showEventAlert()
@@ -77,7 +86,15 @@ class Alert : Fragment() ,EventsCustomDialogFragment.EventsListener,AddAlarmDial
                 if (isChecked) {
 
                     setAlarm(calendar)
-                    weatherAlertViewModel.setAlarm(AlarmData(true,calendar.timeInMillis,"24h","notification","rain"))
+                    weatherAlertViewModel.setAlarm(
+                        AlarmData(
+                            true,
+                            calendar.timeInMillis,
+                            "24h",
+                            "notification",
+                            "rain"
+                        )
+                    )
                     toastMsg = "Stand Up Alarm On"
 
                 } else {
@@ -89,26 +106,32 @@ class Alert : Fragment() ,EventsCustomDialogFragment.EventsListener,AddAlarmDial
 
         createNotificationChannel()
 
+
         return view
 
     }
 
     private fun showEventAlert() {
-       /* var eventDialog=EventsCustomDialogFragment()
+        /* var eventDialog=EventsCustomDialogFragment()
         activity?.supportFragmentManager?.let { eventDialog.show(it,"event") }*/
-        var dialog=AddAlarmDialog()
-        dialog.setTargetFragment(this,1)
-        fragmentManager?.let { dialog.show(it,"AddDialog") }
+        var dialog = AddAlarmDialog()
+        dialog.setTargetFragment(this, 1)
+        fragmentManager?.let { dialog.show(it, "AddDialog") }
     }
 
-    public fun createNotificationChannel(){
+    public fun createNotificationChannel() {
         //create notification manager object
-        notificationManager= activity?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager =
+            activity?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         //check on skd version
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O){
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             //create notification channel with all parameters
-            val notificationChannel:NotificationChannel=
-                NotificationChannel(PRIMARY_CHANNEL_ID,"stand up Notification",NotificationManager.IMPORTANCE_HIGH)
+            val notificationChannel: NotificationChannel =
+                NotificationChannel(
+                    PRIMARY_CHANNEL_ID,
+                    "stand up Notification",
+                    NotificationManager.IMPORTANCE_HIGH
+                )
             notificationChannel.enableLights(true)
             notificationChannel.setLightColor(Color.RED)
             notificationChannel.enableVibration(true)
@@ -118,51 +141,98 @@ class Alert : Fragment() ,EventsCustomDialogFragment.EventsListener,AddAlarmDial
         }
 
     }
-    private fun setAlarm(calendar: Calendar){
-        val notifyIntent:Intent=Intent(context, AlarmReceiver::class.java)
-        if (eventChosen!=null)
-        notifyIntent.putExtra("event",eventChosen)
-        val alarmManager:AlarmManager=activity?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+
+    private fun setAlarm(calendar: Calendar) {
+        val notifyIntent: Intent = Intent(context, AlarmReceiver::class.java)
+        if (eventChosen != null)
+            notifyIntent.putExtra("event", eventChosen)
+        val alarmManager: AlarmManager =
+            activity?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
         val notifyPendingIntent: PendingIntent =
-            PendingIntent.getBroadcast(context,NOTIFICATION_ID,notifyIntent,PendingIntent.FLAG_UPDATE_CURRENT)
+            PendingIntent.getBroadcast(
+                context,
+                NOTIFICATION_ID,
+                notifyIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT
+            )
 
 //Alarm Manager
         //set repeating Alarm
-        alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP,calendar.timeInMillis,notifyPendingIntent)
+        alarmManager.setExactAndAllowWhileIdle(
+            AlarmManager.RTC_WAKEUP,
+            calendar.timeInMillis,
+            notifyPendingIntent
+        )
 
     }
-    private fun cancelAlarm(){
-          notificationManager.cancelAll()
-        val notifyIntent:Intent=Intent(context, AlarmReceiver::class.java)
-        if (eventChosen!=null)
-            notifyIntent.putExtra("event",eventChosen)
-        val alarmManager:AlarmManager=activity?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+
+    private fun cancelAlarm() {
+        notificationManager.cancelAll()
+        val notifyIntent: Intent = Intent(context, AlarmReceiver::class.java)
+        if (eventChosen != null)
+            notifyIntent.putExtra("event", eventChosen)
+        val alarmManager: AlarmManager =
+            activity?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
         val notifyPendingIntent: PendingIntent =
-            PendingIntent.getBroadcast(context,NOTIFICATION_ID,notifyIntent,PendingIntent.FLAG_UPDATE_CURRENT)
+            PendingIntent.getBroadcast(
+                context,
+                NOTIFICATION_ID,
+                notifyIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT
+            )
 
-        if (alarmManager!=null){
-                       alarmManager.cancel(notifyPendingIntent)
-                   }
+        if (alarmManager != null) {
+            alarmManager.cancel(notifyPendingIntent)
+        }
     }
-    private fun updateTimeText(calendar: Calendar){
-        var text="Alarm set for :"
-        text+=DateFormat.getTimeInstance(DateFormat.SHORT).format(calendar)
+
+    private fun updateTimeText(calendar: Calendar) {
+        var text = "Alarm set for :"
+        text += DateFormat.getTimeInstance(DateFormat.SHORT).format(calendar)
 
     }
 
     override fun getEvent(event: String) {
-        eventChosen=event
-    //   Toast.makeText(requireContext(),"$eventChosen",Toast.LENGTH_SHORT).show()
+        eventChosen = event
+        //   Toast.makeText(requireContext(),"$eventChosen",Toast.LENGTH_SHORT).show()
 
     }
 
     override fun getAlarmObject(alarmData: AlarmData) {
-        if (alarmData!=null){
+        if (alarmData != null) {
             weatherAlertViewModel.setAlarm(alarmData)
-            Toast.makeText(requireContext(),"set Alarm Successfully",Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "set Alarm Successfully", Toast.LENGTH_SHORT).show()
         }
     }
 
+    var itemTouchHelper: ItemTouchHelper.SimpleCallback =
+        object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                AlertDialog.Builder(activity).setMessage(getString(R.string.deletAlarm))
+                    .setPositiveButton(
+                        getString(R.string.yes)
+                    ) { dialog, id ->
+                        val alertItemDeleted = adapter.getItemByVH(viewHolder)
+                        //   cancelAlarm(requireContext(),alertItemDeleted.requestCode)
+                        //     deleteAlertFromDB(alertItemDeleted)
+                        adapter.removeAlertItem(viewHolder)
+                    }
+                    .setNegativeButton(getString(R.string.no),
+                        { dialog, id ->
+                            //        getAlertFromDB()
+                        }).show()
+
+
+            }
+        }
 }

@@ -2,6 +2,7 @@ package com.example.weatherforecast.model
 
 import android.util.Log
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.example.roomwordsample.model.WeatherDatabase
 import com.example.weatherforecast.model.local.AlarmData
 import com.example.weatherforecast.model.local.NameTuple
@@ -49,11 +50,17 @@ class WeatherRepository (private val weatherDao: WeatherDao) {
 
         }
     }
-    val alarmData=weatherDao.getAlarm()
+    val alarmData:LiveData<MutableList<AlarmData>> = weatherDao.getAlarm()
     val alarm=weatherDao.getAlarm()
     suspend fun setAlarm(alarmData: AlarmData){
         withContext(Dispatchers.IO){
             weatherDao.setAlarm(alarmData)
+        }
+    }
+
+    suspend fun deleteAlarm(alarmData: AlarmData){
+        withContext(Dispatchers.IO){
+            weatherDao.deleteAlert(alarmData)
         }
     }
 

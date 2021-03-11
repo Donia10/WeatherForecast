@@ -36,6 +36,9 @@
     <string name="Notification">Notification</string>
     <string name="DefaultAlarmSound">Default Sound</string>
     <string name="AlarmType">Alarm Type</string>
+    <string name="yes">Yes</string>
+    <string name="deletAlarm">Delete Alarm</string>
+    <string name="no">No</string>
     <string-array name="alarmType_array">
         <item>Notification</item>
         <item>Default Sound</item>

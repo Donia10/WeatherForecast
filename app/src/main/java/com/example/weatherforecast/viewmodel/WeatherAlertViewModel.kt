@@ -23,9 +23,12 @@ import java.util.*
 
 class WeatherAlertViewModel (private val weatherRepository: WeatherRepository) :ViewModel() {
 
-    val alarmData=weatherRepository.alarmData
+    val alarmData :LiveData<MutableList<AlarmData>> = weatherRepository.alarmData
      fun setAlarm(alarmData: AlarmData)=viewModelScope.launch {
         weatherRepository.setAlarm(alarmData)
+    }
+    fun deleteAlarm(alarmData: AlarmData)=viewModelScope.launch {
+        weatherRepository.deleteAlarm(alarmData)
     }
 }
 class WeatherAlertViewModelFactory(private val weatherRepository: WeatherRepository):ViewModelProvider.Factory{

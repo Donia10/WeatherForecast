@@ -2,6 +2,7 @@
 package com.example.weatherforecast.model.local
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.room.*
 import com.example.weatherforecast.model.Alert
 import com.example.weatherforecast.model.WeatherDataModel
@@ -17,6 +18,8 @@ interface WeatherDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertWeatherData( weatherData: WeatherDataModel)
+    @Delete
+    fun deleteWeatherData(weatherData: WeatherDataModel)
 
     @Query("select * from Weather where lat=:lat and lon=:lon")
     fun getAlert(lat: Double,lon: Double):WeatherDataModel
@@ -24,5 +27,7 @@ interface WeatherDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun setAlarm(alarmData: AlarmData)
     @Query("select * from AlarmData")
-    fun getAlarm():LiveData<List<AlarmData>>
+    fun getAlarm():LiveData<MutableList<AlarmData>>
+    @Delete
+    fun deleteAlert(alarmData: AlarmData)
 }
