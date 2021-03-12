@@ -58,7 +58,6 @@ class Home : Fragment() {
         val weatherHomeViewModel : WeatherHomeViewModel by viewModels {
             WeatherHomeViewModelFactory( (requireActivity().application as WeatherApplication).repository)
         }
-    //    Language.setLocale(requireActivity(),"ar")
         weatherHomeViewModel.refreshDataFromRepository(requireContext())
         // Inflate the layout for this fragment
          val view:View= inflater.inflate(R.layout.fragment_home, container, false)
@@ -75,29 +74,44 @@ class Home : Fragment() {
    //     val homeViewModel = ViewModelProvider(this).get(WeatherHomeViewModel::class.java)
 
         val sp: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-        val lat= sp.getFloat("lat",2f)
-        val lon=sp.getFloat("lon",2f)
-        Toast.makeText(context,"${lat.toDouble()}}${ lon.toDouble()}",Toast.LENGTH_SHORT).show()
-        if (lat != null) {
-            if (lon != null) {
-                weatherHomeViewModel.refreshHomeDataFromRepository(lat.toDouble(),lon.toDouble())
+        val lat= sp.getString("lat","")
+        val lon=sp.getString("lon","")
+        val lan=sp.getString("lan","")
+        if(lan=="Arabic")
+     //       Language.setLocale(requireActivity(),"ar")
+
+//        Toast.makeText(context,"${lat?.toDouble()}}${ lon?.toDouble()}",Toast.LENGTH_SHORT).show()
+        if (lat != "") {
+            if (lon != "") {
+                if (lat != null) {
+                    if (lon != null) {
+                        weatherHomeViewModel.refreshHomeDataFromRepository(lat.toDouble(),lon.toDouble())
+                    }
+                }
             }
         }
 
-        if (lat != null) {
-            if (lon != null) {
-                val latcast:Double = String.format("%.4f", lat.toDouble()).toDouble()
-                val loncat:Double = String.format("%.4f", lon.toDouble()).toDouble()
 
-                weatherHomeViewModel.getHome(String.format("%.4f", lat.toDouble()).toDouble(), String.format("%.4f", lon.toDouble()).toDouble())
-                    .observe(viewLifecycleOwner, Observer { data ->data?.let {
+        if (lat != "") {
+            if (lon != "") {
+                if (lat != null) {
+                    if (lon != null) {
 
-                        data.let { updaMainLayout(it) }
-                        data.hourly?.let { it1 -> updateHourlyListUI(it1) }
-                        data.daily?.let { it1 -> updateDailyListUI(it1) }
-                        data.let { updateDetailsLayout(it) }
+                        val latcast:Double = String.format("%.4f",lat.toDouble()).toDouble()
+                        val loncat:Double = String.format("%.4f", lon.toDouble()).toDouble()
 
-                    } })
+
+                        weatherHomeViewModel.getHome(latcast, loncat)
+                            .observe(viewLifecycleOwner, Observer { data ->data?.let {
+
+                                data.let { updaMainLayout(it) }
+                                data.hourly?.let { it1 -> updateHourlyListUI(it1) }
+                                data.daily?.let { it1 -> updateDailyListUI(it1) }
+                                data.let { updateDetailsLayout(it) }
+
+                            } })
+                    }
+                }
             }
         }
 
@@ -167,5 +181,23 @@ class Home : Fragment() {
         }
         temp.text=tempSpan
     }
+
+    fun convertArabic(arabicStr: String): String? {
+        val chArr = arabicStr.toCharArray()
+        val sb = StringBuilder()
+        for (ch in chArr) {
+            if (Character.isDigit(ch)) {
+                sb.append(Character.getNumericValue(ch))
+            }else if (ch == '٫'){
+                sb.append(".")
+            }
+
+            else {
+                sb.append(ch)
+            }
+        }
+        return sb.toString()
+    }
+
 
 }

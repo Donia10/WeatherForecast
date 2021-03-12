@@ -26,6 +26,7 @@ interface WeatherDao {
     fun setAlarm(alarmData: AlarmData)
     @Query("select * from AlarmData")
     fun getAlarm():LiveData<MutableList<AlarmData>>
+   
     @Delete
     fun deleteAlert(alarmData: AlarmData)
 }

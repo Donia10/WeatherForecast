@@ -143,8 +143,8 @@ class SettingPreferences(activity: SettingsFragment){
     private fun sharedPrefs(location:String,lat:Double,lon:Double){
         var editor:SharedPreferences.Editor= prefs.edit()
         editor.putString("Location",location)
-        editor.putFloat("lat",lat.toFloat())
-        editor.putFloat("lon",lon.toFloat())
+        editor.putString("lat",lat.toString())
+        editor.putString("lon",lon.toString())
         editor.commit();
     }
 

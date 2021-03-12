@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.location.Address
 import android.location.Geocoder
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,21 +12,18 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherforecast.R
 import com.example.weatherforecast.WeatherApplication
 import com.example.weatherforecast.viewmodel.WeatherFavouriteListViewModelFactory
 import com.example.weatherforecast.viewmodel.WeatherFavouriteViewModel
-import com.example.weatherforecast.viewmodel.WeatherHomeViewModel
-import com.example.weatherforecast.viewmodel.WeatherHomeViewModelFactory
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.fragment_favourite.view.*
 import java.io.IOException
 import java.util.*
 
-class Favourite : Fragment() {
+
+class Favourite : Fragment(),FavouriteLocationsListAdapter.OnViewClickListener {
     val weatherFavouriteViewModel : WeatherFavouriteViewModel by viewModels {
         WeatherFavouriteListViewModelFactory( (requireActivity().application as WeatherApplication).repository)
     }
@@ -50,6 +46,7 @@ class Favourite : Fragment() {
     weatherFavouriteViewModel.liveFavLocations.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
         Toast.makeText(context,"${it.size}",Toast.LENGTH_SHORT).show()
         adapter.submitList(it)
+        adapter.setOnClickListener(this)
     })
 
 
@@ -108,5 +105,16 @@ class Favourite : Fragment() {
         return addresses?.get(0)?.getAddressLine(0)// If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
         //     t.setText(address);
 
+    }
+
+    override fun removeFromRoom(position: Int) {
+    //    weatherAlertViewModel.deleteAlarm(adapter.currentList.get(position))
+
+    }
+
+    override fun navigateToWeatherData(position: Int) {
+        Toast.makeText(requireContext(),"zz",Toast.LENGTH_SHORT).show()
+        val intent= Intent(requireContext() , WeatherDataFav::class.java)
+        startActivity(intent)
     }
 }

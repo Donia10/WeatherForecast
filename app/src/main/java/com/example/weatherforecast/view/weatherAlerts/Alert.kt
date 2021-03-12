@@ -37,7 +37,7 @@ import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
-class Alert : Fragment() ,EventsCustomDialogFragment.EventsListener,AddAlarmDialog.EventsListener ,AlarmAdapter.OnItemClickListener ,AlarmManager.OnAlarmListener{
+class Alert : Fragment() ,EventsCustomDialogFragment.EventsListener,AddAlarmDialog.EventsListener ,AlarmAdapter.OnItemClickListener{
     private val NOTIFICATION_ID = 0
     private val PRIMARY_CHANNEL_ID = "primary_notification_channel"
     private lateinit var notificationManager: NotificationManager
@@ -60,7 +60,6 @@ class Alert : Fragment() ,EventsCustomDialogFragment.EventsListener,AddAlarmDial
         val view: View = inflater.inflate(R.layout.fragment_alert, container, false)
         val alarmToggleButton: ToggleButton = view.alarmToggle
         val recyclerView = view.alert_recyclerview
-        //     val adapter= AlarmAdapter()
 
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(context)
@@ -230,10 +229,6 @@ class Alert : Fragment() ,EventsCustomDialogFragment.EventsListener,AddAlarmDial
     override fun removeAlarm(alarmData: AlarmData) {
         cancelAlarm()
         weatherAlertViewModel.deleteAlarm(alarmData)
-
-    }
-
-    override fun onAlarm() {
 
     }
 }

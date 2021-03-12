@@ -27,6 +27,7 @@ class AlarmAdapter :ListAdapter <AlarmData, AlarmAdapter.AlarmViewHolder>(AlarmC
     }
 
     fun setOnClickListener( listenerr: OnItemClickListener){listener=listenerr}
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlarmViewHolder {
         val view=  LayoutInflater.from(parent.context).inflate(R.layout.alarm_item, parent, false)
         context=parent.context
