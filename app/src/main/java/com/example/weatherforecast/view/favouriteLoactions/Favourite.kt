@@ -96,7 +96,7 @@ class Favourite : Fragment(),FavouriteLocationsListAdapter.OnViewClickListener {
     }
 
     override fun removeFromRoom(position: Int) {
-    //    weatherAlertViewModel.deleteAlarm(adapter.currentList.get(position))
+        weatherFavouriteViewModel.deleteWeatherFav(adapter.currentList.get(position))
 
     }
 

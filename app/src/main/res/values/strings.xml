@@ -35,7 +35,7 @@
     <string name="CheckEvent">Check Event</string>
     <string name="Notification">Notification</string>
     <string name="DefaultAlarmSound">Default Sound</string>
-    <string name="AlarmType">Alarm Type</string>
+    <string name="AlarmType">Type</string>
     <string name="yes">Yes</string>
     <string name="deletAlarm">Delete Alarm</string>
     <string name="no">No</string>
@@ -59,4 +59,6 @@
     <string name="WindSpeed">WindSpeed</string>
     <string name="CloudCover">Cloud Cover</string>
     <string name="Visibility">Visibility</string>
+    <string name="Cancel">Cancel</string>
+    <string name="Save">Save</string>
 </resources>

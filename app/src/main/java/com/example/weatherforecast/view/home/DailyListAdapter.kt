@@ -1,14 +1,18 @@
 package com.example.weatherforecast.view.home
+import android.content.SharedPreferences
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.weatherforecast.R
 import com.example.weatherforecast.model.Daily
 import kotlinx.android.synthetic.main.daily_row.view.*
+import kotlinx.android.synthetic.main.fragment_home.view.*
+import kotlinx.android.synthetic.main.hourly_row.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -37,36 +41,39 @@ class DailyListAdapter(var dailyList:ArrayList<Daily>) :RecyclerView.Adapter<Dai
     }
 
     class DailyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val dt=itemView.txt_daily_dt
-        private val day=itemView.daily_day
-        private val dailyDayIcon=itemView.dailyDay_icon
-        private val dailyDayTemp=itemView.dailyDay_temp
-        private val sunrise=itemView.daily_sunrise
-        private val night=itemView.daily_night
-        private val dailyNightIcon=itemView.dailyNight_icon
-        private val dailyNightTemp=itemView.dailyNight_temp
-        private val sunset=itemView.dailyNight_sunset
-        private val dailyDayDesc=itemView.dailyDay_desc
-        private val dailyNightDesc=itemView.dailyNight_desc
-
-
-
+        private val dt=itemView.home_day_temp_daily_item
+        private val dailyDayIcon=itemView.home_day_icon_daily_item
+        private val dailyDayTemp=itemView.home_day_temp_daily_item
+        private val sunrise=itemView.home_day_sunrise_item
+        private val dailyNightIcon=itemView.home_night_icon_daily_item
+        private val dailyNightTemp=itemView.home_night_temp_daily_item
+        private val sunset=itemView.home_night_sunset_daily_item
+        val sp: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(itemView.home_day_icon_daily_item.getContext())
         fun bind(daily: Daily){
-
+            val temp= sp.getString("Temperature","").toString()
             val calendar = Calendar.getInstance()
             val tz = TimeZone.getDefault()
             calendar.add(Calendar.MILLISECOND, tz.getOffset(calendar.timeInMillis))
             val sdf = SimpleDateFormat(" EE:dd:MM", Locale.getDefault())
             val currenTimeZone = (daily.dt?.toLong())?.times(1000)?.let { it1 -> Date(it1) }
             dt.text= sdf.format(currenTimeZone)
-            day.text="Day"
-            night.text="Night"
-            dailyDayTemp.text=(daily.temp?.day)?.toInt().toString()+"℃"
-            dailyNightTemp.text=(daily.temp?.night)?.toInt().toString()+"℃"
+
             sunrise.text=getDt(daily.sunrise)
             sunset.text=getDt(daily.sunset)
-            dailyDayDesc.text="'"
-
+            if(temp=="Fahrenheit"){
+                dailyDayTemp.text=(daily.temp?.day)?.toInt().toString()+" "+ "\u2109"
+            }else if(temp=="Celsius"){
+                dailyDayTemp.text=(daily.temp?.day)?.toInt().toString()+ " "+"\u2103"
+            }else{
+                dailyDayTemp.text=(daily.temp?.day)?.toInt().toString()+" "+ "\u00B0"
+            }
+            if(temp=="Fahrenheit"){
+                dailyNightTemp.text=(daily.temp?.night)?.toInt().toString()+" "+ "\u2109"
+            }else if(temp=="Celsius"){
+                dailyNightTemp.text=(daily.temp?.night)?.toInt().toString()+ " "+"\u2103"
+            }else{
+                dailyNightTemp.text=(daily.temp?.night)?.toInt().toString()+" "+ "\u00B0"
+            }
 
             //   hourlyPrec.text=hourly.
             val dayIcon=daily.weather?.get(0)?.icon

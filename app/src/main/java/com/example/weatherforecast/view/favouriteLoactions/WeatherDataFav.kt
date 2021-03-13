@@ -1,6 +1,7 @@
 package com.example.weatherforecast.view.favouriteLoactions
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
@@ -12,6 +13,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
+import androidx.preference.PreferenceManager
 import com.example.weatherforecast.R
 import com.example.weatherforecast.WeatherApplication
 import com.example.weatherforecast.viewmodel.WeatherDataFavViewModel
@@ -65,6 +67,8 @@ class WeatherDataFav : AppCompatActivity() {
     }
 
     private fun updaMainLayout(it: WeatherDataModel){
+        val sp: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+        val temp= sp.getString("Temperature","").toString()
         fav_location_name.text= it.timezone?.substringAfter("/")
         val calendar = Calendar.getInstance()
         val tz = TimeZone.getDefault()
@@ -72,6 +76,14 @@ class WeatherDataFav : AppCompatActivity() {
         val sdf = SimpleDateFormat("dd-MM-yyyy HH:mm a", Locale.getDefault())
         val currenTimeZone = (it.current?.dt?.toLong())?.times(1000)?.let { it1 -> Date(it1) }
         fav_date_time.text= sdf.format(currenTimeZone)
+
+        if(temp=="Fahrenheit"){
+            fav_temp.text =(it.current?.temp)?.toInt().toString()+" "+ "\u2109"
+        }else if(temp=="Celsius"){
+            fav_temp.text =(it.current?.temp)?.toInt().toString()+" "+  "\u2103"
+        }else{
+            fav_temp.text =(it.current?.temp)?.toInt().toString()+" "+ "\u00B0"
+        }
         val options = RequestOptions()
             .error(R.mipmap.ic_launcher_round)
         val icon:String?= it.current?.weather?.get(0)?.icon
@@ -89,19 +101,6 @@ class WeatherDataFav : AppCompatActivity() {
 //        windSpeed.text="wind"+(it.current?.windSpeed?.toInt()).toString()+"mph"
 //        clouds.text= "clods"+ it.current?.clouds.toString()+"%"
 
-        val tempr =(it.current?.temp)?.toInt().toString()+ "\u2103"
-        val tempSpan: SpannableString = SpannableString(tempr)
-        if (tempr.length >0){
-            //the symbol will be smaller then the number
-            tempSpan.setSpan( RelativeSizeSpan(0.7f),tempr.length-1, tempr.length, 0);
-
-            //the number style will be bold and the symbol normal
-            tempSpan.setSpan(android.text.style.StyleSpan(Typeface.BOLD), 0, tempr.length-1, 0);
-
-            //the symbol color will be yellow
-            tempSpan.setSpan( ForegroundColorSpan(Color.BLACK), tempr.length-1, tempr.length, 0);
-        }
-        fav_temp.text=tempSpan
     }
     fun getIcon(icon: String): String {
         return "http://openweathermap.org/img/w/${icon}.png"
@@ -113,13 +112,18 @@ class WeatherDataFav : AppCompatActivity() {
         dailyListAdapter.updateHoursList(it)
     }
     private fun updateDetailsLayout(it:WeatherDataModel){
-        fav_data_windSpeed.text= it.current?.windSpeed.toString()
-
-        fav_data_cloudCover.text=it.current?.clouds.toString()
-        fav_data_humidity.text=it.current?.humidity.toString()
+        val sp: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+        val temp= sp.getString("Temperature","").toString()
+        if(temp=="Fahrenheit"){
+            fav_data_windSpeed.text= it.current?.windSpeed.toString()+" "+ "miles/hour"
+        }else{
+            fav_data_windSpeed.text= it.current?.windSpeed.toString()+" "+ " meter/sec"
+        }
+        fav_data_cloudCover.text=it.current?.clouds.toString()+" %"
+        fav_data_humidity.text=it.current?.humidity.toString()+" %"
         fav_data_visibility.text=it.current?.visibility.toString()
-        fav_data_pressure.text=it.current?.pressure.toString()
-        fav_data_precipitation.text= it.minutely?.get(0)?.precipitation.toString()
+        fav_data_pressure.text=it.current?.pressure.toString()+" mbar"
+        fav_data_precipitation.text= it.minutely?.get(0)?.precipitation.toString()+" mm"
     }
 
 

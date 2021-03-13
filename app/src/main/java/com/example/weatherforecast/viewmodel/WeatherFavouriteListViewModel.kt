@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.*
 import com.example.weatherforecast.model.WeatherDataModel
 import com.example.weatherforecast.model.WeatherRepository
+import com.example.weatherforecast.model.local.AlarmData
 import kotlinx.coroutines.*
 import java.io.IOException
 import java.lang.IllegalArgumentException
@@ -22,6 +23,9 @@ class WeatherFavouriteViewModel (private val weatherRepository: WeatherRepositor
             Log.i("TAG", "refreshFavDataFromRepository: catch")
         }
 
+    }
+    fun deleteWeatherFav(weatherDataModel: WeatherDataModel)=viewModelScope.launch {
+        weatherRepository.deleteWeatherDataFav(weatherDataModel)
     }
 
     /*init {

@@ -36,6 +36,7 @@ import kotlinx.android.synthetic.main.fragment_favourite.view.*
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.random.Random.Default.nextInt
 
 class Alert : Fragment() ,EventsCustomDialogFragment.EventsListener,AddAlarmDialog.EventsListener ,AlarmAdapter.OnItemClickListener{
     private val NOTIFICATION_ID = 0
@@ -58,7 +59,6 @@ class Alert : Fragment() ,EventsCustomDialogFragment.EventsListener,AddAlarmDial
         savedInstanceState: Bundle?
     ): View? {
         val view: View = inflater.inflate(R.layout.fragment_alert, container, false)
-        val alarmToggleButton: ToggleButton = view.alarmToggle
         val recyclerView = view.alert_recyclerview
 
         recyclerView.adapter = adapter
@@ -82,28 +82,28 @@ class Alert : Fragment() ,EventsCustomDialogFragment.EventsListener,AddAlarmDial
         })
 
 
-        alarmToggleButton.setOnCheckedChangeListener(
-            CompoundButton.OnCheckedChangeListener { compoundButton, isChecked ->
-                if (isChecked) {
-
-                    setAlarm(calendar)
-                    weatherAlertViewModel.setAlarm(
-                        AlarmData(
-                            true,
-                            calendar.timeInMillis,
-                            "24h",
-                            "notification",
-                            "rain"
-                        )
-                    )
-                    toastMsg = "Stand Up Alarm On"
-
-                } else {
-                    cancelAlarm()
-                    toastMsg = "Stand Up Alarm Off"
-                }
-                Toast.makeText(context, toastMsg, Toast.LENGTH_SHORT).show()
-            })
+//        alarmToggleButton.setOnCheckedChangeListener(
+//            CompoundButton.OnCheckedChangeListener { compoundButton, isChecked ->
+//                if (isChecked) {
+//
+//                    setAlarm(calendar)
+//                    weatherAlertViewModel.setAlarm(
+//                        AlarmData(
+//                            true,
+//                            calendar.timeInMillis,
+//                            "24h",
+//                            "notification",
+//                            "rain"
+//                        )
+//                    )
+//                    toastMsg = "Stand Up Alarm On"
+//
+//                } else {
+//                    cancelAlarm()
+//                    toastMsg = "Stand Up Alarm Off"
+//                }
+//                Toast.makeText(context, toastMsg, Toast.LENGTH_SHORT).show()
+//            })
 
         createNotificationChannel()
 
@@ -142,17 +142,21 @@ class Alert : Fragment() ,EventsCustomDialogFragment.EventsListener,AddAlarmDial
         }
     }
 
-    private fun setAlarm(calendar: Calendar) {
+    private fun setAlarm(calendar: Calendar,id: Long) {
         val notifyIntent: Intent = Intent(context, AlarmReceiver::class.java)
         if (eventChosen != null)
             notifyIntent.putExtra("event", eventChosen)
+
+
         val alarmManager: AlarmManager =
             activity?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
+        val i=(0..100).random()
+        notifyIntent.putExtra("id", i)
         val notifyPendingIntent: PendingIntent =
             PendingIntent.getBroadcast(
                 context,
-                NOTIFICATION_ID,
+                i,
                 notifyIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT
             )
@@ -200,16 +204,17 @@ class Alert : Fragment() ,EventsCustomDialogFragment.EventsListener,AddAlarmDial
 
     }
 
-    override fun getAlarmObject(alarmData: AlarmData) {
+    override fun getAlarmObject(alarmData: AlarmData,calendar: Calendar) {
         if (alarmData != null) {
-            weatherAlertViewModel.setAlarm(alarmData)
+            val id=weatherAlertViewModel.setAlarm(alarmData)
             Toast.makeText(requireContext(), "set Alarm Successfully", Toast.LENGTH_SHORT).show()
+            startAlarm(calendar,id)
         }
 
         }
 
-    override fun startAlarm(calendar: Calendar) {
-        setAlarm(calendar)
+     fun startAlarm(calendar: Calendar,id:Long) {
+        setAlarm(calendar,id)
     }
 
     override fun deleteFromApter(position: Int) {
@@ -219,7 +224,6 @@ class Alert : Fragment() ,EventsCustomDialogFragment.EventsListener,AddAlarmDial
     }
 
     override fun removeFromRoom(position: Int) {
-
         cancelAlarm()
         weatherAlertViewModel.deleteAlarm(adapter.currentList.get(position))
 

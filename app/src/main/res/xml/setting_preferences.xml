@@ -16,7 +16,7 @@
             app:key="location"
             app:summary="Determine Location With GPS Or Search"
             app:defaultValue="true"
-            app:title="Choose Location"/>
+            app:title="Choose Location" />
             <Preference
                 app:key="displayLocation"
                 app:summary="search bar"

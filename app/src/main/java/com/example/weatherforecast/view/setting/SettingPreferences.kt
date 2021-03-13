@@ -1,7 +1,5 @@
 package com.example.weatherforecast.view.setting
 
-import android.annotation.SuppressLint
-import android.content.Context
 import android.content.SharedPreferences
 import android.widget.Toast
 import androidx.preference.ListPreference
@@ -14,7 +12,6 @@ import kotlinx.coroutines.launch
 
 class SettingPreferences(activity: SettingsFragment){
     val context=activity
-    @SuppressLint("RestrictedApi")
 
     val prefs = PreferenceManager.getDefaultSharedPreferences(activity.context)
 
@@ -26,7 +23,6 @@ class SettingPreferences(activity: SettingsFragment){
 
     fun updatePrefSummary(context: SettingsFragment) {
         get(context)
-       // prefLocation?.let { bindPreferenceSummaryToValue(it) }
         if (prefLocation != null) {
             bindPreferenceSummaryToValue(prefLocation)
         }
@@ -43,9 +39,6 @@ class SettingPreferences(activity: SettingsFragment){
          * A preference value change listener that updates the preference's summary
          * to reflect its new value.
          */
-
-
-
      //   companion object {
             val instance : SettingsFragment? =null
             public fun get(context: SettingsFragment) {
@@ -78,7 +71,6 @@ class SettingPreferences(activity: SettingsFragment){
                                     Toast.makeText(preference.context, "$index", Toast.LENGTH_SHORT).show()
                   //                  Log.i("TAG", "search: ${preference.isVisible}${com.example.weatherforecast.view.setting.SettingPreferences.Companion.flag}")
                                     search?.let { it1 -> bindPreferenceSummaryToValue(it1) }
-
                                 } else if (listPreference.entries[index] == "GPS") {
                                     flag = false
                                     CoroutineScope(Dispatchers.Default).launch {
@@ -89,7 +81,7 @@ class SettingPreferences(activity: SettingsFragment){
                                       val job=  launch {
                                            getLocation.getLastLocation()  }
                                         launch {   delay(5000)
-                                            s="${getLocation.latitude}+${getLocation.longitude} "
+                                            s="${getLocation.address} "
                                             s?.let { sharedPrefs(it,getLocation.latitude,getLocation.longitude) }
                                         }
 
@@ -120,13 +112,13 @@ class SettingPreferences(activity: SettingsFragment){
                  //       Log.i("TAG", ": ${preference.isVisible} ${com.example.weatherforecast.view.setting.SettingPreferences.Companion.flag}")
                        else
                         preference.summary = stringValue
-
-
                 }
                 true
 
             }
-            private fun bindPreferenceSummaryToValue(preference: Preference) {
+
+
+    private fun bindPreferenceSummaryToValue(preference: Preference) {
                 // Set the listener to watch for value changes.
                 preference.onPreferenceChangeListener = sBindPreferenceSummaryToValueListener
 
@@ -146,9 +138,5 @@ class SettingPreferences(activity: SettingsFragment){
         editor.putString("lat",lat.toString())
         editor.putString("lon",lon.toString())
         editor.commit();
-    }
-
-    private fun getSharedPref(){
-
     }
 }

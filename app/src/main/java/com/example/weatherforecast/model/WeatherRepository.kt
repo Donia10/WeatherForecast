@@ -15,18 +15,18 @@ class WeatherRepository (private val weatherDao: WeatherDao) {
 
 
       fun  getHome(lat:Double,lon:Double):LiveData<WeatherDataModel>{
-          if (lan == "ar") {
-              var loni = convertArabic("$lon")
-              var lati = convertArabic("$lat")
-
+//          if (lan == "ar") {
+//              var loni = convertArabic("$lon")
+//              var lati = convertArabic("$lat")
+//
+//              val weatherLiveData: LiveData<WeatherDataModel> = weatherDao.getWeatherData(lat, lon)
+//
+//              return weatherLiveData
+//          }else{
               val weatherLiveData: LiveData<WeatherDataModel> = weatherDao.getWeatherData(lat, lon)
 
               return weatherLiveData
-          }else{
-              val weatherLiveData: LiveData<WeatherDataModel> = weatherDao.getWeatherData(lat, lon)
-
-              return weatherLiveData
-          }
+        //  }
     }
 
     var unit:String?=null
@@ -41,11 +41,11 @@ class WeatherRepository (private val weatherDao: WeatherDao) {
                 Log.i("TAG", "refresh weather is called and get data from api")
                 if(unit!=null && lan!=null && lat!=null && lon!=null) {
 
-                    if(lan=="ar"){
-                        lat=convertArabic(lat!!)
-                        lan=convertArabic(lon!!)
-
-                    }
+//                    if(lan=="ar"){
+//                        lat=convertArabic(lat!!)
+//                        lan=convertArabic(lon!!)
+//
+//                    }
                         val responseWeatherData =
                             WeatherHomeService.getWeatherService().getWeatherForecast(
                                 "$lat",
@@ -99,10 +99,11 @@ class WeatherRepository (private val weatherDao: WeatherDao) {
     }
     val alarmData:LiveData<MutableList<AlarmData>> = weatherDao.getAlarm()
     val alarm=weatherDao.getAlarm()
-    suspend fun setAlarm(alarmData: AlarmData){
+    suspend fun setAlarm(alarmData: AlarmData):Long{
         withContext(Dispatchers.IO){
-            weatherDao.setAlarm(alarmData)
+            return@withContext weatherDao.setAlarm(alarmData)
         }
+        return -1
     }
 
     fun getSp(context: Context){
@@ -130,6 +131,17 @@ class WeatherRepository (private val weatherDao: WeatherDao) {
     suspend fun deleteAlarm(alarmData: AlarmData){
         withContext(Dispatchers.IO){
             weatherDao.deleteAlert(alarmData)
+        }
+    }
+    suspend fun deleteAlarmById(id: Int){
+        withContext(Dispatchers.IO){
+            weatherDao.deleteAlertById(id)
+        }
+    }
+
+    suspend fun deleteWeatherDataFav(weatherDataModel: WeatherDataModel){
+        withContext(Dispatchers.IO){
+            weatherDao.deleteFavLocation(weatherDataModel)
         }
     }
 

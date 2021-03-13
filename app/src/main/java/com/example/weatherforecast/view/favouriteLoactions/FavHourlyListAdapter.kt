@@ -1,7 +1,9 @@
 package com.example.weatherforecast.view.favouriteLoactions
+import android.content.SharedPreferences
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -41,8 +43,9 @@ class FavHourlyListAdapter(var hoursList:ArrayList<Hourly>) :RecyclerView.Adapte
         private val hourlyIcon=itemView.fav_icon_item
         private val hourlyTemp=itemView.fav_hourly_item_temp
         private val hourlyPrec=itemView.fav_hourly_item_clouds
-
+        val sp: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(itemView.fav_hourly_item.getContext())
         fun bind(hourly:Hourly){
+            val temp= sp.getString("Temperature","").toString()
             val calendar = Calendar.getInstance()
             val tz = TimeZone.getDefault()
             calendar.add(Calendar.MILLISECOND, tz.getOffset(calendar.timeInMillis))
@@ -51,7 +54,13 @@ class FavHourlyListAdapter(var hoursList:ArrayList<Hourly>) :RecyclerView.Adapte
             hourlyTime.text= sdf.format(currenTimeZone)
 
             hourlyPrec.text="clouds:"+(hourly.clouds).toString()+"%"
-            hourlyTemp.text=(hourly.temp)?.toInt().toString()+"c"
+            if(temp=="Fahrenheit"){
+                hourlyTemp.text = (hourly.temp)?.toInt().toString()+" "+ "\u2109"
+            }else if(temp=="Celsius"){
+                hourlyTemp.text = (hourly.temp)?.toInt().toString()+" "+  "\u2103"
+            }else{
+                hourlyTemp.text = (hourly.temp)?.toInt().toString()+" "+ "\u00B0"
+            }
             //   hourlyPrec.text=hourly.
             val icon=hourly.weather?.get(0)?.icon
             val options = RequestOptions()

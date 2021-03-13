@@ -37,6 +37,9 @@ class WeatherHomeViewModel (private val weatherRepository: WeatherRepository):Vi
         }
 
     }
+     fun deleteAlarmById(id:Int)=viewModelScope.launch {
+        weatherRepository.deleteAlarmById(id)
+    }
 /*
 
     init {

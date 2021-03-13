@@ -65,6 +65,17 @@ class FavouriteLocationsListAdapter :ListAdapter <WeatherDataModel, FavouriteLoc
                     }
                 }
             })
+            itemView.setOnLongClickListener(View.OnLongClickListener {
+                if(listener!=null) {
+                    val position: Int = adapterPosition
+                    if (position!=RecyclerView.NO_POSITION) {
+                        //  listener.removeFromRoom(position)
+                        listener.removeFromRoom(position)
+
+                    }
+                }
+              return@OnLongClickListener true
+            })
 
         }
 

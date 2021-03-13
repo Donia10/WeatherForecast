@@ -1,14 +1,17 @@
 package com.example.weatherforecast.view.favouriteLoactions
+import android.content.SharedPreferences
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.weatherforecast.R
 import com.example.weatherforecast.model.Daily
 import kotlinx.android.synthetic.main.daily_fav_row.view.*
+import kotlinx.android.synthetic.main.daily_row.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -45,9 +48,10 @@ class FavDailyListAdapter(var dailyList:ArrayList<Daily>) :RecyclerView.Adapter<
         private val dailyNightIcon=itemView.fav_night_icon_daily_item
         private val dailyNightTemp=itemView.fav_night_temp_daily_item
         private val sunset=itemView.fav_night_sunset_daily_item
+        val sp: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(itemView.fav_day_icon_daily_item.getContext())
 
         fun bind(daily: Daily){
-
+            val temp= sp.getString("Temperature","").toString()
             val calendar = Calendar.getInstance()
             val tz = TimeZone.getDefault()
             calendar.add(Calendar.MILLISECOND, tz.getOffset(calendar.timeInMillis))
@@ -56,10 +60,22 @@ class FavDailyListAdapter(var dailyList:ArrayList<Daily>) :RecyclerView.Adapter<
             dt.text= sdf.format(currenTimeZone)
           /*  day.text="Day"
             night.text="Night"*/
-            dailyDayTemp.text=(daily.temp?.day)?.toInt().toString()+"℃"
-            dailyNightTemp.text=(daily.temp?.night)?.toInt().toString()+"℃"
             sunrise.text=getDt(daily.sunrise)
             sunset.text=getDt(daily.sunset)
+            if(temp=="Fahrenheit"){
+                dailyDayTemp.text=(daily.temp?.day)?.toInt().toString()+" "+ "\u2109"
+            }else if(temp=="Celsius"){
+                dailyDayTemp.text=(daily.temp?.day)?.toInt().toString()+ " "+"\u2103"
+            }else{
+                dailyDayTemp.text=(daily.temp?.day)?.toInt().toString()+" "+ "\u00B0"
+            }
+            if(temp=="Fahrenheit"){
+                dailyNightTemp.text=(daily.temp?.night)?.toInt().toString()+" "+ "\u2109"
+            }else if(temp=="Celsius"){
+                dailyNightTemp.text=(daily.temp?.night)?.toInt().toString()+ " "+"\u2103"
+            }else{
+                dailyNightTemp.text=(daily.temp?.night)?.toInt().toString()+" "+ "\u00B0"
+            }
 
             //   hourlyPrec.text=hourly.
             val dayIcon=daily.weather?.get(0)?.icon

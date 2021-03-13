@@ -16,17 +16,19 @@ interface WeatherDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertWeatherData( weatherData: WeatherDataModel)
-    @Delete
-    fun deleteWeatherData(weatherData: WeatherDataModel)
 
     @Query("select * from Weather where lat =:lat and lon =:lon")
     fun getAlert(lat: Double,lon: Double):WeatherDataModel
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun setAlarm(alarmData: AlarmData)
+    fun setAlarm(alarmData: AlarmData):Long
     @Query("select * from AlarmData")
     fun getAlarm():LiveData<MutableList<AlarmData>>
    
     @Delete
     fun deleteAlert(alarmData: AlarmData)
+    @Query("delete from AlarmData where id =:id")
+    fun deleteAlertById(id:Int)
+    @Delete
+    fun deleteFavLocation(weatherData: WeatherDataModel)
 }

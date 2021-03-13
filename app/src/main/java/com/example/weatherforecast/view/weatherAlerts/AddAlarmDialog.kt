@@ -55,8 +55,6 @@ class AddAlarmDialog:DialogFragment() ,EventsCustomDialogFragment.EventsListener
                         calendar.set(Calendar.HOUR_OF_DAY, selectedHours)
                         calendar.set(Calendar.MINUTE,selectedMinute)
                         calendar.set(Calendar.SECOND,0)
-
-
                     }, 12, 0, false
                 )
             timePickerDialog.show()
@@ -75,9 +73,8 @@ class AddAlarmDialog:DialogFragment() ,EventsCustomDialogFragment.EventsListener
             eventSelected.getAlarmObject(AlarmData(true,calendar.timeInMillis,"not det",isNotification,
                 getevent!!
 
-
-            ))
-                eventSelected.startAlarm(calendar)
+            ),calendar)
+             //   eventSelected.startAlarm(calendar)
             dismiss()
             }else{
                 Toast.makeText(context,"Required data ",Toast.LENGTH_SHORT).show()
@@ -106,8 +103,8 @@ class AddAlarmDialog:DialogFragment() ,EventsCustomDialogFragment.EventsListener
     }
 
     public interface EventsListener  {
-        fun getAlarmObject( alarmData: AlarmData)
-        fun startAlarm(calendar: Calendar)
+        fun getAlarmObject( alarmData: AlarmData,calendar: Calendar)
+     //   fun startAlarm(calendar: Calendar)
     }
 
     override fun getEvent(event: String) {
