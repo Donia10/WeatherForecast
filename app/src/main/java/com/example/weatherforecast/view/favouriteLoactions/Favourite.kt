@@ -27,6 +27,7 @@ class Favourite : Fragment(),FavouriteLocationsListAdapter.OnViewClickListener {
     val weatherFavouriteViewModel : WeatherFavouriteViewModel by viewModels {
         WeatherFavouriteListViewModelFactory( (requireActivity().application as WeatherApplication).repository)
     }
+    val adapter= FavouriteLocationsListAdapter()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -39,7 +40,7 @@ class Favourite : Fragment(),FavouriteLocationsListAdapter.OnViewClickListener {
         // Inflate the layout for this fragment
         val view:View =inflater.inflate(R.layout.fragment_favourite, container, false)
         val recyclerView=view.favListRecyclerview
-        val adapter= FavouriteLocationsListAdapter()
+
         recyclerView.adapter=adapter
         recyclerView.layoutManager= LinearLayoutManager(context)
 
@@ -55,21 +56,8 @@ class Favourite : Fragment(),FavouriteLocationsListAdapter.OnViewClickListener {
 
             val intent= Intent(requireContext() , MapsActivity::class.java)
             startActivityForResult(intent,1)
-
-            /*
-            val gmmIntentUri =
-                Uri.parse("https://www.google.com/maps/dir/?api=1&origin&travelmode=driving")
-            val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
-            mapIntent.setPackage("com.google.android.apps.maps")
-            requireContext().startActivity(mapIntent)
-            **/
-
         }
 
-        /*
-        wordViewModel.allWords.observe(this, Observer { words ->
-            words?.let { adapter.submitList(it) }
-        })**/
         return view
     }
 
@@ -115,6 +103,10 @@ class Favourite : Fragment(),FavouriteLocationsListAdapter.OnViewClickListener {
     override fun navigateToWeatherData(position: Int) {
         Toast.makeText(requireContext(),"zz",Toast.LENGTH_SHORT).show()
         val intent= Intent(requireContext() , WeatherDataFav::class.java)
+
+        intent.putExtra("latOfSelectedFavObject", adapter.currentList.get(position).lat)
+        intent.putExtra("latOfSelectedFavObject", adapter.currentList.get(position).lat)
+        intent.putExtra("lonOfSelectedFavObject", adapter.currentList.get(position).lon)
         startActivity(intent)
     }
 }

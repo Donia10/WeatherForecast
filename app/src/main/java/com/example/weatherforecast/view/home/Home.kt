@@ -11,7 +11,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -20,20 +19,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.example.weatherforecast.Language
 import com.example.weatherforecast.R
 import com.example.weatherforecast.WeatherApplication
 import com.example.weatherforecast.model.Daily
 import com.example.weatherforecast.model.Hourly
 import com.example.weatherforecast.model.WeatherDataModel
-import com.example.weatherforecast.view.DailyListAdapter
-import com.example.weatherforecast.view.HourlyListAdapter
 import com.example.weatherforecast.viewmodel.WeatherHomeViewModel
 import com.example.weatherforecast.viewmodel.WeatherHomeViewModelFactory
 import kotlinx.android.synthetic.main.fragment_home.*
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.math.round
 
 class Home : Fragment() {
 

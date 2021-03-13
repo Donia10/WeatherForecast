@@ -1,4 +1,4 @@
-package com.example.weatherforecast.view
+package com.example.weatherforecast.view.favouriteLoactions
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -8,12 +8,12 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.weatherforecast.R
 import com.example.weatherforecast.model.Daily
-import kotlinx.android.synthetic.main.daily_row.view.*
+import kotlinx.android.synthetic.main.daily_fav_row.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 
 
-class DailyListAdapter(var dailyList:ArrayList<Daily>) :RecyclerView.Adapter<DailyListAdapter.DailyViewHolder>(){
+class FavDailyListAdapter(var dailyList:ArrayList<Daily>) :RecyclerView.Adapter<FavDailyListAdapter.DailyViewHolder>(){
 
 
     fun updateHoursList(newDailyList: List<Daily>) {
@@ -24,7 +24,7 @@ class DailyListAdapter(var dailyList:ArrayList<Daily>) :RecyclerView.Adapter<Dai
 
     override fun onCreateViewHolder(parent: ViewGroup, p1: Int) =
         DailyViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.daily_row, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.daily_fav_row, parent, false)
         )
 
 
@@ -37,19 +37,14 @@ class DailyListAdapter(var dailyList:ArrayList<Daily>) :RecyclerView.Adapter<Dai
     }
 
     class DailyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val dt=itemView.txt_daily_dt
-        private val day=itemView.daily_day
-        private val dailyDayIcon=itemView.dailyDay_icon
-        private val dailyDayTemp=itemView.dailyDay_temp
-        private val sunrise=itemView.daily_sunrise
-        private val night=itemView.daily_night
-        private val dailyNightIcon=itemView.dailyNight_icon
-        private val dailyNightTemp=itemView.dailyNight_temp
-        private val sunset=itemView.dailyNight_sunset
-        private val dailyDayDesc=itemView.dailyDay_desc
-        private val dailyNightDesc=itemView.dailyNight_desc
-
-
+        private val dt=itemView.fav_time_daily_item
+    //    private val day=itemView.da
+        private val dailyDayIcon=itemView.fav_day_icon_daily_item
+        private val dailyDayTemp=itemView.fav_day_temp_daily_item
+        private val sunrise=itemView.fav_day_sunrise_item
+        private val dailyNightIcon=itemView.fav_night_icon_daily_item
+        private val dailyNightTemp=itemView.fav_night_temp_daily_item
+        private val sunset=itemView.fav_night_sunset_daily_item
 
         fun bind(daily: Daily){
 
@@ -59,14 +54,12 @@ class DailyListAdapter(var dailyList:ArrayList<Daily>) :RecyclerView.Adapter<Dai
             val sdf = SimpleDateFormat(" EE:dd:MM", Locale.getDefault())
             val currenTimeZone = (daily.dt?.toLong())?.times(1000)?.let { it1 -> Date(it1) }
             dt.text= sdf.format(currenTimeZone)
-            day.text="Day"
-            night.text="Night"
+          /*  day.text="Day"
+            night.text="Night"*/
             dailyDayTemp.text=(daily.temp?.day)?.toInt().toString()+"℃"
             dailyNightTemp.text=(daily.temp?.night)?.toInt().toString()+"℃"
             sunrise.text=getDt(daily.sunrise)
             sunset.text=getDt(daily.sunset)
-            dailyDayDesc.text="'"
-
 
             //   hourlyPrec.text=hourly.
             val dayIcon=daily.weather?.get(0)?.icon
@@ -91,12 +84,12 @@ class DailyListAdapter(var dailyList:ArrayList<Daily>) :RecyclerView.Adapter<Dai
             return "http://openweathermap.org/img/w/${icon}.png"
         }
         fun getDt(dt:Int?):String{
-        val calendar = Calendar.getInstance()
-        val tz = TimeZone.getDefault()
-        calendar.add(Calendar.MILLISECOND, tz.getOffset(calendar.timeInMillis))
-        val sdf = SimpleDateFormat("HH:mm a", Locale.getDefault())
-        val currenTimeZone = (dt?.toLong())?.times(1000)?.let { it1 -> Date(it1) }
-        return sdf.format(currenTimeZone)
-    }
+            val calendar = Calendar.getInstance()
+            val tz = TimeZone.getDefault()
+            calendar.add(Calendar.MILLISECOND, tz.getOffset(calendar.timeInMillis))
+            val sdf = SimpleDateFormat("HH:mm a", Locale.getDefault())
+            val currenTimeZone = (dt?.toLong())?.times(1000)?.let { it1 -> Date(it1) }
+            return sdf.format(currenTimeZone)
+        }
     }
 }

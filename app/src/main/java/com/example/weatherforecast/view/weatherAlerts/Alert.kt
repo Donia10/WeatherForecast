@@ -140,7 +140,6 @@ class Alert : Fragment() ,EventsCustomDialogFragment.EventsListener,AddAlarmDial
 
             notificationManager.createNotificationChannel(notificationChannel)
         }
-
     }
 
     private fun setAlarm(calendar: Calendar) {

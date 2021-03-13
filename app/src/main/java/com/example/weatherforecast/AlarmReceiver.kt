@@ -60,10 +60,6 @@ class AlarmReceiver : BroadcastReceiver() {
                 .setAutoCancel(true)
                 .setDefaults(NotificationCompat.DEFAULT_ALL)
         notificationManager.notify(NOTIFICATION_ID,builder.build())
-
-
-
-
     }
 
 }

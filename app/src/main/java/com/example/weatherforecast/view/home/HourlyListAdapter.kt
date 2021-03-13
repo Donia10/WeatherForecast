@@ -1,9 +1,8 @@
-package com.example.weatherforecast.view
+package com.example.weatherforecast.view.home
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -23,16 +22,17 @@ class HourlyListAdapter(var hoursList:ArrayList<Hourly>) :RecyclerView.Adapter<H
         notifyDataSetChanged()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, p1: Int) = HourlyViewHolder(
-        LayoutInflater.from(parent.context).inflate(R.layout.hourly_row, parent, false)
-    )
+    override fun onCreateViewHolder(parent: ViewGroup, p1: Int) =
+        HourlyViewHolder(
+            LayoutInflater.from(parent.context).inflate(R.layout.hourly_row, parent, false)
+        )
 
 
     override fun getItemCount(): Int {
         return hoursList.size
     }
 
-    override fun onBindViewHolder(holder: HourlyListAdapter.HourlyViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: HourlyViewHolder, position: Int) {
         holder.bind(hoursList[position])
     }
 

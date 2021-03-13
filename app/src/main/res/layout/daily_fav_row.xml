@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="30dp"
+        app:cardBackgroundColor="#0D47A1">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/fav_time_daily_item"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="10:10 pm"
+                android:textSize="18dp"
+                android:textColor="@color/white"
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="18dp"/>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/Day"
+                    android:textSize="22sp"
+                    android:textColor="@color/white"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="16dp"/>
+                <TextView
+                    android:id="@+id/fav_day_temp_daily_item"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="10c"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:layout_marginTop="16dp"/>
+
+                <ImageView
+                    android:id="@+id/fav_day_icon_daily_item"
+                    android:layout_width="120dp"
+                    android:layout_height="80dp"
+                    android:src="@drawable/ic_thunderstorm"/>
+                <TextView
+                    android:id="@+id/fav_day_sunrise_item"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="sunrise"
+                    android:textSize="18dp"
+                    android:textColor="@color/white"
+                    android:layout_marginTop="16dp"/>
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/Night"
+                    android:textSize="22sp"
+                    android:textColor="@color/white"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="8dp"/>
+                <TextView
+                    android:id="@+id/fav_night_temp_daily_item"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="10c"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:layout_marginTop="16dp"/>
+
+                <ImageView
+                    android:id="@+id/fav_night_icon_daily_item"
+                    android:layout_width="120dp"
+                    android:layout_height="80dp"
+                    android:src="@drawable/ic_thunderstorm"/>
+                <TextView
+                    android:id="@+id/fav_night_sunset_daily_item"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="sunset"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:layout_marginTop="20dp" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</FrameLayout>
