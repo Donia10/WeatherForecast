@@ -1,42 +1,24 @@
 package com.example.weatherforecast.view.weatherAlerts
 
 import android.app.*
-import android.app.TimePickerDialog.OnTimeSetListener
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.os.SystemClock
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide.init
-import com.bumptech.glide.GlideBuilder
 import com.example.weatherforecast.AlarmReceiver
 import com.example.weatherforecast.R
 import com.example.weatherforecast.WeatherApplication
 import com.example.weatherforecast.model.local.AlarmData
-import com.example.weatherforecast.view.favouriteLoactions.FavouriteLocationsListAdapter
-import com.example.weatherforecast.viewmodel.WeatherAlertViewModel
-import com.example.weatherforecast.viewmodel.WeatherAlertViewModelFactory
-import com.example.weatherforecast.viewmodel.WeatherHomeViewModel
-import com.example.weatherforecast.viewmodel.WeatherHomeViewModelFactory
-import kotlinx.android.synthetic.main.alarm_item.*
-import kotlinx.android.synthetic.main.fragment_alert.*
 import kotlinx.android.synthetic.main.fragment_alert.view.*
-import kotlinx.android.synthetic.main.fragment_favourite.view.*
 import java.text.DateFormat
-import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.random.Random.Default.nextInt
 
 class Alert : Fragment() ,EventsCustomDialogFragment.EventsListener,AddAlarmDialog.EventsListener ,AlarmAdapter.OnItemClickListener{
     private val NOTIFICATION_ID = 0
@@ -45,7 +27,9 @@ class Alert : Fragment() ,EventsCustomDialogFragment.EventsListener,AddAlarmDial
     private lateinit var toastMsg: String
     val adapter = AlarmAdapter()
     val weatherAlertViewModel: WeatherAlertViewModel by viewModels {
-        WeatherAlertViewModelFactory((requireActivity().application as WeatherApplication).repository)
+        WeatherAlertViewModelFactory(
+            (requireActivity().application as WeatherApplication).repository
+        )
     }
 
     private var eventChosen: String? = null

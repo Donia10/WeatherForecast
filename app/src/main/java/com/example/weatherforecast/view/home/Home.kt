@@ -6,7 +6,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -15,36 +14,27 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.example.weatherforecast.Language
 import com.example.weatherforecast.R
 import com.example.weatherforecast.WeatherApplication
 import com.example.weatherforecast.model.Daily
 import com.example.weatherforecast.model.Hourly
 import com.example.weatherforecast.model.WeatherDataModel
-import com.example.weatherforecast.viewmodel.WeatherHomeViewModel
-import com.example.weatherforecast.viewmodel.WeatherHomeViewModelFactory
-import kotlinx.android.synthetic.main.activity_weather_data_fav.*
 import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.hourly_row.*
 import java.text.SimpleDateFormat
 import java.util.*
-
 class Home : Fragment() {
-
     val weatherHomeViewModel : WeatherHomeViewModel by viewModels {
-        WeatherHomeViewModelFactory( (requireActivity().application as WeatherApplication).repository)
+        WeatherHomeViewModelFactory((requireActivity().application as WeatherApplication).repository)
     }
+
     var hourlyListAdapter =
         HourlyListAdapter(arrayListOf())
     var dailyListAdapter =
         DailyListAdapter(arrayListOf())
 
     lateinit var temp:String
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -68,16 +58,14 @@ class Home : Fragment() {
         val lon=sp.getString("lon","")
         val lan=sp.getString("language","")
         temp= sp.getString("Temperature","").toString()
-        //if(lan=="Arabic")
-       //     Language.setLocale(requireActivity(),"ar")
+//        if(lan=="Arabic")
+//            Language.setLocale(requireActivity(),"ar")
 
         if (lat != "") {
             if (lon != "") {
                 if (lat != null) {
                     if (lon != null) {
                         weatherHomeViewModel.refreshHomeDataFromRepository(lat.toDouble(),lon.toDouble())
-                        Toast.makeText(context,"1nn1${lat?.toDouble()}}${ lon?.toDouble()}",Toast.LENGTH_SHORT).show()
-
                     }
                 }
             }
@@ -88,19 +76,22 @@ class Home : Fragment() {
                 if (lat != null) {
                     if (lon != null) {
 
-                        val latcast:Double = String.format("%.4f",lat.toDouble()).toDouble()
-                        val loncat:Double = String.format("%.4f", lon.toDouble()).toDouble()
+//                                val latcast = String.format("%.4f", lat.toDouble()).toDouble()
+//                                val loncast = String.format("%.4f", lon.toDouble()).toDouble()
+                                weatherHomeViewModel.getHome(round(lat.toDouble(),4), round(lon.toDouble(),4))
+                                    .observe(viewLifecycleOwner, Observer { data ->
+                                        data?.let {
 
-                        weatherHomeViewModel.getHome(latcast, loncat)
-                            .observe(viewLifecycleOwner, Observer { data ->data?.let {
+                                            updaMainLayout(it)
+                                            data.hourly?.let { it1 -> updateHourlyListUI(it1) }
+                                            data.daily?.let { it1 -> updateDailyListUI(it1) }
+                                            data.let { updateDetailsLayout(it) }
 
-                                updaMainLayout(it)
-                                data.hourly?.let { it1 -> updateHourlyListUI(it1) }
-                                data.daily?.let { it1 -> updateDailyListUI(it1) }
-                                data.let { updateDetailsLayout(it) }
+                                        }
+                                    })
 
-                            } })
-                    }
+                            }
+
                 }
             }
         }
@@ -164,21 +155,13 @@ class Home : Fragment() {
         }
     }
 
-    fun convertArabic(arabicStr: String): String? {
-        val chArr = arabicStr.toCharArray()
-        val sb = StringBuilder()
-        for (ch in chArr) {
-            if (Character.isDigit(ch)) {
-                sb.append(Character.getNumericValue(ch))
-            }else if (ch == '٫'){
-                sb.append(".")
-            }
-
-            else {
-                sb.append(ch)
-            }
-        }
-        return sb.toString()
+    fun round(value: Double, places: Int): Double {
+        var value = value
+        require(places >= 0)
+        val factor = Math.pow(10.0, places.toDouble()).toLong()
+        value = value * factor
+        val tmp = Math.round(value)
+        return tmp.toDouble() / factor
     }
 
 

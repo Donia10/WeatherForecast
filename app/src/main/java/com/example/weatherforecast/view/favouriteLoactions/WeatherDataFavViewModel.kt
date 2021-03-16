@@ -1,4 +1,5 @@
-package com.example.weatherforecast.viewmodel
+package com.example.weatherforecast.view.favouriteLoactions
+
 
 import android.content.Context
 import android.util.Log
@@ -9,17 +10,16 @@ import kotlinx.coroutines.*
 import java.io.IOException
 import java.lang.IllegalArgumentException
 
-class WeatherHomeViewModel (private val weatherRepository: WeatherRepository):ViewModel() {
+class WeatherDataFavViewModel (private val weatherRepository: WeatherRepository):ViewModel() {
     /**
      * The data source this ViewModel will fetch results from.
      */
-   // private val weatherRepository = WeatherRepository(getDatabase(getApplication()))
 
-    fun getHome(lat: Double, lon: Double): LiveData<WeatherDataModel>{
+    fun getFav(lat: Double, lon: Double): LiveData<WeatherDataModel>{
         val liveWeatherData: LiveData<WeatherDataModel> = weatherRepository.getHome(lat,lon)
         return liveWeatherData
     }
-     fun refreshDataFromRepository(context: Context) = viewModelScope.launch {
+    fun refreshDataFromRepository(context: Context) = viewModelScope.launch {
         try {
             Log.i("TAG", "refreshDataFromRepository: try ")
             weatherRepository.refreshWeatherData(context)
@@ -28,7 +28,7 @@ class WeatherHomeViewModel (private val weatherRepository: WeatherRepository):Vi
         }
 
     }
-    fun refreshHomeDataFromRepository(lat: Double, lon: Double) = viewModelScope.launch {
+    fun refreshFavDataFromRepository(lat: Double, lon: Double) = viewModelScope.launch {
         try {
             Log.i("TAG", "refreshFavDataFromRepository: try ")
             weatherRepository.insertWeatherData(lat,lon)
@@ -37,22 +37,15 @@ class WeatherHomeViewModel (private val weatherRepository: WeatherRepository):Vi
         }
 
     }
-     fun deleteAlarmById(id:Int)=viewModelScope.launch {
-        weatherRepository.deleteAlarmById(id)
-    }
-/*
-
-    init {
-        refreshDataFromRepository( )
-    }
-*/
 
 }
-class WeatherHomeViewModelFactory(private val weatherRepository: WeatherRepository):ViewModelProvider.Factory{
+class WeatherDataFavViewModelFactory(private val weatherRepository: WeatherRepository):ViewModelProvider.Factory{
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        if(modelClass.isAssignableFrom(WeatherHomeViewModel::class.java)){
+        if(modelClass.isAssignableFrom(WeatherDataFavViewModel::class.java)){
             @Suppress("UNCHECKED_CAST")
-            return WeatherHomeViewModel(weatherRepository) as T
+            return WeatherDataFavViewModel(
+                weatherRepository
+            ) as T
         }
         throw IllegalArgumentException("UnKnown ViewModel class")
     }

@@ -22,7 +22,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WeatherForecast"
         android:usesCleartextTraffic="true">
-        <activity android:name=".view.favouriteLoactions.WeatherDataFav"></activity>
+        <activity android:name=".MainActivity"
+            android:configChanges="locale"></activity>
+        <activity android:name=".view.favouriteLoactions.WeatherDataFav" />
 
         <receiver
             android:name=".AlarmReceiver"
@@ -43,7 +45,7 @@
         <activity
             android:name=".view.favouriteLoactions.MapsActivity"
             android:label="@string/title_activity_maps" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

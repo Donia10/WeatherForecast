@@ -12,12 +12,13 @@ class PagerAdapter (fm: FragmentManager,noOfTabs:Int) : FragmentStatePagerAdapte
 
     private val numberOfTabs=noOfTabs
      override fun getItem(position: Int): Fragment {
+
          return when (position) {
              0 -> SettingsFragment()
              1 -> Home()
              2 -> Alert()
              3 -> Favourite()
-             else-> Fragment()
+             else ->Fragment()
 
          }
      }

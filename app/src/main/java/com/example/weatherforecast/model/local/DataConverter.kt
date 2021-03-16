@@ -318,5 +318,22 @@ class DataConverter {
             object : TypeToken<List<Alert>>() {}.type
         return gson.fromJson<List<Alert>>(alertList, type)
     }
-
+    @TypeConverter
+    fun fromDouble(double: Double): String? {
+        if (double == null) {
+            return null
+        }
+        val gson = Gson()
+        val type =
+            object : TypeToken<Double>() {}.type
+        return gson.toJson(double, type)
+    }
+    @TypeConverter
+    fun toDouble(double: String? ): Double? {
+        if (double == null) return null
+        val gson = Gson()
+        val type =
+            object : TypeToken<Double>() {}.type
+        return gson.fromJson<Double>(double, type)
+    }
 }

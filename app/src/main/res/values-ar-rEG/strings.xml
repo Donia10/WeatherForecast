@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">النشرة الجوية</string>
+    <string name="setting_fragment">الإعدادات</string>
+    <string name="favourite_fragment">المفضله</string>
+    <string name="alert_fragment">تنبيه</string>
+    <string name="title_activity_maps">خريطه</string>
+    <string name="normal_map">خريطه عاديه</string>
+    <string name="hybrid_map">خريطه هجينيه</string>
+    <string name="satellite_map">خريطه القمر الصناعى</string>
+    <string name="terrain_map">خريطه التضاريس</string>
+    <string name="Rain">مطر</string>
+    <string name="Wind">الرياح</string>
+    <string name="fog_mist_haze">ضباب</string>
+    <string name="snow">الثلج</string>
+    <string name="cloud">السحاب</string>
+    <string name="ThunderStorm">عاصفة رعدية</string>
+    <string name="CheckEvent">تحقق من الحدث</string>
+    <string name="Notification">تنبيه</string>
+    <string name="DefaultAlarmSound">الصوت الافتراضي</string>
+    <string name="AlarmType">النوع</string>
+    <string name="yes">نعم</string>
+    <string name="deletAlarm">حذف المنبه</string>
+    <string name="no">لا</string>
+    <string name="Day">نهار</string>
+    <string name="Night">ليل</string>
+    <string name="humidity">رطوبة</string>
+    <string name="precipition">تساقط</string>
+    <string name="Pressure">ضغط</string>
+    <string name="WindSpeed">سرعه الرياح</string>
+    <string name="CloudCover">"غطاء السحابى "</string>
+    <string name="Visibility">الرؤية</string>
+    <string name="Cancel">إالغاء</string>
+    <string name="Save">حفظ</string>
+    <string name="home_fragment">الصفحة الرئيسية</string>
+    <string name="Location">الموقع</string>
+    <string name="Temperature">درجه الحراراه</string>
+    <string name="ChooseLocation">اختر الموقع</string>
+    <string name="Units">الوحدات</string>
+    <string name="ChooseUnitOfTemperature">اختر وحده درجه الحراره</string>
+    <string name="ChooseUnitOfWindSpeed">اختر وحده سرعه الرياح</string>
+    <string name="Language">اللغه</string>
+    <string name="ChooseLanguage">اختر اللغه</string>
+</resources>

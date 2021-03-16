@@ -2,13 +2,8 @@ package com.example.weatherforecast.view.favouriteLoactions
 
 import android.content.Intent
 import android.content.SharedPreferences
-import android.graphics.Color
-import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.SpannableString
-import android.text.style.ForegroundColorSpan
-import android.text.style.RelativeSizeSpan
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.widget.Toolbar
@@ -16,19 +11,13 @@ import androidx.lifecycle.Observer
 import androidx.preference.PreferenceManager
 import com.example.weatherforecast.R
 import com.example.weatherforecast.WeatherApplication
-import com.example.weatherforecast.viewmodel.WeatherDataFavViewModel
-import com.example.weatherforecast.viewmodel.WeatherDataFavViewModelFactory
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.weatherforecast.model.Daily
 import com.example.weatherforecast.model.Hourly
 import com.example.weatherforecast.model.WeatherDataModel
-import com.example.weatherforecast.view.home.DailyListAdapter
-import com.example.weatherforecast.view.home.HourlyListAdapter
 import kotlinx.android.synthetic.main.activity_weather_data_fav.*
-import kotlinx.android.synthetic.main.fragment_home.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -43,7 +32,9 @@ class WeatherDataFav : AppCompatActivity() {
         setContentView(R.layout.activity_weather_data_fav)
      //   updateMainInfoUI()
         val WeatherDataFavViewModel : WeatherDataFavViewModel by viewModels {
-            WeatherDataFavViewModelFactory( (this.application as WeatherApplication).repository)
+            WeatherDataFavViewModelFactory(
+                (this.application as WeatherApplication).repository
+            )
         }
         val toolBar =findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolBar)

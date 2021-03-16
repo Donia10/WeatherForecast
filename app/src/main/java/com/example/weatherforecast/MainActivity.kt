@@ -1,12 +1,13 @@
 package com.example.weatherforecast
 
+import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.activity.viewModels
+import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
+import androidx.preference.PreferenceManager
 import androidx.viewpager.widget.ViewPager
-import com.example.weatherforecast.viewmodel.WeatherHomeViewModel
-import com.example.weatherforecast.viewmodel.WeatherHomeViewModelFactory
 import com.google.android.material.tabs.TabLayout
 
 class MainActivity : AppCompatActivity() {
@@ -16,6 +17,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val toolBar =findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolBar)
+        val sp: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+        val lan=sp.getString("language","")
+        Language.setLocale(this,lan)
+        Toast.makeText(this,lan,Toast.LENGTH_SHORT).show()
+
         val tabLayout=findViewById<TabLayout>(R.id.tab_layout)
         tabLayout.addTab(tabLayout.newTab().setText(R.string.setting_fragment))
         tabLayout.addTab(tabLayout.newTab().setText(R.string.home_fragment))
@@ -25,9 +31,8 @@ class MainActivity : AppCompatActivity() {
 
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL)
         val viewPager =findViewById<ViewPager>(R.id.pager)
-         val adapter=PagerAdapter(supportFragmentManager,tabLayout.tabCount)
+        val adapter=PagerAdapter(supportFragmentManager,tabLayout.tabCount)
         viewPager.setAdapter(adapter)
-
 
         //listener
         viewPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabLayout))
@@ -36,12 +41,11 @@ class MainActivity : AppCompatActivity() {
                 viewPager.currentItem = tab.position
             }
             override fun onTabUnselected(tab: TabLayout.Tab) {
-
             }
             override fun onTabReselected(tab: TabLayout.Tab) {
-
             }
         })
+
 
     }
 }

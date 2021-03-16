@@ -15,8 +15,6 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.weatherforecast.R
 import com.example.weatherforecast.WeatherApplication
-import com.example.weatherforecast.viewmodel.WeatherFavouriteListViewModelFactory
-import com.example.weatherforecast.viewmodel.WeatherFavouriteViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.fragment_favourite.view.*
 import java.io.IOException
@@ -25,18 +23,17 @@ import java.util.*
 
 class Favourite : Fragment(),FavouriteLocationsListAdapter.OnViewClickListener {
     val weatherFavouriteViewModel : WeatherFavouriteViewModel by viewModels {
-        WeatherFavouriteListViewModelFactory( (requireActivity().application as WeatherApplication).repository)
+        WeatherFavouriteListViewModelFactory(
+            (requireActivity().application as WeatherApplication).repository
+        )
     }
     val adapter= FavouriteLocationsListAdapter()
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        Log.i("TAG", "fav: ")
+
         // Inflate the layout for this fragment
         val view:View =inflater.inflate(R.layout.fragment_favourite, container, false)
         val recyclerView=view.favListRecyclerview

@@ -57,7 +57,7 @@
             app:title="Language"
             app:summary="Choose Language"
             android:entries="@array/chooseLanguage"
-            android:entryValues="@array/chooseLanguage">
+            android:entryValues="@array/saveLanguage">
         </ListPreference>
 
     </PreferenceCategory>

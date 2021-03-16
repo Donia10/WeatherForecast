@@ -16,6 +16,7 @@ import androidx.fragment.app.viewModels
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
+import com.example.weatherforecast.Language
 import com.example.weatherforecast.R
 import com.example.weatherforecast.WeatherApplication
 import com.example.weatherforecast.view.favouriteLoactions.MapsActivity
@@ -26,35 +27,28 @@ import java.util.*
 
 class SettingsFragment : PreferenceFragmentCompat() {
 
-
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.setting_preferences, rootKey)
-
       val settingPref=
           SettingPreferences(this)
         settingPref.updatePrefSummary(this)
+    }
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val prefLang: Preference? =getPreferenceScreen().findPreference("language")
+        prefLang?.onPreferenceChangeListener=Preference.OnPreferenceChangeListener { preference, newValue ->
+            Language.setLocale(requireActivity(), newValue.toString())
+            requireActivity().recreate()
+            true
+
+        }
+        return super.onCreateView(inflater, container, savedInstanceState)
 
     }
 
-//     override fun onCreateView(
-//        inflater: LayoutInflater,
-//        container: ViewGroup?,
-//        savedInstanceState: Bundle?
-//    ): View? {
-//
-//        // Inflate the layout for this fragment
-//        return onCreateView(inflater,container,savedInstanceState)
-////        val prefLoc: Preference? = getPreferenceScreen().findPreference("showLoc")
-////        prefLoc?.setOnPreferenceChangeListener(Preference.OnPreferenceChangeListener { preference, newValue ->
-////            if(preference.summary=="Search"){
-////      //          navigateToMapsActivity()
-////            }
-////            true
-////        })
-//
-//
-//    }
-//
 //    override fun onActivityCreated(savedInstanceState: Bundle?) {
 //        super.onActivityCreated(savedInstanceState)
 ////        val settingViewModel : SettingViewModel by viewModels {

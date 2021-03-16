@@ -28,4 +28,9 @@
         <item>Arabic</item>
         <item>English</item>
     </string-array>
+    <string-array name="saveLanguage">
+        <item>ar</item>
+        <item>en</item>
+    </string-array>
+
 </resources>

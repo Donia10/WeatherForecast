@@ -15,14 +15,7 @@ class WeatherRepository (private val weatherDao: WeatherDao) {
 
 
       fun  getHome(lat:Double,lon:Double):LiveData<WeatherDataModel>{
-//          if (lan == "ar") {
-//              var loni = convertArabic("$lon")
-//              var lati = convertArabic("$lat")
-//
-//              val weatherLiveData: LiveData<WeatherDataModel> = weatherDao.getWeatherData(lat, lon)
-//
-//              return weatherLiveData
-//          }else{
+
               val weatherLiveData: LiveData<WeatherDataModel> = weatherDao.getWeatherData(lat, lon)
 
               return weatherLiveData
@@ -41,19 +34,16 @@ class WeatherRepository (private val weatherDao: WeatherDao) {
                 Log.i("TAG", "refresh weather is called and get data from api")
                 if(unit!=null && lan!=null && lat!=null && lon!=null) {
 
-//                    if(lan=="ar"){
-//                        lat=convertArabic(lat!!)
-//                        lan=convertArabic(lon!!)
-//
-//                    }
-                        val responseWeatherData =
-                            WeatherHomeService.getWeatherService().getWeatherForecast(
-                                "$lat",
-                                "$lon",
-                                "c9f08d5ea2902a1721e39bea2c8ccac0",
-                                "$unit",
-                                "$lan"
-                            )
+                    val responseWeatherData = WeatherHomeService.getWeatherService().getWeatherForecast(
+                        "$lat",
+                        "$lon",
+                        "$lan",
+                        "$unit",
+                        "c9f08d5ea2902a1721e39bea2c8ccac0"
+
+
+                    )
+
                         responseWeatherData.body()
                             ?.let { weatherDao.insertWeatherData(it) }
 
@@ -71,9 +61,10 @@ class WeatherRepository (private val weatherDao: WeatherDao) {
                 val responseWeatherData = WeatherHomeService.getWeatherService().getWeatherForecast(
                     "$lat",
                     "$lon",
+                    "$lan",
                     "c9f08d5ea2902a1721e39bea2c8ccac0",
-                    "$unit",
-                    "$lan"
+                    "$unit"
+
                 )
                 responseWeatherData.body()
                     ?.let { weatherDao.insertWeatherData(it) }
@@ -108,10 +99,10 @@ class WeatherRepository (private val weatherDao: WeatherDao) {
 
     fun getSp(context: Context){
         val sp: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-        if( sp.getString("Temperature","notfound")=="Fahrenheit"&&sp.getString("WindSpeed","no")=="miles/hour"){
+        if( sp.getString("Temperature","notfound")=="Fahrenheit"){
             unit="imperial"
 
-        }else  if( sp.getString("Temperature","notfound")=="Celsius"&&sp.getString("WindSpeed","no")=="meter/sec"){
+        }else  if( sp.getString("Temperature","notfound")=="Celsius"){
 
             unit="metric"
         }else
@@ -120,9 +111,7 @@ class WeatherRepository (private val weatherDao: WeatherDao) {
             unit="standard"
         }
 
-          if(sp.getString("language","not")=="Arabic")
-              lan="ar"
-
+          lan=sp.getString("language","")
            lat=sp.getString("lat","")
            lon=sp.getString("lon","")
 

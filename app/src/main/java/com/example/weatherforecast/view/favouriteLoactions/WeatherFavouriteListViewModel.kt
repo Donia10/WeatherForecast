@@ -1,10 +1,9 @@
-package com.example.weatherforecast.viewmodel
+package com.example.weatherforecast.view.favouriteLoactions
 
 import android.util.Log
 import androidx.lifecycle.*
 import com.example.weatherforecast.model.WeatherDataModel
 import com.example.weatherforecast.model.WeatherRepository
-import com.example.weatherforecast.model.local.AlarmData
 import kotlinx.coroutines.*
 import java.io.IOException
 import java.lang.IllegalArgumentException
@@ -37,7 +36,9 @@ class WeatherFavouriteListViewModelFactory(private val weatherRepository: Weathe
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if(modelClass.isAssignableFrom(WeatherFavouriteViewModel::class.java)){
             @Suppress("UNCHECKED_CAST")
-            return WeatherFavouriteViewModel(weatherRepository) as T
+            return WeatherFavouriteViewModel(
+                weatherRepository
+            ) as T
         }
         throw IllegalArgumentException("UnKnown ViewModel class")
     }

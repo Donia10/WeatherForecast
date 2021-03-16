@@ -92,21 +92,24 @@ data class Weather (    @SerializedName("id") @Expose var id: Int? ,
                         @SerializedName("icon") @Expose var icon: String?)
 
 @Entity(tableName ="Weather" ,primaryKeys = ["lat","lon"])
-data class WeatherDataModel( @SerializedName("lat") @Expose var lat: Double,
-                             @SerializedName("lon") @Expose var lon: Double ,
-                             @SerializedName("timezone") @Expose var timezone: String?,
-                             @SerializedName("timezone_offset")@Expose var timezoneOffset: Int? ,
+data class WeatherDataModel(
+                            @TypeConverters(DataConverter::class)
+                            @SerializedName("lat") @Expose var lat: Double,
+                            @TypeConverters(DataConverter::class)
+                            @SerializedName("lon") @Expose var lon: Double,
+                            @SerializedName("timezone") @Expose var timezone: String?,
+                            @SerializedName("timezone_offset")@Expose var timezoneOffset: Int?,
     //          @Embedded(prefix = "w_current")
-                             @TypeConverters(DataConverter::class)
-                             @SerializedName("current") @Expose var current: Current? ,
+                            @TypeConverters(DataConverter::class)
+                             @SerializedName("current") @Expose var current: Current?,
     //         @Embedded(prefix = "w_minutely")
-                             @TypeConverters(DataConverter::class)
-                             @SerializedName("minutely") @Expose var minutely: List<Minutely>? ,
+                            @TypeConverters(DataConverter::class)
+                             @SerializedName("minutely") @Expose var minutely: List<Minutely>?,
     //           @Embedded(prefix = "w_hourly")
-                             @TypeConverters(DataConverter::class)
-                             @SerializedName("hourly") @Expose var hourly: List<Hourly>? ,
+                            @TypeConverters(DataConverter::class)
+                             @SerializedName("hourly") @Expose var hourly: List<Hourly>?,
     //              @Embedded(prefix = "w_daily")
-                             @TypeConverters(DataConverter::class)
+                            @TypeConverters(DataConverter::class)
                              @SerializedName("daily") @Expose var daily: List<Daily>?,
 
                             @TypeConverters(DataConverter::class)
