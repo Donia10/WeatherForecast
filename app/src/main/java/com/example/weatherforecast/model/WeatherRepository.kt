@@ -12,16 +12,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class WeatherRepository (private val weatherDao: WeatherDao) {
-
-
       fun  getHome(lat:Double,lon:Double):LiveData<WeatherDataModel>{
-
               val weatherLiveData: LiveData<WeatherDataModel> = weatherDao.getWeatherData(lat, lon)
-
               return weatherLiveData
-        //  }
     }
-
     var unit:String?=null
     var lat:String?=null
     var lan:String?=null
@@ -40,53 +34,48 @@ class WeatherRepository (private val weatherDao: WeatherDao) {
                         "$lan",
                         "$unit",
                         "c9f08d5ea2902a1721e39bea2c8ccac0"
-
-
                     )
-
                         responseWeatherData.body()
                             ?.let { weatherDao.insertWeatherData(it) }
-
                 }
             }
     }
     suspend fun getAlert():WeatherDataModel ?{
        return weatherDao.getAlert(33.4418,-94.0377)
     }
-    suspend fun insertWeatherData(lat: Double?, lon: Double?){
-        //   val datarefresd = weatherDatabase.weatherDao().getHasRefreshed()
-        withContext(Dispatchers.IO) {
-            Log.i("TAG", "insertWeatherData is called and get data from api")
-          //  if(unit!=null && lan!=null) {
-                val responseWeatherData = WeatherHomeService.getWeatherService().getWeatherForecast(
-                    "$lat",
-                    "$lon",
-                    "$lan",
-                    "c9f08d5ea2902a1721e39bea2c8ccac0",
-                    "$unit"
-
-                )
-                responseWeatherData.body()
-                    ?.let { weatherDao.insertWeatherData(it) }
-            }
-    //    }
-    }
-    suspend fun insertWeatherData(lat:String, lon: String){
+//    suspend fun insertWeatherData(lat: Double?, lon: Double?){
+//        //   val datarefresd = weatherDatabase.weatherDao().getHasRefreshed()
+//        withContext(Dispatchers.IO) {
+//            Log.i("TAG", "insertWeatherData is called and get data from api")
+//          //  if(unit!=null && lan!=null) {
+//                val responseWeatherData = WeatherHomeService.getWeatherService().getWeatherForecast(
+//                    "$lat",
+//                    "$lon",
+//                    "$lan",
+//                    "c9f08d5ea2902a1721e39bea2c8ccac0",
+//                    "$unit"
+//
+//                )
+//                responseWeatherData.body()
+//                    ?.let { weatherDao.insertWeatherData(it) }
+//            }
+//    //    }
+//    }
+    suspend fun insertWeatherData(lat:Double, lon: Double){
         //   val datarefresd = weatherDatabase.weatherDao().getHasRefreshed()
         withContext(Dispatchers.IO) {
             Log.i("TAG", "insertWeatherData is called and get data from api")
             //  if(unit!=null && lan!=null) {
             val responseWeatherData = WeatherHomeService.getWeatherService().getWeatherForecast(
-                lat,
-                lon,
-                "c9f08d5ea2902a1721e39bea2c8ccac0",
+                "$lat",
+                "$lon",
+                "$lan",
                 "$unit",
-                "$lan"
+                "c9f08d5ea2902a1721e39bea2c8ccac0"
             )
             responseWeatherData.body()
                 ?.let { weatherDao.insertWeatherData(it) }
         }
-        //    }
     }
     val alarmData:LiveData<MutableList<AlarmData>> = weatherDao.getAlarm()
     val alarm=weatherDao.getAlarm()
@@ -96,27 +85,22 @@ class WeatherRepository (private val weatherDao: WeatherDao) {
         }
         return -1
     }
-
     fun getSp(context: Context){
         val sp: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         if( sp.getString("Temperature","notfound")=="Fahrenheit"){
             unit="imperial"
-
         }else  if( sp.getString("Temperature","notfound")=="Celsius"){
 
             unit="metric"
         }else
         {
-
             unit="standard"
         }
-
-          lan=sp.getString("language","")
+           lan=sp.getString("language","")
            lat=sp.getString("lat","")
            lon=sp.getString("lon","")
 
     }
-
     suspend fun deleteAlarm(alarmData: AlarmData){
         withContext(Dispatchers.IO){
             weatherDao.deleteAlert(alarmData)
@@ -127,27 +111,9 @@ class WeatherRepository (private val weatherDao: WeatherDao) {
             weatherDao.deleteAlertById(id)
         }
     }
-
     suspend fun deleteWeatherDataFav(weatherDataModel: WeatherDataModel){
         withContext(Dispatchers.IO){
             weatherDao.deleteFavLocation(weatherDataModel)
         }
-    }
-
-    fun convertArabic(arabicStr: String): String? {
-        val chArr = arabicStr.toCharArray()
-        val sb = StringBuilder()
-        for (ch in chArr) {
-            if (Character.isDigit(ch)) {
-                sb.append(Character.getNumericValue(ch))
-            }else if (ch == '٫'){
-                sb.append(".")
-            }
-
-            else {
-                sb.append(ch)
-            }
-        }
-        return sb.toString()
     }
 }

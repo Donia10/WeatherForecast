@@ -15,7 +15,7 @@ interface WeatherDao {
     fun getFavLocations():LiveData<List<WeatherDataModel>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertWeatherData( weatherData: WeatherDataModel)
+    fun insertWeatherData(weatherData: WeatherDataModel)
 
     @Query("select * from Weather where lat =:lat and lon =:lon")
     fun getAlert(lat: Double,lon: Double):WeatherDataModel

@@ -12,12 +12,13 @@ class WeatherFavouriteViewModel (private val weatherRepository: WeatherRepositor
     /**
      * The data source this ViewModel will fetch results from.
      */
-    val liveFavLocations: LiveData<List<WeatherDataModel>> = weatherRepository.weatherFavLocations
+     val liveFavLocations: LiveData<List<WeatherDataModel>> = weatherRepository.weatherFavLocations
 
      fun refreshFavDataFromRepository(lat:Double,lon:Double) = viewModelScope.launch {
         try {
-            Log.i("TAG", "refreshFavDataFromRepository: try ")
             weatherRepository.insertWeatherData(lat,lon)
+            Log.i("TAG", "refreshFavDataFromRepository: try ")
+
         } catch (networkError: IOException) {
             Log.i("TAG", "refreshFavDataFromRepository: catch")
         }

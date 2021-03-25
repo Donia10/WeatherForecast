@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">WeatherForecast</string>
+    <string name="app_name">Weather Forecast</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="setting_fragment">Setting</string>
     <string name="favourite_fragment">Favourite</string>
@@ -70,4 +70,9 @@
     <string name="ChooseLanguage">Choose Language</string>
     <string name="searchbar">search bar</string>
     <string name="DetermineLocationWithGPSOrSearch">Determine Location With GPS Or Search</string>
+    <string name="HourlyForecast">Hourly Forecast</string>
+    <string name="DailyForecast">Daily Forecast</string>
+    <string name="Details">Details</string>
+    <string name="LocationChosen">Location Chosen</string>
+   
 </resources>

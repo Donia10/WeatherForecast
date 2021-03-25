@@ -16,16 +16,12 @@
             android:orientation="vertical">
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="173dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="20dp"
-                app:cardCornerRadius="30dp"
-                app:cardBackgroundColor="#0D47A1"
-                android:textAlignment="viewStart"
-                android:layout_marginRight="16dp">
+                android:layout_height="200dp"
+                app:cardBackgroundColor="@color/cardview_shadow_start_color"
+                android:textAlignment="viewStart">
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="179dp"
+                    android:layout_height="match_parent"
                     android:orientation="vertical">
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -37,31 +33,29 @@
                             android:layout_height="wrap_content"
                             android:text="Suez"
                             android:textAlignment="viewStart"
-                            android:textColor="@color/white"
                             android:textSize="24dp"
+                            android:layout_marginRight="20dp"
+                            android:textColor="@color/white"
                             android:layout_marginLeft="20dp"
-                            android:layout_marginTop="10dp"/>
-                        <RelativeLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
+                            android:layout_marginTop="20dp"/>
+
                             <TextView
                                 android:id="@+id/home_date_time"
-                                android:layout_alignParentRight="true"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="10dp"
-                                android:layout_marginRight="5dp"
+                                android:layout_marginRight="10dp"
+                                android:layout_marginLeft="80dp"
                                 android:textAlignment="viewStart"
                                 android:textSize="18sp"
                                 android:textColor="@color/white"
                                 android:text="Fri 12/2/2121 09:04 Pm"/>
-                        </RelativeLayout>
                     </LinearLayout>
                     <TextView
                         android:id="@+id/home_weather_desc"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
+                        android:layout_marginTop="30dp"
                         android:text="Clear"
                         android:textColor="@color/white"
                         android:textSize="18dp"
@@ -80,19 +74,21 @@
                             android:textAlignment="viewStart"
                             android:textColor="@color/white"
                             android:textSize="34dp"
+                            android:layout_marginRight="20dp"
                             android:layout_marginLeft="20dp"/>
 
                         <ImageView
                             android:layout_alignParentTop="true"
                             android:id="@+id/home_icon_weather"
-                            android:layout_width="120dp"
-                            android:layout_height="70dp"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:layout_marginRight="30dp"
                             android:src="@drawable/ic_thunderstorm"/>
 
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:orientation="horizontal">
                         <TextView
                             android:id="@+id/home_max"
@@ -100,205 +96,267 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="20dp"
                             android:layout_marginRight="5dp"
-                            android:textAlignment="viewStart"
                             android:text="max:20%"
+                            android:layout_marginBottom="5dp"
+                            android:layout_gravity="bottom"
+                            android:layout_alignParentBottom="true"
                             android:textColor="@color/white" />
                         <TextView
                             android:id="@+id/home_min"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
+                            android:layout_marginRight="20dp"
                             android:text="min:20%"
-                            android:textAlignment="viewStart"
+                            android:layout_marginBottom="5dp"
+                            android:layout_gravity="bottom"
+                            android:layout_alignParentBottom="true"
                             android:textColor="@color/white"/>
                     </LinearLayout>
                 </LinearLayout>
-
-
             </androidx.cardview.widget.CardView>
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="173dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="20dp"
-                app:cardCornerRadius="30dp"
+                android:layout_height="200dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="16dp"
+                app:cardCornerRadius="20dp"
                 app:cardBackgroundColor="#0D47A1"
-                android:layout_marginRight="16dp">
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/home_hourly_recyclerview"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:clipToPadding="false"
-                    tools:listitem="@layout/hourly_fav_row"/>
-            </androidx.cardview.widget.CardView>
-            <androidx.cardview.widget.CardView
-                app:cardCornerRadius="30dp"
-                app:cardBackgroundColor="#0D47A1"
-                android:layout_width="match_parent"
-                android:layout_height="173dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="16dp">
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/home_daily_recyclerview"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:clipToPadding="false"
-                    tools:listitem="@layout/daily_fav_row"/>
-            </androidx.cardview.widget.CardView>
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="173dp"
-                app:cardCornerRadius="30dp"
-                app:cardBackgroundColor="#0D47A1"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="16dp">
+                android:layout_marginRight="10dp">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/HourlyForecast"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:textColor="@color/white"/>
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/home_hourly_recyclerview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clipToPadding="false"
+                        tools:listitem="@layout/hourly_fav_row"/>
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                app:cardCornerRadius="20dp"
+                app:cardBackgroundColor="#0D47A1"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="10dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/DailyForecast"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:textColor="@color/white"/>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/home_daily_recyclerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipToPadding="false"
+                    tools:listitem="@layout/daily_fav_row"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="20dp"
+                app:cardBackgroundColor="#0D47A1"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:layout_marginRight="10dp">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_gravity="center">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:text="@string/Details"/>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_margin="16dp">
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/ic_humidity"/>
+                    <TextView
+                        android:id="@+id/txtView_humidity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:textColor="@color/white"
+                        android:text="@string/humidity" />
+                    <TextView
+                        android:id="@+id/home_data_humidity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="18sp"
+                        android:textColor="@color/white"
+                        android:text="humidity" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_margin="16dp">
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/ic_precipitation"/>
+                    <TextView
+                        android:id="@+id/txt_precipitation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:textColor="@color/white"
+                        android:text="@string/precipition" />
+                    <TextView
+                        android:id="@+id/home_data_precipitation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="precipitation"
+                        android:textColor="@color/white"
+                        android:textSize="18sp" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_margin="16dp">
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/ic_pressure"/>
+
+                    <TextView
+                        android:id="@+id/txt_pressure"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:textColor="@color/white"
+                        android:text="@string/Pressure" />
+                    <TextView
+                        android:id="@+id/home_data_pressure"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="pressure"
+                        android:textColor="@color/white"
+                        android:textSize="18sp"/>
+                </LinearLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal">
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                        <TextView
-                            android:id="@+id/txtView_humidity"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
-                            android:layout_marginRight="20dp"
-                            android:layout_marginTop="10dp"
-                            android:textSize="18sp"
-                            android:textColor="@color/white"
-                            android:text="@string/humidity" />
-
-                        <TextView
-                            android:id="@+id/txt_precipitation"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="20dp"
-                            android:layout_marginTop="10dp"
-                            android:textSize="18sp"
-                            android:textColor="@color/white"
-                            android:text="@string/precipition" />
-                        <TextView
-                            android:id="@+id/txt_pressure"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="20dp"
-                            android:layout_marginTop="10dp"
-                            android:textSize="18sp"
-                            android:textColor="@color/white"
-                            android:text="@string/Pressure" />
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                        <TextView
-                            android:id="@+id/home_data_humidity"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="30dp"
-                            android:layout_marginRight="30dp"
-                            android:textSize="18sp"
-                            android:textColor="@color/white"
-                            android:layout_marginTop="5dp"
-                            android:text="humidity" />
-
-                        <TextView
-                            android:id="@+id/home_data_precipitation"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="precipitation"
-                            android:layout_marginLeft="20dp"
-                            android:layout_marginRight="20dp"
-                            android:textColor="@color/white"
-                            android:textSize="18sp"
-                            android:layout_marginTop="5dp"/>
-
-                        <TextView
-                            android:id="@+id/home_data_pressure"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="pressure"
-                            android:layout_marginLeft="25dp"
-                            android:layout_marginRight="20dp"
-                            android:textColor="@color/white"
-                            android:textSize="18sp"
-                            android:layout_marginTop="5dp"/>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                        <TextView
-                            android:id="@+id/txt_windSpeed"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
-                            android:layout_marginRight="20dp"
-                            android:layout_marginTop="10dp"
-                            android:textSize="18sp"
-                            android:textColor="@color/white"
-                            android:text="@string/WindSpeed" />
+                        android:orientation="vertical"
+                        android:layout_margin="16dp">
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:src ="@drawable/ic_cloud__1_"/>
                         <TextView
                             android:id="@+id/txt_cloudCover"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            android:textAlignment="viewStart"
                             android:text="@string/CloudCover"
-                            android:layout_marginRight="20dp"
-                            android:layout_marginTop="10dp"
-                            android:textColor="@color/white"
-                            android:textSize="18sp"/>
-
-                        <TextView
-                            android:id="@+id/txt_visibility"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/Visibility"
-                            android:layout_marginTop="10dp"
-                            android:textColor="@color/white"
-                            android:textSize="18sp"/>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                        <TextView
-                            android:id="@+id/home_data_windSpeed"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="data_windSpeed"
-                            android:textAlignment="center"
-                            android:textColor="@color/white"
-                            android:layout_marginLeft="30dp"
-                            android:layout_marginRight="30dp"
-                            android:textSize="18sp"/>
+                            android:textSize="12sp"/>
                         <TextView
                             android:id="@+id/home_data_cloudCover"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="data_cloudCover"
-                            android:layout_gravity="center"
                             android:textColor="@color/white"
-                            android:textAlignment="center"
-                            android:layout_marginLeft="20dp"
-                            android:layout_marginRight="20dp"
+                            android:textAlignment="viewStart"
                             android:textSize="18sp"/>
-
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_margin="16dp">
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:src="@drawable/ic_anemometer"/>
+                        <TextView
+                            android:id="@+id/txt_windSpeed"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="12sp"
+                            android:textAlignment="viewStart"
+                            android:textColor="@color/white"
+                            android:text="@string/WindSpeed" />
+                        <TextView
+                            android:id="@+id/home_data_windSpeed"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="data_windSpeed"
+                            android:textColor="@color/white"
+                            android:textAlignment="viewStart"
+                            android:textSize="18sp"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_margin="16dp">
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:src="@drawable/ic_visibility"/>
+                        <TextView
+                            android:id="@+id/txt_visibility"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/Visibility"
+                            android:textColor="@color/white"
+                            android:textAlignment="viewStart"
+                            android:textSize="12sp"/>
                         <TextView
                             android:id="@+id/home_data_visibility"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="data_visibility"
                             android:textColor="@color/white"
-                            android:layout_gravity="center"
-                            android:textAlignment="center"
-                            android:layout_marginLeft="35dp"
-                            android:layout_marginRight="20dp"            android:textSize="18sp"/>
+                            android:textAlignment="viewStart"
+                            android:textSize="18sp"/>
                     </LinearLayout>
+
+                </LinearLayout>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
         </LinearLayout>

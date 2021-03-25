@@ -16,7 +16,7 @@
     <string name="cloud">السحاب</string>
     <string name="ThunderStorm">عاصفة رعدية</string>
     <string name="CheckEvent">تحقق من الحدث</string>
-    <string name="Notification">تنبيه</string>
+    <string name="Notification">التنبيه</string>
     <string name="DefaultAlarmSound">الصوت الافتراضي</string>
     <string name="AlarmType">النوع</string>
     <string name="yes">نعم</string>
@@ -32,7 +32,7 @@
     <string name="Visibility">الرؤية</string>
     <string name="Cancel">إالغاء</string>
     <string name="Save">حفظ</string>
-    <string name="home_fragment">الصفحة الرئيسية</string>
+    <string name="home_fragment">الرئيسية</string>
     <string name="Location">الموقع</string>
     <string name="Temperature">درجه الحراراه</string>
     <string name="ChooseLocation">اختر الموقع</string>
@@ -41,4 +41,7 @@
     <string name="ChooseUnitOfWindSpeed">اختر وحده سرعه الرياح</string>
     <string name="Language">اللغه</string>
     <string name="ChooseLanguage">اختر اللغه</string>
+    <string name="HourlyForecast">توقعات كل ساعه</string>
+    <string name="DailyForecast">توقعات كل يوم</string>
+    <string name="Details">التفاصيل</string>
 </resources>

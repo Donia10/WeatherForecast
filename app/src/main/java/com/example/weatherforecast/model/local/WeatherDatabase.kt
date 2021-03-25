@@ -16,7 +16,6 @@ import com.example.weatherforecast.model.local.AlarmData
         //singleton
         @Volatile
         private var INSTANCE: WeatherDatabase? = null
-
         fun getDatabase(context: Context): WeatherDatabase {
             return INSTANCE
                 ?: synchronized(this) {
@@ -29,12 +28,6 @@ import com.example.weatherforecast.model.local.AlarmData
                     //return instance
                     return instance
                 }
-
         }
-
-
-
     }
-
-
 }

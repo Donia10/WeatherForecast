@@ -47,7 +47,6 @@ class Favourite : Fragment(),FavouriteLocationsListAdapter.OnViewClickListener {
         adapter.setOnClickListener(this)
     })
 
-
         val fab=view.findViewById<FloatingActionButton>(R.id.fab)
         fab.setOnClickListener{
 
@@ -66,7 +65,6 @@ class Favourite : Fragment(),FavouriteLocationsListAdapter.OnViewClickListener {
        //     Toast.makeText(context,"$latitude ,$longitude",Toast.LENGTH_LONG).show()
             Log.i("TAG", "onActivityResult: $latitude ,$longitude")
             if (longitude != null&&latitude!=null) {
-
                 weatherFavouriteViewModel.refreshFavDataFromRepository(latitude,longitude)
                 Toast.makeText(context,getAddress(latitude,longitude),Toast.LENGTH_LONG).show()
                 Log.i("TAG", "onActivityResult: ${getAddress(latitude,longitude)}")

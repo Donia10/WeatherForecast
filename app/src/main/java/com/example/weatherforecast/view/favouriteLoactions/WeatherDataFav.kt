@@ -86,8 +86,8 @@ class WeatherDataFav : AppCompatActivity() {
         }
 
         fav_weather_desc.text= it.current?.weather?.get(0)?.description
-        fav_max.text= "max: "+(it.daily?.get(0)?.temp?.max)?.toInt().toString()
-        fav_min.text= "min: "+ (it.daily?.get(0)?.temp?.min)?.toInt().toString()
+        fav_max.text= "max: "+(it.daily?.get(0)?.temp?.max)?.toInt().toString()+"\u00B0"
+        fav_min.text= "min: "+ (it.daily?.get(0)?.temp?.min)?.toInt().toString()+"\u00B0"
 //        precipitation.text= "prec"+(it.minutely?.get(0)?.precipitation)?.toInt().toString()+"%"
 //        windSpeed.text="wind"+(it.current?.windSpeed?.toInt()).toString()+"mph"
 //        clouds.text= "clods"+ it.current?.clouds.toString()+"%"

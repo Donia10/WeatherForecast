@@ -41,7 +41,7 @@ class DailyListAdapter(var dailyList:ArrayList<Daily>) :RecyclerView.Adapter<Dai
     }
 
     class DailyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val dt=itemView.home_day_temp_daily_item
+        private val dt=itemView.home_time_daily_item
         private val dailyDayIcon=itemView.home_day_icon_daily_item
         private val dailyDayTemp=itemView.home_day_temp_daily_item
         private val sunrise=itemView.home_day_sunrise_item

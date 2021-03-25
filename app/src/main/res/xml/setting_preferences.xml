@@ -8,7 +8,7 @@
         android:icon="@color/cardview_dark_background"
         app:allowDividerBelow="true"
         app:key="loc_cati"
-        app:title="Location">
+        app:title="@string/Location">
 
         <ListPreference
             android:entries="@array/location"
@@ -16,31 +16,31 @@
             app:key="location"
             app:summary="Determine Location With GPS Or Search"
             app:defaultValue="true"
-            app:title="Choose Location" />
+            app:title="@string/ChooseLocation" />
             <Preference
                 app:key="displayLocation"
                 app:summary="search bar"
-                app:title="Location Chosen"
+                app:title="@string/LocationChosen"
                 app:isPreferenceVisible="false"/>
 
 
     </PreferenceCategory>
     <PreferenceCategory
         app:key="Units"
-        app:title="Units"
+        app:title="@string/Units"
         app:allowDividerBelow="true"
         android:icon="@color/cardview_dark_background">
 
         <ListPreference
             app:key="Temperature"
-            app:title="Temperature"
+            app:title="@string/Temperature"
             app:summary="Choose Unit Of Temperature"
             android:entries="@array/unitOfTemperature"
             android:entryValues="@array/unitOfTemperature">
         </ListPreference>
         <ListPreference
             app:key="WindSpeed"
-            app:title="Wind Speed"
+            app:title="@string/WindSpeed"
             app:summary="Choose Unit Of Wind Speed"
             android:entries="@array/unitsOfWindSpeed"
             android:entryValues="@array/unitsOfWindSpeed">
@@ -48,14 +48,14 @@
     </PreferenceCategory>
     <PreferenceCategory
         app:key="Language"
-        app:title="Language"
+        app:title="@string/Language"
         app:allowDividerBelow="true"
         android:icon="@color/cardview_dark_background">
 
         <ListPreference
             app:key="language"
             app:title="Language"
-            app:summary="Choose Language"
+            app:summary="@string/ChooseLanguage"
             android:entries="@array/chooseLanguage"
             android:entryValues="@array/saveLanguage">
         </ListPreference>
