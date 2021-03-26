@@ -21,7 +21,7 @@ class SplashScreen : AppCompatActivity() {
             //invoke the SecondActivity.
             finish()
             //the current activity will get finished.
-        }, 5000)
+        }, 1000)
 
 
     }

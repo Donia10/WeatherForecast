@@ -72,20 +72,20 @@ class SettingPreferences(activity: SettingsFragment){
                   //                  Log.i("TAG", "search: ${preference.isVisible}${com.example.weatherforecast.view.setting.SettingPreferences.Companion.flag}")
                                     search?.let { it1 -> bindPreferenceSummaryToValue(it1) }
                                 } else if (listPreference.entries[index] == "GPS") {
-                                    flag = false
-                                    CoroutineScope(Dispatchers.Default).launch {
-                                        val getLocation =
-                                            GetLocation(
-                                                preference.context
-                                            )
-                                      val job=  launch {
-                                           getLocation.getLastLocation()  }
-                                        launch {   delay(5000)
-                                            s="${getLocation.address} "
-                                            s?.let { sharedPrefs(it,getLocation.latitude,getLocation.longitude) }
-                                        }
-
-                                    }
+                                     flag = false
+//                                    CoroutineScope(Dispatchers.Default).launch {
+//                                        val getLocation =
+//                                            GetLocation(
+//                                                preference.context
+//                                            )
+//                                        val job=  launch {
+//                                            getLocation.getLastLocation()  }
+//                                        launch {   delay(1000)
+//                                            s="${getLocation.address} "
+//                                            s?.let { sharedPrefs(it,getLocation.latitude,getLocation.longitude) }
+//                                        }
+//
+//                                    }
                                     search?.let { it1 -> bindPreferenceSummaryToValue(it1) }
                                     //                 Log.i("TAG", "gps: ${preference.isVisible}${com.example.weatherforecast.view.setting.SettingPreferences.Companion.flag}")
 
