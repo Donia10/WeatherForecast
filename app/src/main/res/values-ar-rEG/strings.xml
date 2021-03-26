@@ -44,4 +44,15 @@
     <string name="HourlyForecast">توقعات كل ساعه</string>
     <string name="DailyForecast">توقعات كل يوم</string>
     <string name="Details">التفاصيل</string>
+    <string name="messages_header">الرسائل</string>
+    <string name="DetermineLocationWithGPSOrSearch">"حدد الموقع "</string>
+    <string name="Search">خريطه</string>
+    <string name="Kelvin">كليفن</string>
+    <string name="Fahrenheit">فهرنهايت</string>
+    <string name="metersec">متر/الثانيه</string>
+    <string name="mileshour">مليمتر/الساعه</string>
+    <string name="Arabic">العربيه</string>
+    <string name="English">الانجليزيه</string>
+    <string name="GPS">نظام تحديد الموقع</string>
+    <string name="Celsius">سيليزيس</string>
 </resources>

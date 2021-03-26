@@ -65,7 +65,7 @@ class Home : Fragment() {
             if (lon != "") {
                 if (lat != null) {
                     if (lon != null) {
-                        weatherHomeViewModel.refreshHomeDataFromRepository(lat.toDouble(),lon.toDouble())
+           //             weatherHomeViewModel.refreshHomeDataFromRepository(lat.toDouble(),lon.toDouble())
                     }
                 }
             }

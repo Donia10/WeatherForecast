@@ -18,7 +18,7 @@ interface WeatherDao {
     fun insertWeatherData(weatherData: WeatherDataModel)
 
     @Query("select * from Weather where lat =:lat and lon =:lon")
-    fun getAlert(lat: Double,lon: Double):WeatherDataModel
+    fun getAlert(lat: Double, lon: Double):WeatherDataModel
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun setAlarm(alarmData: AlarmData):Long

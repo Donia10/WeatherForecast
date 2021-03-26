@@ -11,26 +11,48 @@
     </string-array>
 
     <string-array name="location">
+        <item>@string/GPS</item>
+        <item>@string/Search</item>
+    </string-array>
+    <string-array name="savelocation">
         <item>GPS</item>
-        <item>Search</item>
+        <item>Map</item>
     </string-array>
     <string-array name="unitOfTemperature">
+        <item>@string/Kelvin</item>
+        <item>@string/Celsius</item>
+        <item>@string/Fahrenheit</item>
+    </string-array>
+    <string-array name="saveunitOfTemperature">
         <item>Kelvin</item>
         <item>Celsius</item>
         <item>Fahrenheit</item>
     </string-array>
 
     <string-array name="unitsOfWindSpeed">
+        <item>@string/metersec</item>
+        <item>@string/mileshour</item>
+    </string-array>
+    <string-array name="saveunitsOfWindSpeed">
         <item>meter/sec</item>
         <item>miles/hour</item>
     </string-array>
     <string-array name="chooseLanguage">
-        <item>Arabic</item>
-        <item>English</item>
+        <item>@string/Arabic</item>
+        <item>@string/English</item>
     </string-array>
     <string-array name="saveLanguage">
         <item>ar</item>
         <item>en</item>
     </string-array>
 
+    <string name="GPS">GPS</string>
+    <string name="Search">Map</string>
+    <string name="Kelvin">Kelvin</string>
+    <string name="Fahrenheit">Fahrenheit</string>
+    <string name="metersec">meter/sec</string>
+    <string name="mileshour">miles/hour</string>
+    <string name="Arabic">Arabic</string>
+    <string name="English">English</string>
+    <string name="Celsius">Celsius</string>
 </resources>

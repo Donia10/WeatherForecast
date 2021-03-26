@@ -12,14 +12,14 @@
 
         <ListPreference
             android:entries="@array/location"
-            android:entryValues="@array/location"
+            android:entryValues="@array/savelocation"
             app:key="location"
-            app:summary="Determine Location With GPS Or Search"
+            app:summary="@string/DetermineLocationWithGPSOrSearch"
             app:defaultValue="true"
             app:title="@string/ChooseLocation" />
             <Preference
                 app:key="displayLocation"
-                app:summary="search bar"
+                app:summary="@string/searchbar"
                 app:title="@string/LocationChosen"
                 app:isPreferenceVisible="false"/>
 
@@ -34,16 +34,16 @@
         <ListPreference
             app:key="Temperature"
             app:title="@string/Temperature"
-            app:summary="Choose Unit Of Temperature"
+            app:summary="@string/ChooseUnitOfTemperature"
             android:entries="@array/unitOfTemperature"
-            android:entryValues="@array/unitOfTemperature">
+            android:entryValues="@array/saveunitOfTemperature">
         </ListPreference>
         <ListPreference
             app:key="WindSpeed"
             app:title="@string/WindSpeed"
-            app:summary="Choose Unit Of Wind Speed"
+            app:summary="@string/ChooseUnitOfWindSpeed"
             android:entries="@array/unitsOfWindSpeed"
-            android:entryValues="@array/unitsOfWindSpeed">
+            android:entryValues="@array/saveunitsOfWindSpeed">
         </ListPreference>
     </PreferenceCategory>
     <PreferenceCategory
@@ -54,7 +54,7 @@
 
         <ListPreference
             app:key="language"
-            app:title="Language"
+            app:title="@string/Language"
             app:summary="@string/ChooseLanguage"
             android:entries="@array/chooseLanguage"
             android:entryValues="@array/saveLanguage">

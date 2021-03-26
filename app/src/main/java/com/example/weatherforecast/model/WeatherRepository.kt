@@ -40,8 +40,12 @@ class WeatherRepository (private val weatherDao: WeatherDao) {
                 }
             }
     }
-    suspend fun getAlert():WeatherDataModel ?{
-       return weatherDao.getAlert(33.4418,-94.0377)
+    suspend fun getAlert(context: Context):WeatherDataModel?{
+        getSp(context)
+        if (lat!="" && lat!= null && lon!="" && lon!= null){
+          return  weatherDao.getAlert(round(lat!!.toDouble(),4),round(lon!!.toDouble(),4))
+       }
+        return null
     }
 //    suspend fun insertWeatherData(lat: Double?, lon: Double?){
 //        //   val datarefresd = weatherDatabase.weatherDao().getHasRefreshed()
@@ -78,7 +82,6 @@ class WeatherRepository (private val weatherDao: WeatherDao) {
         }
     }
     val alarmData:LiveData<MutableList<AlarmData>> = weatherDao.getAlarm()
-    val alarm=weatherDao.getAlarm()
     suspend fun setAlarm(alarmData: AlarmData):Long{
         withContext(Dispatchers.IO){
             return@withContext weatherDao.setAlarm(alarmData)
@@ -115,5 +118,13 @@ class WeatherRepository (private val weatherDao: WeatherDao) {
         withContext(Dispatchers.IO){
             weatherDao.deleteFavLocation(weatherDataModel)
         }
+    }
+    fun round(value: Double, places: Int): Double {
+        var value = value
+        require(places >= 0)
+        val factor = Math.pow(10.0, places.toDouble()).toLong()
+        value = value * factor
+        val tmp = Math.round(value)
+        return tmp.toDouble() / factor
     }
 }

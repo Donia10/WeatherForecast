@@ -18,7 +18,7 @@ class PagerAdapter (fm: FragmentManager,noOfTabs:Int) : FragmentStatePagerAdapte
              1 -> Home()
              2 -> Alert()
              3 -> Favourite()
-             else ->Fragment()
+             else ->Fragment(position)
 
          }
      }

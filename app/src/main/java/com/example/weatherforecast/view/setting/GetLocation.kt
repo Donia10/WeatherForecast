@@ -41,7 +41,7 @@ class GetLocation (con: Context){
                         var location:android.location.Location=it.getResult()
                         if(location==null){
 
-                            Toast.makeText(context,"..",Toast.LENGTH_SHORT).show()
+                      //      Toast.makeText(context,"..",Toast.LENGTH_SHORT).show()
                             requestNewLocationData()
                         }else {
                             latLng = LatLng(location.latitude, location.longitude)

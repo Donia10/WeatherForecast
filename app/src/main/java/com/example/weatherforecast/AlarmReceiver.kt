@@ -5,7 +5,9 @@ import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.core.app.NotificationCompat
+import androidx.preference.PreferenceManager
 import com.example.weatherforecast.model.Alert
 import com.example.weatherforecast.model.WeatherRepository
 import kotlinx.coroutines.CoroutineScope
@@ -18,7 +20,6 @@ class AlarmReceiver : BroadcastReceiver() {
     private lateinit var notificationManager: NotificationManager
     override fun onReceive(context: Context, intent: Intent) {
         // This method is called when the BroadcastReceiver is receiving an Intent broadcast.
-        var alert:String?=null
         var event:String?=null
         var id:Int?=0
         var aletobj:Alert?=null
@@ -26,23 +27,20 @@ class AlarmReceiver : BroadcastReceiver() {
         CoroutineScope(Dispatchers.IO).launch {
             var repo=WeatherRepository(((context.applicationContext as WeatherApplication).database).weatherDao())
             repo.refreshWeatherData(context)
-             alert = repo.getAlert()?.alerts?.get(0)?.description
-            aletobj=repo.getAlert()?.alerts?.get(0)
+           val alert = repo.getAlert(context)?.alerts?.get(0)?.description
+            aletobj=repo.getAlert(context)?.alerts?.get(0)
             event=intent.getStringExtra("event")
             id=intent.getIntExtra("id",0)
-            id?.let { deliverNotification(context,aletobj, it) }
-        //    repo.deleteAlarmById(id!!)
+            if(event!=null){
+                if (alert != null) {
+                    if (alert.contains(event!!))
+                    {
+                        id?.let { deliverNotification(context,aletobj, it) }
+                    }
+                }
+            }
         }
-      //  if (alert != null) {
-         //   if(event?.let { alert!!.contains(it) }!!){
-       //     }
-    //    }
-
-
-      //  deliverNotification(context,intent.getStringExtra("event"))
-
     }
-
 
     private fun deliverNotification(context: Context, get: Alert?,id:Int){
         val contentIntent:Intent=Intent(context,MainActivity::class.java)
@@ -53,7 +51,8 @@ class AlarmReceiver : BroadcastReceiver() {
             NotificationCompat.Builder(context,PRIMARY_CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_baseline_notifications_active_24)
                 .setContentTitle("Weather Alert for event ${get?.event}")
-                .setContentText("${get?.description} \n")
+                .setContentTitle("Weather Alert for event ${get?.event}")
+                .setContentText("${get?.description}")
                 .setContentIntent(pendingIntent)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setAutoCancel(true)
