@@ -39,6 +39,8 @@ class AlarmReceiver : BroadcastReceiver() {
                     }
                 }
             }
+            id?.let { deliverNotification(context,aletobj, it) }
+
         }
     }
 

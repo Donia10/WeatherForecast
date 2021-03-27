@@ -74,5 +74,9 @@
     <string name="DailyForecast">Daily Forecast</string>
     <string name="Details">Details</string>
     <string name="LocationChosen">Location Chosen</string>
-   
+    <string name="once">Once</string>
+    <string name="Two">Twice</string>
+    <string name="Three">Three</string>
+    <string name="Repeat">Repeatedly</string>
+
 </resources>

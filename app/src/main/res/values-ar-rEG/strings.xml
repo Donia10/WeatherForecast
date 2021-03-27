@@ -55,4 +55,7 @@
     <string name="English">الانجليزيه</string>
     <string name="GPS">نظام تحديد الموقع</string>
     <string name="Celsius">سيليزيس</string>
+    <string name="once">"مراه واحده "</string>
+    <string name="Two">مرتين</string>
+    <string name="Three">ثلاث مرات</string>
 </resources>

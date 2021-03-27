@@ -33,6 +33,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        Log.i("TAG", "Setting: ")
+
         val prefLang: Preference? =getPreferenceScreen().findPreference("language")
         val prefLocation: Preference? =getPreferenceScreen().findPreference("location")
 

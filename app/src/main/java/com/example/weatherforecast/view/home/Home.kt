@@ -39,6 +39,8 @@ class Home : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View ?{
+        Log.i("TAG", "home: ")
+
         val view:View= inflater.inflate(R.layout.fragment_home, container, false)
 
         weatherHomeViewModel.refreshDataFromRepository(requireContext())
@@ -51,15 +53,12 @@ class Home : Fragment() {
         recyclerViewForDaily.layoutManager=LinearLayoutManager(requireContext())
         recyclerViewForDaily.adapter=dailyListAdapter
 
-        Log.i("TAG", "home: ")
 
         val sp: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         val lat= sp.getString("lat","")
         val lon=sp.getString("lon","")
         val lan=sp.getString("language","")
         temp= sp.getString("Temperature","").toString()
-//        if(lan=="Arabic")
-//            Language.setLocale(requireActivity(),"ar")
 
         if (lat != "") {
             if (lon != "") {
@@ -76,8 +75,6 @@ class Home : Fragment() {
                 if (lat != null) {
                     if (lon != null) {
 
-//                                val latcast = String.format("%.4f", lat.toDouble()).toDouble()
-//                                val loncast = String.format("%.4f", lon.toDouble()).toDouble()
                                 weatherHomeViewModel.getHome(round(lat.toDouble(),4), round(lon.toDouble(),4))
                                     .observe(viewLifecycleOwner, Observer { data ->
                                         data?.let {
@@ -95,8 +92,6 @@ class Home : Fragment() {
                 }
             }
         }
-
-       // initUI()
         return view
     }
     fun getIcon(icon: String): String {

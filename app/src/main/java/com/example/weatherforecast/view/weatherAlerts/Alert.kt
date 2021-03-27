@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -42,6 +43,8 @@ class Alert : Fragment() ,EventsCustomDialogFragment.EventsListener,AddAlarmDial
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        Log.i("TAG", "Alert: ")
+
         val view: View = inflater.inflate(R.layout.fragment_alert, container, false)
         val recyclerView = view.alert_recyclerview
 

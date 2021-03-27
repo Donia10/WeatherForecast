@@ -49,19 +49,20 @@ class AlarmAdapter :ListAdapter <AlarmData, AlarmAdapter.AlarmViewHolder>(AlarmC
         val deleteBtn: ImageButton? =itemView.delete_alarm
 
         private val time:TextView=itemView.txt_time
+        private val datep:TextView=itemView.txt_date
         private val alarmType:TextView=itemView.txt_alarmType
         private val event:TextView=itemView.txt_event
         fun bind(alarmData: AlarmData) {
-            val date = Date(alarmData.time)
+            val date = Date(alarmData.time.toLong())
             val currentTime = Calendar.getInstance().time
 
             if(date <= currentTime){
                 listener.removeAlarm(alarmData)
             }
             time.text = DateFormat.getTimeInstance(DateFormat.SHORT).format(date)
+            datep.text=DateFormat.getDateInstance().format(date)
             event.text = alarmData.event
             alarmType.text = alarmData.alarmSound
-
 
             deleteBtn?.setOnClickListener(View.OnClickListener {
                 if(listener!=null) {

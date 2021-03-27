@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        android:weightSum="4">
+        android:weightSum="5">
         <ImageButton
             android:id="@+id/time_dialog"
             android:layout_width="0dp"
@@ -21,6 +21,14 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_time_24"
             android:background="@color/white"/>
+        <ImageButton
+            android:id="@+id/date_dialog"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:src="@drawable/ic_calendar"
+            android:background="@color/white"
+            android:layout_marginTop="25dp"/>
         <ImageButton
             android:id="@+id/event_dialog"
             android:src="@drawable/ic_thunderstorm"
@@ -50,6 +58,45 @@
                 android:textColor="#0D47A1"
                 android:text="@string/DefaultAlarmSound"/>
         </RadioGroup>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#0D47A1"
+            android:textSize="16sp"
+            android:text="@string/Repeat"/>
+
+        <RadioGroup
+            android:id="@+id/radioGroup2"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:orientation="horizontal">
+            <RadioButton
+                android:id="@+id/one_dialog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="@string/once"
+                android:textColor="#0D47A1"/>
+            <RadioButton
+                android:id="@+id/two_dialog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#0D47A1"
+                android:text="@string/Two"/>
+            <RadioButton
+                android:id="@+id/three_dialog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#0D47A1"
+                android:text="@string/Three"/>
+        </RadioGroup>
 
     </LinearLayout>
 
@@ -61,9 +108,8 @@
 
 
     <Button
-
-        android:id="@+id/save"
-        android:text="@string/Save"
+        android:id="@+id/cancel"
+        android:text="@string/Cancel"
         android:textColor="@color/white"
         android:textSize="20sp"
         android:background="#0D47A1"
@@ -74,8 +120,8 @@
         android:layout_weight="1"
         android:layout_height="wrap_content"/>
         <Button
-            android:id="@+id/cancel"
-            android:text="@string/Cancel"
+            android:id="@+id/save"
+            android:text="@string/Save"
             android:textColor="@color/white"
             android:textSize="20sp"
             android:layout_marginTop="10dp"

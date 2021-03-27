@@ -1,12 +1,13 @@
 package com.example.weatherforecast.view.weatherAlerts
 
+import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.app.TimePickerDialog.OnTimeSetListener
 import android.content.Context
 import android.content.res.Resources
 import android.graphics.Rect
+import android.os.Build
 import android.os.Bundle
-import android.text.Layout
 import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -16,6 +17,7 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.RadioButton
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.DialogFragment
 import com.example.weatherforecast.R
 import com.example.weatherforecast.model.local.AlarmData
@@ -27,7 +29,9 @@ class AddAlarmDialog:DialogFragment() ,EventsCustomDialogFragment.EventsListener
     private  var listener: EventsListener? =null
     var getevent:String?=null
     var isNotification:String="Notification"
+    var repeat:Int=1
     private lateinit var eventSelected:EventsListener
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -41,12 +45,20 @@ class AddAlarmDialog:DialogFragment() ,EventsCustomDialogFragment.EventsListener
         val save:Button=view.save
         val cancel:Button=view.cancel
         val timeBtn:ImageButton=view.time_dialog
+        val dateBtn:ImageButton=view.date_dialog
         val eventBtn:ImageButton=view.event_dialog
         val noti:RadioButton=view.notification_dialog
         val default:RadioButton=view.defaultSound_dialog
+        val one:RadioButton=view.one_dialog
+        val two:RadioButton=view.two_dialog
+        val three:RadioButton=view.three_dialog
 
         var calendar:Calendar=Calendar.getInstance()
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
         var isSetTime:Boolean=false
+        var isSetDate:Boolean=false
         timeBtn.setOnClickListener(View.OnClickListener {
             val timePickerDialog =
                 TimePickerDialog(context,
@@ -59,6 +71,21 @@ class AddAlarmDialog:DialogFragment() ,EventsCustomDialogFragment.EventsListener
                 )
             timePickerDialog.show()
         })
+        dateBtn.setOnClickListener(View.OnClickListener {
+         val datePickerDialog=
+             context?.let { it1 ->
+                 DatePickerDialog(
+                     it1, DatePickerDialog.OnDateSetListener{ view, year, month, dayOfMonth ->
+                         isSetDate=true
+                         calendar.set(Calendar.YEAR,year)
+                         calendar.set(Calendar.MONTH,month)
+                         calendar.set(Calendar.DAY_OF_MONTH,dayOfMonth)
+
+                     },year,month,day
+                 )
+             }
+            datePickerDialog?.show()
+        })
         eventBtn.setOnClickListener(View.OnClickListener {
             showEventAlert()
         })
@@ -68,14 +95,72 @@ class AddAlarmDialog:DialogFragment() ,EventsCustomDialogFragment.EventsListener
         default.setOnClickListener(View.OnClickListener {
             isNotification="Default Sound"
         })
+        one.setOnClickListener(View.OnClickListener {
+            repeat=1
+        })
+        two.setOnClickListener(View.OnClickListener {
+            repeat=2
+        })
+        three.setOnClickListener(View.OnClickListener {
+            repeat=3
+        })
         save.setOnClickListener(View.OnClickListener {
-            if(getevent!=null&& isSetTime != false){
-            eventSelected.getAlarmObject(AlarmData(true,calendar.timeInMillis,"not det",isNotification,
-                getevent!!
+            if(getevent!=null&& isSetTime != false &&isSetDate!=false){
+                if(repeat==1) {
+                    eventSelected.getAlarmObject(
+                        AlarmData(
+                            true, calendar.timeInMillis+0.0, "not det", isNotification,
+                            getevent!!
 
-            ),calendar)
-             //   eventSelected.startAlarm(calendar)
-            dismiss()
+                        ), calendar
+                    )
+                    //   eventSelected.startAlarm(calendar)
+                    dismiss()
+                }else if (repeat==2){
+                    eventSelected.getAlarmObject(
+                        AlarmData(
+                            true, calendar.timeInMillis+0.0, "not det", isNotification,
+                            getevent!!
+
+                        ), calendar
+                    )
+                    eventSelected.getAlarmObject(
+                        AlarmData(
+                            true, calendar.timeInMillis+(1.728e+8), "not det", isNotification,
+                            getevent!!
+
+                        ), calendar
+                    )
+
+                    dismiss()
+                }
+                else if(repeat==3){
+                    eventSelected.getAlarmObject(
+                        AlarmData(
+                            true, calendar.timeInMillis+0.0, "not det", isNotification,
+                            getevent!!
+
+                        ), calendar
+                    )
+                    eventSelected.getAlarmObject(
+                        AlarmData(
+                            true, calendar.timeInMillis+(8.64e+7), "not det", isNotification,
+                            getevent!!
+
+                        ), calendar
+                    )
+
+                    eventSelected.getAlarmObject(
+                        AlarmData(
+                            true, calendar.timeInMillis+(1.728e+8), "not det", isNotification,
+                            getevent!!
+
+                        ), calendar
+                    )
+
+                    dismiss()
+                }
+
             }else{
                 Toast.makeText(context,"Required data ",Toast.LENGTH_SHORT).show()
             }
